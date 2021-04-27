@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <g id="amharic" transform="translate(-444 -22)">
+    <path id="Icon_material-g-translate" data-name="Icon material-g-translate" d="M30,7.5H16.32L15,3H6A3.009,3.009,0,0,0,3,6V25.5a3.009,3.009,0,0,0,3,3H16.5L18,33H30a3.009,3.009,0,0,0,3-3V10.5A3.009,3.009,0,0,0,30,7.5ZM31.5,30A1.5,1.5,0,0,1,30,31.5H19.5l3-3-1.215-4.155c-4.429-15.4-.648-2.305-2.745-9.285L16.77,9H30a1.5,1.5,0,0,1,1.5,1.5Z" transform="translate(441 19)" fill="#eaeaea"/>
+    <text id="_" data-name="አ" transform="translate(446 25)" fill="#111" font-size="20" font-family="EthiopicWookianos, Ethiopic Wookianos"><tspan x="0" y="16">አ</tspan></text>
+    <text id="E" transform="translate(458 46)" fill="#eaeaea" font-size="20" font-family="Montserrat-Bold, Montserrat" font-weight="700"><tspan x="0" y="0">E</tspan></text>
+  </g>
+</svg>
