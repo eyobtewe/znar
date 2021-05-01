@@ -5,6 +5,7 @@ import '../../core/core.dart';
 import '../../external_src/flappy_search_bar/flappy_search_bar.dart';
 import '../../external_src/flappy_search_bar/search_bar_style.dart';
 import '../../presentation/bloc.dart';
+import '../home/widgets/widgets.dart';
 import '../screens.dart';
 import '../widgets/widgets.dart';
 
@@ -64,6 +65,23 @@ class _SearchHomeScreenState extends State<SearchHomeScreen> {
       textStyle: Theme.of(context).textTheme.subtitle2.copyWith(
             fontFamilyFallback: f,
           ),
+      placeHolder: ListView(
+        physics: const BouncingScrollPhysics(),
+        children: [
+          buildDivider(),
+          buildDivider(),
+          ThumbnailCards(
+            ar: CustomAspectRatio.PLAYLIST,
+            title: Language.locale(uiBloc.language, 'trending_playlists'),
+          ),
+          // buildDivider(),
+          buildDivider(),
+          ThumbnailCards(
+            ar: CustomAspectRatio.SONG,
+            title: Language.locale(uiBloc.language, 'songs'),
+          ),
+        ],
+      ),
       hintText: Language.locale(uiBloc.language, 'search_sth'),
       buildSuggestion: buildSuggestion,
       cancellationWidget: Icon(
@@ -152,7 +170,7 @@ class _SearchHomeScreenState extends State<SearchHomeScreen> {
       child: Container(
         width: size.width,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List<Widget>.generate(
             choices.length,
             (int index) {
@@ -160,14 +178,19 @@ class _SearchHomeScreenState extends State<SearchHomeScreen> {
                 label: Text(
                   Language.locale(
                       uiBloc.language, choices[index].toLowerCase()),
-                  style: const TextStyle(
-                    color: PURE_WHITE,
+                  style: TextStyle(
+                    // color: _value == index ? BACKGROUND : PURE_WHITE,
                     fontFamilyFallback: f,
+                    color: PRIMARY_COLOR,
                   ),
                 ),
+                visualDensity: VisualDensity(vertical: -4),
+                side: BorderSide(
+                  color: _value == index ? PRIMARY_COLOR : BACKGROUND,
+                ),
                 padding: EdgeInsets.zero,
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                selectedColor: PRIMARY_COLOR,
+                backgroundColor: BACKGROUND,
+                selectedColor: BACKGROUND,
                 selected: _value == index,
                 onSelected: (bool selected) {
                   setState(() {
@@ -220,9 +243,9 @@ class _SearchHomeScreenState extends State<SearchHomeScreen> {
 
 const List<String> choices = [
   'Artists',
-  'Albums',
+  // 'Albums',
   'Songs',
-  'Videos',
+  // 'Videos',
   'Charts',
 ];
 

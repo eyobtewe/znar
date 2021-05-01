@@ -56,11 +56,16 @@ class SongThumbnail extends StatelessWidget {
                       ),
                     ),
                   ),
-            MusicTitle(title: song[i].title ?? '', lines: 2),
+            MusicTitle(
+              title: song[i].title ?? '',
+              lines: 1,
+              fontSize: 12,
+            ),
             Divider(color: TRANSPARENT, height: 5),
             MusicTitle(
                 title: song[i].artistStatic?.stageName ?? '',
-                lines: 2,
+                lines: 1,
+                fontSize: 12,
                 color: GRAY),
           ],
         ),

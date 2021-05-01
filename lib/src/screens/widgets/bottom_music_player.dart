@@ -51,7 +51,7 @@ class BottomScreenPlayer extends StatelessWidget {
         alignment: Alignment.centerRight,
         child: CircleAvatar(
           child: const Icon(
-            Ionicons.stop,
+            Ionicons.stop_circle,
             color: PRIMARY_COLOR,
             size: 32,
           ),

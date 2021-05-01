@@ -67,7 +67,7 @@ flutter_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/images/logo.png"
+  image_path: "assets/images/logo_y.png"
 
 flutter:
   uses-material-design: true
@@ -109,3 +109,6 @@ flutter:
     - family: Wo
       fonts:
         - asset: assets/fonts/wookianos.ttf
+    - family: HN
+      fonts:
+        - asset: assets/fonts/HelveticaNeue.ttc

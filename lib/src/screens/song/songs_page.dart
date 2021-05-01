@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:znar/src/screens/search/search.dart';
 
-import '../../app.dart';
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../presentation/bloc.dart';
@@ -87,10 +87,7 @@ class _SongScreenState extends State<SongScreen> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext ctx, int i) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: SongTile(songs: bloc.songs, index: i),
-                    );
+                    return SongTile(songs: bloc.songs, index: i);
                   },
                   childCount: bloc.songs?.length ?? 0,
                 ),
@@ -136,7 +133,8 @@ class _SongScreenState extends State<SongScreen> {
         IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              Navigator.pushNamed(context, SEARCH_SONGS_PAGE_ROUTE);
+              showSearch(context: context, delegate: SongSearch());
+              // Navigator.pushNamed(context, SEARCH_SONGS_PAGE_ROUTE);
             }),
       ],
     );

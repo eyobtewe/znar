@@ -1,4 +1,3 @@
-// import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,14 +30,6 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Container(
-          //   alignment: Alignment.center,
-          //   child: Image.asset(
-          //     'assets/images/instruments.jpg',
-          //     height: size.height,
-          //     width: size.width,
-          //   ),
-          // ),
           Container(
             height: size.height,
             width: size.width,
@@ -47,12 +38,14 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: size.height * 0.2),
                 child: Text(
+                  // 'ዝናር',
                   'ZNAR',
                   style: TextStyle(
-                    fontSize: 28,
-                    fontFamily: GoogleFonts.notoSerif().fontFamily,
+                    fontSize: 38,
+                    fontFamilyFallback: f,
+                    fontFamily: GoogleFonts.playfairDisplay().fontFamily,
                     color: PRIMARY_COLOR,
-                    // fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),

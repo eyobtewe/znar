@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/colors.dart';
 import '../../domain/models/models.dart';
@@ -22,7 +23,8 @@ class PlaylistThumbnail extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size);
-    final w = size.width / 2 - 40;
+    // final w = size.width / 2 - 30;
+    final w = size.width / 2 - 80;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -48,14 +50,31 @@ class PlaylistThumbnail extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                       child: CachedPicture(
                         image: playlist.featureImage,
-                        boxFit: BoxFit.cover,
+                        // boxFit: BoxFit.cover,
                         isBackground: true,
                       ),
                     ),
                   ),
             MusicTitle(title: playlist.name ?? '', lines: 2),
             Divider(height: 5, color: TRANSPARENT),
-            MusicTitle(title: playlist.count + ' songs' ?? '', lines: 1),
+            Row(
+              children: [
+                Icon(
+                  Ionicons.musical_notes,
+                  size: ScreenUtil().setSp(12),
+                  color: GRAY,
+                ),
+                Text(
+                  ' ' + playlist.count + ' songs',
+                  style: TextStyle(
+                    color: GRAY,
+                    fontSize: ScreenUtil().setSp(12),
+                  ),
+                ),
+              ],
+            ),
+            // MusicTitle(
+            //     title: playlist.count + ' songs' ?? '', lines: 1, color: GRAY),
           ],
         ),
       ),

@@ -41,11 +41,13 @@ class ThumbnailCards extends StatelessWidget {
                     Container(
                       child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
+                          crossAxisCount: ar == CustomAspectRatio.SONG ? 3 : 3,
                           childAspectRatio: _childAspectRatio(ar),
                         ),
                         itemBuilder: (BuildContext ctx, int index) {
                           return Container(
+                            height: 150,
+                            width: 150,
                             child: HomeCards(
                               ar: ar,
                               data: bloc.buildInitialData(ar),
@@ -53,7 +55,8 @@ class ThumbnailCards extends StatelessWidget {
                             ),
                           );
                         },
-                        itemCount: 4,
+                        itemCount: bloc.buildInitialData(ar).length,
+                        // itemCount: ar == CustomAspectRatio.SONG ? 6 : 4,
                         shrinkWrap: true,
                         primary: false,
                       ),
@@ -68,9 +71,9 @@ class ThumbnailCards extends StatelessWidget {
   double _childAspectRatio(CustomAspectRatio aspectRatio) {
     switch (aspectRatio) {
       case CustomAspectRatio.PLAYLIST:
-      // return 0.85;
+      // return 0.8;
       case CustomAspectRatio.SONG:
-        return 0.8;
+        return 0.7;
       case CustomAspectRatio.ARTIST:
         return 0.9;
       default:

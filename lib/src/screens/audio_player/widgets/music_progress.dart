@@ -33,7 +33,7 @@ class _MusicProgressState extends State<MusicProgress> {
           bufferedBarColor: BLUE,
           progressBarColor: PRIMARY_COLOR,
           thumbColor: PRIMARY_COLOR,
-          timeLabelLocation: TimeLabelLocation.below,
+          timeLabelLocation: TimeLabelLocation.sides,
           timeLabelTextStyle: TextStyle(
             color: GRAY,
           ),

@@ -82,11 +82,13 @@ class MusicTitle extends StatelessWidget {
     this.lines,
     this.color,
     this.alignment,
+    this.fontSize = 14,
     this.textAlign = TextAlign.left,
   });
 
   final String title;
   final int lines;
+  final int fontSize;
   final Color color;
   final Alignment alignment;
   final TextAlign textAlign;
@@ -102,7 +104,7 @@ class MusicTitle extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         textAlign: textAlign,
         style: TextStyle(
-          // fontSize: ScreenUtil().setSp(12),
+          fontSize: ScreenUtil().setSp(fontSize),
           fontFamilyFallback: f,
           color: color,
         ),

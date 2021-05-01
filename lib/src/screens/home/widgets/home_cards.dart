@@ -19,14 +19,10 @@ class HomeCards extends StatelessWidget {
     switch (ar) {
       case CustomAspectRatio.SONG:
         return Container(
+          width: 150,
           child: SongThumbnail(i: i, song: data),
-          // width: 130,
         );
-      // case CustomAspectRatio.ALBUM:
-      //   return Container(
-      //     child: AlbumThumbnail(album: data[i]),
-      //     width: 130,
-      //   );
+
       case CustomAspectRatio.ARTIST:
         return Container(
           child: ArtistThumbnail(artist: data[i]),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import '../../../core/core.dart';
 import '../../../presentation/bloc.dart';
@@ -17,15 +18,6 @@ class PlayerButtons extends StatelessWidget {
     ScreenUtil.init(context, designSize: size, allowFontScaling: true);
     return Column(
       children: [
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //   children: <Widget>[
-
-        //     buildPlaylistBtn(playerBloc, size),
-        //     buildVolumeBtn(playerBloc, size),
-
-        //   ],
-        // ),
         Divider(color: TRANSPARENT),
         MusicProgress(),
         Divider(color: TRANSPARENT),
@@ -71,87 +63,115 @@ class PlayerButtons extends StatelessWidget {
   }
 
   Widget buildShuffleBtn(PlayerBloc playerBloc, Size size) {
-    return playerBloc.audioPlayer.builderRealtimePlayingInfos(
-      builder: (BuildContext ctx, RealtimePlayingInfos r) {
-        return IconButton(
-          iconSize: ScreenUtil().setSp(28),
-          icon: const Icon(Ionicons.shuffle),
-          color: (r?.isShuffling == false) ? GRAY : PRIMARY_COLOR,
-          onPressed: r == null
-              ? null
-              : () {
-                  playerBloc.audioPlayer.toggleShuffle();
-                },
-        );
-      },
-    );
+    debugPrint(playerBloc
+        ?.audioPlayer?.realtimePlayingInfos?.valueWrapper?.value?.playingPercent
+        .toString());
+
+    // if (playerBloc?.audioPlayer?.realtimePlayingInfos?.valueWrapper?.value
+    //         ?.playingPercent ==
+    //     null) {
+    return StreamBuilder(
+        stream: playerBloc?.audioPlayer?.realtimePlayingInfos,
+        builder: (BuildContext context, AsyncSnapshot<RealtimePlayingInfos> r) {
+          if (r?.data?.duration == Duration.zero) {
+            return IconButton(
+              color: GRAY,
+              iconSize: ScreenUtil().setSp(28),
+              icon: const Icon(Ionicons.shuffle),
+              onPressed: null,
+            );
+          } else {
+            return IconButton(
+              iconSize: ScreenUtil().setSp(28),
+              icon: const Icon(Ionicons.shuffle),
+              color: (r?.data?.isShuffling == false) ? GRAY : PRIMARY_COLOR,
+              onPressed: () {
+                playerBloc.audioPlayer.toggleShuffle();
+              },
+            );
+          }
+        });
+    // } else {
+    //   return playerBloc.audioPlayer.builderRealtimePlayingInfos(
+    //     builder: (BuildContext ctx, RealtimePlayingInfos r) {
+    //       return IconButton(
+    //         iconSize: ScreenUtil().setSp(28),
+    //         icon: const Icon(Ionicons.shuffle),
+    //         color: (r?.isShuffling == false) ? GRAY : PRIMARY_COLOR,
+    //         onPressed:
+    //             playerBloc?.audioPlayer?.isShuffling?.valueWrapper?.value ==
+    //                     null
+    //                 ? null
+    //                 : () {
+    //                     playerBloc.audioPlayer.toggleShuffle();
+    //                   },
+    //       );
+    //     },
+    //   );
+    // }
   }
 
   Widget buildNextBtn(PlayerBloc playerBloc, Size size) {
-    return playerBloc.audioPlayer.builderCurrent(
-      builder: (BuildContext ctx, Playing playing) {
-        return IconButton(
-          iconSize: ScreenUtil().setSp(28),
-          color: GRAY,
-          icon: const Icon(Ionicons.play_skip_forward_outline),
-          onPressed: playing != null
-              ? (playing.hasNext
-                  ? () {
-                      playerBloc.audioPlayer.pause();
-                      playerBloc.audioPlayer.next();
-                    }
-                  : null)
-              : null,
-        );
+    return IconButton(
+      iconSize: ScreenUtil().setSp(28),
+      color: GRAY,
+      icon: const Icon(Ionicons.play_skip_forward_outline),
+      onPressed: () {
+        // playerBloc.audioPlayer.pause();
+        playerBloc.audioPlayer.next();
       },
     );
   }
 
   PlayerBuilder buildPlayPauseBtn(PlayerBloc playerBloc, Size size) {
     return playerBloc.audioPlayer.builderPlayerState(
-      builder: (BuildContext context, PlayerState _playerState) {
-        return
-            // (buffering && !playing)
-            // ? Stack(
-            //     alignment: Alignment.center,
-            //     children: [
-            //       IconButton(
-            //         color: GRAY,
-            //         disabledColor: PRIMARY_COLOR,
-            //         iconSize: ScreenUtil().setSp(50),
-            //         icon: const Icon(Ionicons.pause_circle_outline),
-            //         onPressed: null,
-            //       ),
-            //       SleekCircularSlider(
-            //         appearance: CircularSliderAppearance(
-            //           spinnerMode: true,
-            //           size: 40,
-            //           customColors: CustomSliderColors(
-            //               trackColor: LINK,
-            //               dotColor: PURE_WHITE,
-            //               progressBarColors: [
-            //                 PURPLE,
-            //                 BLUE,
-            //                 PRIMARY_COLOR,
-            //               ]),
-            //           customWidths: CustomSliderWidths(
-            //               progressBarWidth: 3, trackWidth: 3),
-            //         ),
-            //       )
-            //     ],
-            //   )
-            // :
-            IconButton(
-          color: GRAY,
-          iconSize: ScreenUtil().setSp(50),
-          icon: _playerState == PlayerState.play
-              ? const Icon(Ionicons.pause_circle_outline)
-              : const Icon(Ionicons.play_circle_outline),
-          onPressed: () {
-            playerBloc.audioPlayer.playOrPause();
-          },
-        );
+      builder: (BuildContext _, PlayerState playerState) {
+        return (playerBloc?.audioPlayer?.realtimePlayingInfos?.valueWrapper
+                    ?.value?.playingPercent ==
+                null)
+            ? buildBuffering()
+            : IconButton(
+                color: PRIMARY_COLOR,
+                iconSize: ScreenUtil().setSp(50),
+                icon: playerState == PlayerState.play
+                    ? const Icon(Ionicons.pause_circle_outline)
+                    : const Icon(Ionicons.play_circle_outline),
+                onPressed: () {
+                  playerBloc.audioPlayer.playOrPause();
+                },
+              );
       },
+    );
+  }
+
+  Stack buildBuffering() {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        IconButton(
+          color: GRAY,
+          disabledColor: PRIMARY_COLOR,
+          iconSize: ScreenUtil().setSp(50),
+          icon: const Icon(Ionicons.pause_circle_outline),
+          onPressed: null,
+        ),
+        SleekCircularSlider(
+          appearance: CircularSliderAppearance(
+            spinnerMode: true,
+            size: 40,
+            customColors: CustomSliderColors(
+                trackColor: LINK,
+                dotColor: PURE_WHITE,
+                progressBarColors: [
+                  PURPLE,
+                  BLUE,
+                  PRIMARY_COLOR,
+                ]),
+            customWidths:
+                CustomSliderWidths(progressBarWidth: 3, trackWidth: 3),
+          ),
+        )
+      ],
     );
   }
 

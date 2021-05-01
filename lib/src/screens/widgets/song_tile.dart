@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
@@ -8,7 +9,7 @@ import '../../presentation/bloc.dart';
 import '../screens.dart';
 
 class SongTile extends StatelessWidget {
-  final dynamic songs;
+  final List<dynamic> songs;
   final int index;
   final Playlist playlist;
   final bool clickable;
@@ -28,61 +29,52 @@ class SongTile extends StatelessWidget {
             },
       child: Container(
         width: size.width,
-        margin: EdgeInsets.symmetric(vertical: 10),
-        height: 60,
-        child: Row(
-          children: [
-            Container(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: CachedPicture(image: songs[index].coverArt ?? ''),
-              ),
-            ),
-            VerticalDivider(color: TRANSPARENT),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildSongTitle(size),
-                // Divider(color: TRANSPARENT),
-                Text(
-                  songs[index].runtimeType == Song
-                      ? songs[index].artistStatic?.stageName ?? ''
-                      : songs[index].artist ?? '',
-                  style: const TextStyle(color: GRAY, fontFamilyFallback: f),
+        color: playerBloc.audioPlayer.current.valueWrapper?.value?.audio?.audio
+                    ?.metas?.id ==
+                songs[index].sId
+            ? CANVAS_BLACK
+            : BACKGROUND,
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          height: 60,
+          child: Row(
+            children: [
+              Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: CachedPicture(image: songs[index].coverArt ?? ''),
                 ),
-              ],
-            ),
-          ],
+              ),
+              VerticalDivider(color: TRANSPARENT),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  buildSongTitle(size),
+                  Text(
+                    songs[index].runtimeType == Song
+                        ? songs[index].artistStatic?.stageName ?? ''
+                        : songs[index].artist ?? '',
+                    style: const TextStyle(color: GRAY, fontFamilyFallback: f),
+                  ),
+                ],
+              ),
+              // Spacer(),
+              // Builder(
+              //   builder: (BuildContext ctx) {
+              //     return playerBloc.audioPlayer.current.valueWrapper?.value?.audio
+              //                 ?.audio?.metas?.id ==
+              //             songs[index].sId
+              //         ? Icon(Ionicons.play)
+              //         : Container();
+              //   },
+              // ),
+              // playerBloc.audioPlayer.builderPlayerState
+            ],
+          ),
         ),
       ),
     );
-
-    // return ListTile(
-    //   minLeadingWidth: 40,
-    //   contentPadding:
-    //       const EdgeInsets.only(right: 0, left: 10, bottom: 5, top: 5),
-    //   leading: Container(
-    //     child: ClipRRect(
-    //       borderRadius: BorderRadius.circular(5),
-    //       child: CachedPicture(image: songs[index].coverArt ?? ''),
-    //     ),
-    //   ),
-    //   dense: false,
-    //   visualDensity: VisualDensity.comfortable,
-    //   title: buildSongTitle(),
-    //   subtitle: Text(
-    //     songs[index].runtimeType == Song
-    //         ? songs[index].artistStatic?.stageName ?? ''
-    //         : songs[index].artist ?? '',
-    //     style: const TextStyle(color: GRAY, fontFamilyFallback: f),
-    //   ),
-    //   onTap: !clickable
-    //       ? null
-    //       : () {
-    //           _onTap(context, playerBloc);
-    //         },
-    // );
   }
 
   void _onTap(BuildContext context, PlayerBloc playerBloc) {
@@ -106,7 +98,7 @@ class SongTile extends StatelessWidget {
 
   Container buildSongTitle(Size size) {
     return Container(
-      width: size.width - 116,
+      width: size.width - 140,
       child: Text(
         songs[index].title ?? '',
         maxLines: 1,

@@ -1,8 +1,8 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import '../../../presentation/player_provider.dart';
 
 import '../../../core/core.dart';
+import '../../../presentation/player_provider.dart';
 
 class SongDetails extends StatelessWidget {
   const SongDetails({Key key}) : super(key: key);

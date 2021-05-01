@@ -217,8 +217,8 @@ class MusicApiService implements Api {
   Future<List<Playlist>> fetchPlayList(int page, int count) async {
     String url = ENDPOINT_PLAYLISTS + '?page=$page&limit=$count';
 
-    // final parsedJson = await _getter(url);
-    final parsedJson = MOCK_PLAYLISTS["data"];
+    final parsedJson = await _getter(url);
+    // final parsedJson = MOCK_PLAYLISTS["data"];
     List<Playlist> data = [];
     // debugPrint(url);
     parsedJson.forEach((var item) {

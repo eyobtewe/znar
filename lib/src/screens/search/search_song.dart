@@ -112,12 +112,6 @@ class _SearchSongScreenState extends State<SearchSongScreen> {
     );
   }
 
-  Future<List> _onSearch(String term) async {
-    return widget.isLocal ?? false
-        ? await localSongsBloc.searchSongs(term)
-        : await bloc.searchSongs(term);
-  }
-
   Widget result(dynamic song) {
     return ListTile(
       leading: CircleAvatar(
@@ -136,5 +130,11 @@ class _SearchSongScreenState extends State<SearchSongScreen> {
       ),
       dense: true,
     );
+  }
+
+  Future<List> _onSearch(String term) async {
+    return widget.isLocal ?? false
+        ? await localSongsBloc.searchSongs(term)
+        : await bloc.searchSongs(term);
   }
 }

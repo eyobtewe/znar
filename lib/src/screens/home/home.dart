@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
         // bottomNavigationBar: buildBottomNavigationBar(),
         // appBar: buildAppBar(context),
 
-        body: ExplorerScreen(size: size, uiBloc: uiBloc),
+        body: ExplorerScreen(),
       ),
     );
   }

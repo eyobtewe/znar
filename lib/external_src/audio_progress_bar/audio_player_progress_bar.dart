@@ -562,11 +562,12 @@ class _RenderProgressBar extends RenderBox {
   ///
   void _drawProgressBarWithLabelsOnSides(Canvas canvas) {
     // calculate sizes
-    final padding = _thumbRadius;
+    // final padding = _thumbRadius * 2;
+    final padding = 5 * 3;
     final barHeight = 2 * _thumbRadius;
 
     // current time label
-    final verticalOffset = size.height / 2 - _leftTimeLabel.height / 2;
+    final verticalOffset = size.height / 2 - _leftTimeLabel.height / 1.25;
     final currentLabelOffset = Offset(0, verticalOffset);
     _leftTimeLabel.paint(canvas, currentLabelOffset);
 
