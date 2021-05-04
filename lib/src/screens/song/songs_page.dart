@@ -133,7 +133,9 @@ class _SongScreenState extends State<SongScreen> {
         IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              showSearch(context: context, delegate: SongSearch());
+              showSearch(
+                  context: context,
+                  delegate: SongSearch(CustomAspectRatio.SONG));
               // Navigator.pushNamed(context, SEARCH_SONGS_PAGE_ROUTE);
             }),
       ],

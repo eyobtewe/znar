@@ -269,13 +269,13 @@ class ApiBloc {
 
   Future fetchAll() async {
     // Future.wait([
-    fetchAlbums(1, 7);
-    fetchArtists(1, 7);
+    // fetchAlbums(1, 7);
+    // fetchArtists(1, 7);
     fetchOnlinePlayList(1, 7);
-    fetchChannels();
-    fetchMusicVideos(1, 7);
+    // fetchChannels();
+    // fetchMusicVideos(1, 7);
     fetchSongs(1, 7);
-    fetchAnnouncements();
+    // fetchAnnouncements();
     // ]);
   }
 }

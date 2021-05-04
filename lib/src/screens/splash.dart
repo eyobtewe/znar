@@ -19,8 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final bloc = ApiProvider.of(context);
-    // final localBloc = LocalSongsProvider.of(context);
-    // localBloc.getDownloadedMusic(Theme.of(context).platform);
+
     bloc.fetchAll();
 
     Future.delayed(Duration(seconds: 1), () {
@@ -28,30 +27,26 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: size.height,
-            width: size.width,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: size.height * 0.2),
-                child: Text(
-                  // 'ዝናር',
-                  'ZNAR',
-                  style: TextStyle(
-                    fontSize: 38,
-                    fontFamilyFallback: f,
-                    fontFamily: GoogleFonts.playfairDisplay().fontFamily,
-                    color: PRIMARY_COLOR,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
+      body: Container(
+        height: size.height,
+        width: size.width,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: size.height * 0.2),
+            child: Text(
+              // 'ዝናር',
+              'ZNAR',
+              style: TextStyle(
+                fontSize: 38,
+                fontFamilyFallback: f,
+                fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                color: PRIMARY_COLOR,
+                fontWeight: FontWeight.w900,
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

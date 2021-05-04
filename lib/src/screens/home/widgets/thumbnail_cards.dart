@@ -36,30 +36,34 @@ class ThumbnailCards extends StatelessWidget {
               ? Container()
               : Column(
                   children: [
-                    buildTitle(uiBloc, context),
+                    buildTitle(uiBloc, context, bloc.buildInitialData(ar)),
                     buildDivider(),
                     Container(
-                      child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: ar == CustomAspectRatio.SONG ? 3 : 3,
-                          childAspectRatio: _childAspectRatio(ar),
-                        ),
-                        itemBuilder: (BuildContext ctx, int index) {
-                          return Container(
-                            height: 150,
-                            width: 150,
-                            child: HomeCards(
-                              ar: ar,
-                              data: bloc.buildInitialData(ar),
-                              i: index,
+                      child: CustomAspectRatio.PLAYLIST == ar
+                          ? buildContainer(bloc, size)
+                          : GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount:
+                                    3, // ar == CustomAspectRatio.SONG ? 3 : 2,
+                                childAspectRatio: _childAspectRatio(ar),
+                              ),
+                              itemBuilder: (BuildContext ctx, int index) {
+                                return Container(
+                                  // height: 150,
+                                  // width: 150,
+                                  child: HomeCards(
+                                    ar: ar,
+                                    data: bloc.buildInitialData(ar),
+                                    i: index,
+                                  ),
+                                );
+                              },
+                              // itemCount: bloc.buildInitialData(ar).length,
+                              itemCount: ar == CustomAspectRatio.SONG ? 6 : 4,
+                              shrinkWrap: true,
+                              primary: false,
                             ),
-                          );
-                        },
-                        itemCount: bloc.buildInitialData(ar).length,
-                        // itemCount: ar == CustomAspectRatio.SONG ? 6 : 4,
-                        shrinkWrap: true,
-                        primary: false,
-                      ),
                     ),
                   ],
                 );
@@ -81,25 +85,27 @@ class ThumbnailCards extends StatelessWidget {
     }
   }
 
-  // Container buildContainer(ApiBloc bloc, int index) {
-  //   return Container(
-  //     height: _cardHeight(ar),
-  //     child: ListView.builder(
-  //       physics: const BouncingScrollPhysics(),
-  //       key: PageStorageKey('$ar'),
-  //       scrollDirection: Axis.horizontal,
-  //       // shrinkWrap: true,
-  //       itemBuilder: (BuildContext context, int i) {
-  //         return HomeCards(
-  //           ar: ar,
-  //           data: bloc.buildInitialData(ar),
-  //           i: i * index,
-  //         );
-  //       },
-  //       itemCount: (bloc.buildInitialData(ar).length ~/ 2),
-  //     ),
-  //   );
-  // }
+  Container buildContainer(ApiBloc bloc, Size size) {
+    return Container(
+      // color: PURPLE,
+      height: size.width * 9 / 13,
+      // height: _cardHeight(ar),
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        key: PageStorageKey('$ar'),
+        scrollDirection: Axis.horizontal,
+        // shrinkWrap: true,
+        itemBuilder: (BuildContext context, int i) {
+          return HomeCards(
+            ar: ar,
+            data: bloc.buildInitialData(ar),
+            i: i,
+          );
+        },
+        itemCount: (bloc.buildInitialData(ar).length),
+      ),
+    );
+  }
 
   Widget buildMoreBtn(
       CustomAspectRatio ar, BuildContext context, UiBloc uiBloc) {
@@ -114,7 +120,8 @@ class ThumbnailCards extends StatelessWidget {
     );
   }
 
-  Widget buildTitle(UiBloc uiBloc, BuildContext context) {
+  Widget buildTitle(
+      UiBloc uiBloc, BuildContext context, List<dynamic> content) {
     return Container(
       width: double.maxFinite,
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -131,9 +138,7 @@ class ThumbnailCards extends StatelessWidget {
               ),
             ),
           ),
-          title != Language.locale(uiBloc.language, 'youtube_channels')
-              ? buildMoreBtn(ar, context, uiBloc)
-              : Container(),
+          content.length > 6 ? buildMoreBtn(ar, context, uiBloc) : Container(),
         ],
       ),
     );

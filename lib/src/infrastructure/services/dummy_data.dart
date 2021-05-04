@@ -1,234 +1,584 @@
 const Map<String, dynamic> MOCK_SONGS = {
-  "success": true,
-  "results": 15,
-  "pagination": {},
-  "data": [
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Kalkidan Manaze",
-        "slug": "kalkidan-manaze",
-        "fullName": "Kalkidan Manaze"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f2c3c5f070a0692924098",
-      "title": "ትዝታ ነው",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Tizita New_song-1601121339754.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-f3a2f638c05a-1601716998613-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Ermias Hailu",
-        "slug": "ermias-hailu",
-        "fullName": "Ermias Hailu"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f2bd45f070a0692924097",
-      "title": "ይቅርታ",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/YIKIRTA-1_song-1601122850373.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-f62c0afc1204-1601121236199-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Dawit Bekele",
-        "slug": "dawit-bekele",
-        "fullName": "Dawit Bekele"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f2d175f070a0692924099",
-      "title": "እዮሃ",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Eyoha-2_song-1601121558288.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-af07cefc5397-1601121558555-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #2", "slug": "iaam-#2"},
-      "artistStatic": {
-        "stageName": "Abel Brhanu",
-        "slug": "abel-brhanu",
-        "fullName": "Abel Brhanu"
-      },
-      "featuredArtists": [],
-      "_id": "5f89a84a65cb6028d5bd0fff",
-      "title": "ፅገሬዳዬ",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Abel_Tsigeredaye_song-1602857034407.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-95cddc2a3802-1603008239173-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #2", "slug": "iaam-#2"},
-      "artistStatic": {
-        "stageName": "Rediet Mulugeta",
-        "slug": "rediet-mulugeta",
-        "fullName": "Rediet Mulugeta"
-      },
-      "featuredArtists": [],
-      "_id": "6008049865cb6028d5bd101c",
-      "title": "Liben",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Rediet Liben_song-1615662999883.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-d92eb6113af1-1611138200183-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #2", "slug": "iaam-#2"},
-      "artistStatic": {
-        "stageName": "Hana Hailemichael",
-        "slug": "hana-hailemichael",
-        "fullName": "Hana Hailemichael"
-      },
-      "featuredArtists": [],
-      "_id": "5ff3fb7265cb6028d5bd100d",
-      "title": "Destegna negn",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Selam Hana_song-1615662862498.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-8d0aad937bd6-1609825138250-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #2", "slug": "iaam-#2"},
-      "artistStatic": {
-        "stageName": "Israel Mezgebu",
-        "slug": "israel-mezgebu",
-        "fullName": "Israel Mezgebu"
-      },
-      "featuredArtists": [],
-      "_id": "5f99728965cb6028d5bd1005",
-      "title": "ትዝ ይለኛል",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Tiz Yilegnal - ትዝ ይለኛል - Israel Mezgebu_song-1603891849002.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-92147ac57a64-1603904376154-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Hana Hailemichael",
-        "slug": "hana-hailemichael",
-        "fullName": "Hana Hailemichael"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f28375f070a069292408f",
-      "title": "አውቃለው",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Awukalew Hana_song-1601120310899.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-94e48af89355-1601717838189-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Hana Yeshitila",
-        "slug": "hana-yeshitila",
-        "fullName": "Hana Yeshitila"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f295c5f070a0692924093",
-      "title": "Yikir Meterater",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Yikir Meterater _song-1601120603717.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-95620fe7ec15-1601717217558-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Kalkidan Manaze",
-        "slug": "kalkidan-manaze",
-        "fullName": "Kalkidan Manaze"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f29b95f070a0692924094",
-      "title": "መታደል ነው",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Metadel New _song-1601120696242.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-5594d0b76040-1601120696382-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Ermias Hailu",
-        "slug": "ermias-hailu",
-        "fullName": "Ermias Hailu"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f28825f070a0692924090",
-      "title": "ቀና በል",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Kena Bel_song-1601120385593.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-1f3206704099-1601120385751-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Rekik Asegidew",
-        "slug": "rekik-asegidew",
-        "fullName": "Rekik Asegidew"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f28ca5f070a0692924091",
-      "title": "አታስመስል",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Funk FF-1_song-1601120457777.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-12fede68b654-1601717763041-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Meron Mekete",
-        "slug": "meron-mekete",
-        "fullName": "Meron Mekete"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f29035f070a0692924092",
-      "title": "ቃል",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/KAl MEron2_song-1601120514853.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-59a24fcd2850-1601717649500-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Yosef Bekele",
-        "slug": "yosef-bekele",
-        "fullName": "Yosef Bekele"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f2b9c5f070a0692924096",
-      "title": "እድሜ",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Edime Final-2_song-1601121180249.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-4a31dcba84f9-1601121180529-art.jpeg"
-    },
-    {
-      "albumStatic": {"name": "IAAM #1", "slug": "iaam-#1"},
-      "artistStatic": {
-        "stageName": "Beakal Begashaw",
-        "slug": "beakal-begashaw",
-        "fullName": "Beakal Begashaw"
-      },
-      "featuredArtists": [],
-      "_id": "5f6f27f75f070a069292408e",
-      "title": "ተናፍቃ",
-      "fileUrl":
-          "https://d3853gs02vq4o.cloudfront.net/listings/songs/Beakal_Tenafka Master_song-1601120246520.mp3",
-      "coverArt":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/songs/covers/cover-cce63824b972-1601120246837-art.jpeg"
-    },
-  ]
+    "success": true,
+    "results": 32,
+    "pagination": {},
+    "data": [
+        {
+            "artistStatic": {
+                "stageName": "ኣወጣሽ",
+                "slug": "ኣወጣሽ",
+                "fullName": "ኣወጣሽ ሙልጌታ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:03:09.032Z",
+            "_id": "608ee95dc2d62600042e9584",
+            "title": "ክኾለኩምዶ 'ታ",
+            "artist": "608cfc9195170b000414e27b",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ክኾለኩምዶ-'ታ_song-1619978586193.mp3",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ክኾለኩምዶ-'ታ",
+            "publishedAt": "2021-05-02T18:45:24.724Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ሹምየ",
+                "slug": "ሹምየ",
+                "fullName": "ገብረስላሴ ብርሃነ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:04:56.457Z",
+            "_id": "608ee9c8c2d62600042e9585",
+            "title": "ንዓደይ",
+            "artist": "608cfd0395170b000414e27d",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ንዓደይ_song-1619978686744.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-f15aa91c629d-1619978688788-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ንዓደይ",
+            "publishedAt": "2021-05-02T18:44:34.076Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:09:53.158Z",
+            "_id": "608eeaf1c2d62600042e9586",
+            "title": "ሎሚ ዓይነይ በርሀ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ሎሚ-ዓይነይ-በርሀ-_song-1619978987657.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-aad51893e92e-1619978990767-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ሎሚ-ዓይነይ-በርሀ",
+            "publishedAt": "2021-05-02T18:43:46.020Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:12:00.948Z",
+            "_id": "608eeb70c2d62600042e9588",
+            "title": "በላይ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/በላይ_song-1619979115930.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-0d52ea213c87-1619979118191-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "በላይ",
+            "publishedAt": "2021-05-02T18:41:45.162Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:25:57.565Z",
+            "_id": "608eeeb5c2d62600042e958d",
+            "title": "ዓዲ መዓር ፀባ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ዓዲ-መዓር-ፀባ_song-1619979952139.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-c88030c9e10b-1619979954573-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ዓዲ-መዓር-ፀባ",
+            "publishedAt": "2021-05-02T18:40:57.593Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:10:56.496Z",
+            "_id": "608eeb30c2d62600042e9587",
+            "title": "ሕንጊዱ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ሕንጊዱ_song-1619979049581.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-32c245a50749-1619979052298-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ሕንጊዱ",
+            "publishedAt": "2021-05-02T18:36:36.131Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:13:41.491Z",
+            "_id": "608eebd5c2d62600042e9589",
+            "title": "ባሕርና",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ባሕርና_song-1619979214756.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-555dca8cb05a-1619979218045-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ባሕርና",
+            "publishedAt": "2021-05-02T18:35:53.084Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:27:16.714Z",
+            "_id": "608eef04c2d62600042e958e",
+            "title": "ዓጋመ ዓደይ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ዓጋመ-ዓደይ_song-1619980028637.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-e4afa58fe412-1619980032664-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ዓጋመ-ዓደይ",
+            "publishedAt": "2021-05-02T18:35:18.050Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:16:03.738Z",
+            "_id": "608eec63c2d62600042e958a",
+            "title": "ትግራይ 'የ በሎም",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ትግራይ-'የ-በሎም-_song-1619979358645.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-e98718dd6d57-1619979361177-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ትግራይ-'የ-በሎም",
+            "publishedAt": "2021-05-02T18:34:55.447Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:16:43.933Z",
+            "_id": "608eec8bc2d62600042e958b",
+            "title": "ኣብ ቅድሚ ዓይነይ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ኣብ-ቅድሚ-ዓይነይ_song-1619979398800.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-e5e0d22d3507-1619979401690-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ኣብ-ቅድሚ-ዓይነይ",
+            "publishedAt": "2021-05-02T18:34:01.495Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T18:18:38.193Z",
+            "_id": "608eecfec2d62600042e958c",
+            "title": "ክኾለኩምዶ 'ታ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ክኮለኩም-ዶ'ታ_song-1619979512920.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-3e727976de68-1619979515415-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ክኾለኩምዶ-'ታ",
+            "publishedAt": "2021-05-02T18:33:19.795Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ብርሃነ",
+                "slug": "ብርሃነ",
+                "fullName": "ብርሃነ ታረቀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T17:57:03.677Z",
+            "_id": "608ee7efc2d62600042e9582",
+            "title": "ጎበዛይ",
+            "artist": "608cfbf895170b000414e277",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ጎበዛይ_song-1619978215682.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-3052c69fa96d-1619978218584-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ጎበዛይ",
+            "publishedAt": "2021-05-02T18:33:06.089Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:47:45.859Z",
+            "_id": "608d07a195170b000414e286",
+            "title": "ብደንጎላ ኮነሬል ማራኺ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ብደንጎላ-ኮነሬል-ማራኺ_song-1619855260555.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-3938a142df8f-1619855264148-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ብደንጎላ-ኮነሬል-ማራኺ",
+            "publishedAt": "2021-05-02T18:32:27.274Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ኣበበ",
+                "slug": "ኣበበ",
+                "fullName": "ኣበበ ኣርኣያ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T06:50:17.358Z",
+            "_id": "608cfa2995170b000414e275",
+            "title": "ቁረፅ በሎ",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ቁረፅ-በሎ_song-1619851809948.mp3",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ቁረፅ-በሎ",
+            "artist": "608cfc5995170b000414e279",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-7d70eb28be1c-1619853361021-art.jpeg",
+            "publishedAt": "2021-05-02T18:32:02.640Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ኢሳያስ",
+                "slug": "ኢሳያስ",
+                "fullName": "ኢሳያስ ኣረፋይነ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T06:47:33.477Z",
+            "_id": "608cf98595170b000414e272",
+            "title": "ይምርሽ ኣለኹ",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ይምርሽ-ኣለኹ_song-1619851651161.mp3",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ይምርሽ-ኣለኹ",
+            "artist": "608cfc3995170b000414e278",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-d75db63a6f24-1619853248394-art.jpeg",
+            "publishedAt": "2021-05-02T18:31:44.269Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:48:35.118Z",
+            "_id": "608d07d395170b000414e287",
+            "title": "ብዕራየ ብዕራየ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ብዕራየ-ብዕራየ_song-1619855310050.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-f38cafb3fecb-1619855312936-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ብዕራየ-ብዕራየ",
+            "publishedAt": "2021-05-02T18:31:21.828Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:46:56.795Z",
+            "_id": "608d077095170b000414e285",
+            "title": "ከላዕሎ ተጋድሎ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ከላዕሎ-ተጋድሎ_song-1619855211888.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-81e918ae9017-1619855215066-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ከላዕሎ-ተጋድሎ",
+            "publishedAt": "2021-05-02T18:31:07.704Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:18:33.777Z",
+            "_id": "608d00c995170b000414e281",
+            "title": "ደምኩም ዩ ቃል ኪዳንና",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ደምኩም-ዩ-ቃል-ኪዳንና_song-1619853508658.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-ba9bda5f7b86-1619853510721-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ደምኩም-ዩ-ቃል-ኪዳንና",
+            "publishedAt": "2021-05-02T18:30:56.172Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:49:42.466Z",
+            "_id": "608d081695170b000414e288",
+            "title": "ሸራሮ",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ሸራሮ_song-1619855378589.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-68314b60e10a-1619855380972-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ሸራሮ",
+            "artist": "608cfcc195170b000414e27c",
+            "publishedAt": "2021-05-02T18:30:46.254Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ስራጅ",
+                "slug": "ስራጅ",
+                "fullName": "ስራጅ ጃሃር"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T17:52:25.654Z",
+            "_id": "608ee6d9c2d62600042e9581",
+            "title": "ኣዶ ጅግንነተይ",
+            "artist": "608cfbd295170b000414e276",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ኣዶ-ጅግንነተይ_song-1619977941010.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-423e7b36dc4e-1619977943903-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ኣዶ-ጅግንነተይ",
+            "publishedAt": "2021-05-02T18:30:34.428Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:50:37.370Z",
+            "_id": "608d084d95170b000414e289",
+            "title": "ሚዘር ኣላ'ኮ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ሚዘር-ኣላ'ኮ_song-1619855432876.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-6f2641222dce-1619855435925-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ሚዘር-ኣላ'ኮ",
+            "publishedAt": "2021-05-02T18:30:10.622Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ኢሳያስ",
+                "slug": "ኢሳያስ",
+                "fullName": "ኢሳያስ ኣረፋይነ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T06:46:53.890Z",
+            "_id": "608cf95d95170b000414e271",
+            "title": "ድንቂ ሐራይ",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ድንቂ-ሐራይ_song-1619851611684.mp3",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ድንቂ-ሐራይ",
+            "artist": "608cfc3995170b000414e278",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-16cd1817501e-1619853204545-art.jpeg",
+            "publishedAt": "2021-05-02T18:29:49.804Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:23:24.474Z",
+            "_id": "608d01ec95170b000414e284",
+            "title": "ዓርሞሸሽ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ዓርሞሸሽ_song-1619853799610.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-dc8cc3767303-1619853802254-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ዓርሞሸሽ",
+            "publishedAt": "2021-05-02T18:29:32.466Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:22:06.275Z",
+            "_id": "608d019e95170b000414e283",
+            "title": "ዘበት ዩ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ዘበት-ዩ_song-1619853722828.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-30f16de80864-1619853725116-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ዘበት-ዩ",
+            "publishedAt": "2021-05-02T18:29:21.150Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:20:56.675Z",
+            "_id": "608d015895170b000414e282",
+            "title": "ዘይወዓልኩሉ ዘረባ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ዘይወዓልኩሉ-ዘረባ_song-1619853651202.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-24b5573d612e-1619853654558-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ዘይወዓልኩሉ-ዘረባ",
+            "publishedAt": "2021-05-02T18:29:13.428Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:51:48.932Z",
+            "_id": "608d089495170b000414e28a",
+            "title": "ሓደራ",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ሓደራ_song-1619855504141.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-98cba9d7ab0e-1619855506483-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ሓደራ",
+            "publishedAt": "2021-05-02T18:28:54.272Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "እያሱ",
+                "slug": "እያሱ",
+                "fullName": "እያሱ በርሀ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T07:53:13.620Z",
+            "_id": "608d08e995170b000414e28b",
+            "title": "ለካቲት አዴና",
+            "artist": "608cfcc195170b000414e27c",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ለካቲት-አዴና_song-1619855589451.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-7711478c6cb9-1619855591931-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ለካቲት-አዴና",
+            "publishedAt": "2021-05-02T18:28:46.422Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ኢሳያስ",
+                "slug": "ኢሳያስ",
+                "fullName": "ኢሳያስ ኣረፋይነ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T06:47:45.008Z",
+            "_id": "608cf99195170b000414e273",
+            "title": "እቲ ፋካሪ",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/እቲ-ፋካሪ_song-1619851662854.mp3",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "እቲ-ፋካሪ",
+            "artist": "608cfc3995170b000414e278",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-131e499b4b84-1619853298650-art.jpeg",
+            "publishedAt": "2021-05-02T18:28:34.217Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ኣበበ",
+                "slug": "ኣበበ",
+                "fullName": "ኣበበ ኣርኣያ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T17:40:27.736Z",
+            "_id": "608ee40bc2d62600042e957f",
+            "title": "ኣይርስዐኪን ዓደይ",
+            "artist": "608cfc5995170b000414e279",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ኣይርስዐኪን-ዓደይ_song-1619977222315.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-371abe6a9676-1619977225139-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ኣይርስዐኪን-ዓደይ",
+            "publishedAt": "2021-05-02T18:28:25.971Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ኣበበ",
+                "slug": "ኣበበ",
+                "fullName": "ኣበበ ኣርኣያ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-02T17:47:42.239Z",
+            "_id": "608ee5bec2d62600042e9580",
+            "title": "እምበር ተጋዳላይ",
+            "artist": "608cfc5995170b000414e279",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/እምበር-ተጋዳላይ_song-1619977657097.mp3",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-a6311cd81fe8-1619977659767-art.jpeg",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "እምበር-ተጋዳላይ",
+            "publishedAt": "2021-05-02T18:28:10.784Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ኢሳያስ",
+                "slug": "ኢሳያስ",
+                "fullName": "ኢሳያስ ኣረፋይነ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T06:48:31.862Z",
+            "_id": "608cf9bf95170b000414e274",
+            "title": "ብርሱን ወነይ ብሂገያ",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ብርሱን-ወነይ-ብሂገያ_song-1619851709377.mp3",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ብርሱን-ወነይ-ብሂገያ",
+            "artist": "608cfc3995170b000414e278",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-4973442bc045-1619853323349-art.jpeg",
+            "publishedAt": "2021-05-02T18:28:02.515Z"
+        },
+        {
+            "artistStatic": {
+                "stageName": "ኢሳያስ",
+                "slug": "ኢሳያስ",
+                "fullName": "ኢሳያስ ኣረፋይነ"
+            },
+            "featuredArtists": [],
+            "isPublished": true,
+            "createdAt": "2021-05-01T06:44:02.397Z",
+            "_id": "608cf8b295170b000414e270",
+            "title": "ገና ረመፅ ክትኮኖም እያ መሬትና",
+            "fileUrl": "https://storage.googleapis.com/gedli-tunes.appspot.com/songs/ገና-ረመፅ-ክትኮኖም-እያ-መሬትና_song-1619851439638.mp3",
+            "createdBy": "608959a050e0ea17cc8a4772",
+            "slug": "ገና-ረመፅ-ክትኮኖም-እያ-መሬትና",
+            "artist": "608cfc3995170b000414e278",
+            "coverArt": "https://storage.googleapis.com/gedli-tunes.appspot.com/images/listings/songs/cover-cf17e3ef47ec-1619853125892-art.jpeg",
+            "publishedAt": "2021-05-02T16:47:19.431Z"
+        }
+    ]
 };
 const Map<String, dynamic> MOCK_PLAYLISTS = {
   "success": true,

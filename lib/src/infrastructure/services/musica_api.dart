@@ -33,11 +33,14 @@ class MusicApiService implements Api {
 
   Future<dynamic> _getter(String url) async {
     Map<String, String> _header = {
-      "xca-header": "ja04tw4tn-0bswtwojq3409hsty090ze",
+      "xca-header": "ja04tw4tn-0bswtwojq0439hsty090ze",
     };
 
     try {
-      var response = await _client.get(Uri.parse(url), headers: _header);
+      var response = await _client.get(
+        Uri.parse(url),
+        headers: _header,
+      );
 
       final statusCode = response.statusCode;
       final String jsonBody = response.body;
@@ -132,8 +135,8 @@ class MusicApiService implements Api {
         '&' +
         ENDPOINT_SONG_FILTER;
 
-    // final parsedJson = await _getter(url);
-    final parsedJson = MOCK_SONGS["data"];
+    final parsedJson = await _getter(url);
+    // final parsedJson = MOCK_SONGS["data"];
     List<Song> data = [];
     // debugPrint(url);
     parsedJson.forEach((var item) {
@@ -169,8 +172,8 @@ class MusicApiService implements Api {
         '&' +
         ENDPOINT_ALBUM_FILTER;
 
-    // final parsedJson = await _getter(url);
-    final parsedJson = MOCK_ALBUMS["data"];
+    final parsedJson = await _getter(url);
+    // final parsedJson = MOCK_ALBUMS["data"];
     List<Album> data = [];
     // debugPrint(url);
     parsedJson.forEach((var item) {
@@ -311,8 +314,8 @@ class MusicApiService implements Api {
         '&' +
         ENDPOINT_ARTIST_FILTER;
 
-    // final parsedJson = await _getter(url);
-    final parsedJson = MOCK_ARTISTS["data"];
+    final parsedJson = await _getter(url);
+    // final parsedJson = MOCK_ARTISTS["data"];
     List<Artist> data = [];
     // debugPrint(url);
     parsedJson.forEach((var item) {
@@ -348,8 +351,8 @@ class MusicApiService implements Api {
         '&' +
         ENDPOINT_MUSIC_VIDEO_FILTER;
 
-    // final parsedJson = await _getter(url);
-    final parsedJson = MOCK_VIDEOS["data"];
+    final parsedJson = await _getter(url);
+    // final parsedJson = MOCK_VIDEOS["data"];
     List<MusicVideo> data = [];
     // debugPrint(url);
     parsedJson.forEach((var item) {
@@ -362,8 +365,8 @@ class MusicApiService implements Api {
   Future<List<Announcement>> fetchAnnouncements() async {
     String url = ENDPOINT_ANNOUNCEMENTS;
 
-    // final parsedJson = await _getter(url);
-    final parsedJson = MOCK_ADS["data"];
+    final parsedJson = await _getter(url);
+    // final parsedJson = MOCK_ADS["data"];
     List<Announcement> data = [];
     // debugPrint(url);
     parsedJson.forEach((var item) {

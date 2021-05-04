@@ -42,20 +42,20 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
         ),
         buildDiscoverAndSearch(),
         // buildSearchBar(),
-        Divider(color: TRANSPARENT),
-        AnnouncementCards(size: size),
+        // Divider(color: TRANSPARENT),
+        // AnnouncementCards(size: size),
         buildDivider(),
         buildDivider(),
         ThumbnailCards(
           ar: CustomAspectRatio.PLAYLIST,
           title: Language.locale(uiBloc.language, 'popular_playlists'),
         ),
-        buildDivider(),
-        buildDivider(),
-        ThumbnailCards(
-          ar: CustomAspectRatio.SONG,
-          title: Language.locale(uiBloc.language, 'popular_songs'),
-        ),
+        // buildDivider(),
+        // buildDivider(),
+        // ThumbnailCards(
+        //   ar: CustomAspectRatio.SONG,
+        //   title: Language.locale(uiBloc.language, 'popular_songs'),
+        // ),
         buildDivider(),
         buildDivider(),
         ThumbnailCards(
@@ -87,10 +87,13 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
             ),
           ),
           IconButton(
-              icon: Icon(Ionicons.search),
-              onPressed: () {
-                showSearch(context: context, delegate: SongSearch());
-              })
+            icon: Icon(Ionicons.search),
+            onPressed: () {
+              showSearch(
+                  context: context,
+                  delegate: SongSearch(CustomAspectRatio.SONG));
+            },
+          ),
         ],
       ),
     );
@@ -99,7 +102,8 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
   Widget buildSearchBar() {
     return InkWell(
       onTap: () {
-        showSearch(context: context, delegate: SongSearch());
+        showSearch(
+            context: context, delegate: SongSearch(CustomAspectRatio.SONG));
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

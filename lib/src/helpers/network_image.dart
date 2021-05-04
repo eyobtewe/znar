@@ -32,40 +32,21 @@ class CachedPicture extends StatelessWidget {
                 ),
         );
       },
-      // progressIndicatorBuilder: (BuildContext ctx, String imageUrl, progress) {
-      //   return buildContainer(true);
-      // },
-      // placeholder: (BuildContext ctx, String imageUrl) {
-      //   return buildContainer(true);
-      // },
       errorWidget: (BuildContext context, String url, dynamic error) {
         return Opacity(
-          opacity: 0.03,
-          child: SvgPicture.asset(
-            'assets/images/grey-iaam.svg',
-            fit: BoxFit.contain,
-            width: 150,
+          opacity: 0.4,
+          child: Container(
+            width: 95,
+            height: 95,
+            decoration: BoxDecoration(
+              color: GRAY,
+              image: DecorationImage(
+                image: AssetImage('assets/images/logo_y.png'),
+              ),
+            ),
           ),
         );
       },
-    );
-  }
-
-  Container buildContainer(bool b) {
-    return Container(
-      constraints: BoxConstraints(
-        maxWidth: 130,
-        maxHeight: 130,
-      ),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.contain,
-          colorFilter:
-              ColorFilter.mode(b ? CANVAS_BLACK : BACKGROUND, BlendMode.darken),
-          image: AssetImage('assets/images/temp_logo.png'),
-        ),
-        // color: BACKGROUND,
-      ),
     );
   }
 }

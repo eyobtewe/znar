@@ -39,6 +39,8 @@ class SongThumbnail extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
+        height: 150,
+        width: 150,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -53,6 +55,7 @@ class SongThumbnail extends StatelessWidget {
                       child: CachedPicture(
                         image: song[i].coverArt,
                         // isBackground: true,
+                        // boxFit: BoxFit.contain,
                       ),
                     ),
                   ),
@@ -63,7 +66,11 @@ class SongThumbnail extends StatelessWidget {
             ),
             Divider(color: TRANSPARENT, height: 5),
             MusicTitle(
-                title: song[i].artistStatic?.stageName ?? '',
+                title: song[i].artistStatic.fullName,
+                // !=
+                //         song[i].artistStatic.firstName
+                //     ? song[i].artistStatic.stageName
+                //     : song[i].artistStatic.fullName,
                 lines: 1,
                 fontSize: 12,
                 color: GRAY),

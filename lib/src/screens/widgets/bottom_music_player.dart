@@ -14,17 +14,6 @@ class BottomScreenPlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     final PlayerBloc playerBloc = PlayerProvider.of(context);
 
-    // if (playerBloc.audioPlayer.isPlaying.value == null) {
-    // if (playerBloc.audioPlayer.isPlaying.valueWrapper.value == null) {
-    //   return Container(height: 0);
-    // } else {
-    // return playerBloc.audioPlayer.builderPlayerState(
-    //   builder: (BuildContext ctx, PlayerState r) {
-    //     debugPrint(r.toString());
-
-    // return (r == null || r == Duration.zero)
-    //     ? Container(height: 0)
-    // :
     return StreamBuilder(
         stream: playerBloc.audioPlayer.playerState,
         builder: (BuildContext context, AsyncSnapshot<PlayerState> snapshot) {
@@ -38,9 +27,6 @@ class BottomScreenPlayer extends StatelessWidget {
             }
           }
         });
-    // },
-    // );
-    // }
   }
 
   Widget buildDismissible(BuildContext context, PlayerBloc playerBloc) {

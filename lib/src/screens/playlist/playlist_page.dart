@@ -82,7 +82,9 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
         IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              showSearch(context: context, delegate: SongSearch());
+              showSearch(
+                  context: context,
+                  delegate: SongSearch(CustomAspectRatio.PLAYLIST));
               // Navigator.pushNamed(context, SEARCH_PLAYLISTS_PAGE_ROUTE);
             }),
       ],
@@ -119,9 +121,9 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
     );
   }
 
-  Container buildContainer(ApiBloc bloc, Playlist playlist) {
+  Container buildContainer(ApiBloc bloc, List<Song> songs) {
     return Container(
-      height: 120,
+      height: 200,
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         // key: PageStorageKey('$ar'),
@@ -130,11 +132,11 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
         itemBuilder: (BuildContext context, int i) {
           return HomeCards(
             ar: CustomAspectRatio.SONG,
-            data: bloc.buildInitialData(CustomAspectRatio.SONG),
+            data: songs,
             i: i,
           );
         },
-        itemCount: bloc.buildInitialData(CustomAspectRatio.SONG).length,
+        itemCount: songs.length > 4 ? 4 : songs.length,
       ),
     );
   }
@@ -146,16 +148,28 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
           delegate: SliverChildBuilderDelegate(
             (BuildContext ctx, int k) {
               return Container(
-                height: 200,
+                // height: 200,
                 width: size.width,
-                child: Column(
-                  children: [
-                    Divider(color: TRANSPARENT),
-                    buildPlaylistTitle(playlists[k]),
-                    Divider(color: TRANSPARENT),
-                    buildContainer(bloc, playlists[k]),
-                  ],
-                ),
+                child: FutureBuilder(
+                    future: bloc.fetchPlaylistSong(playlists[k].sId),
+                    initialData: bloc.playlistSongs[playlists[k].sId],
+                    builder:
+                        (BuildContext ctx, AsyncSnapshot<List<Song>> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Container();
+                      } else {
+                        return Column(
+                          children: [
+                            Divider(color: TRANSPARENT),
+                            buildPlaylistTitle(playlists[k],
+                                bloc.playlistSongs[playlists[k].sId]),
+                            Divider(color: TRANSPARENT),
+                            buildContainer(
+                                bloc, bloc.playlistSongs[playlists[k].sId]),
+                          ],
+                        );
+                      }
+                    }),
               );
             },
             childCount: playlists.length,
@@ -177,7 +191,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
     // );
   }
 
-  Container buildPlaylistTitle(Playlist playlist) {
+  Container buildPlaylistTitle(Playlist playlist, List<Song> songs) {
     return Container(
       width: double.maxFinite,
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -194,21 +208,23 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
               ),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext ctx) =>
-                      PlaylistDetailScreen(playlist: playlist),
+          songs.length < 5
+              ? Container()
+              : TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext ctx) =>
+                            PlaylistDetailScreen(playlist: playlist),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    Language.locale(uiBloc.language, 'more'),
+                    style: const TextStyle(color: PRIMARY_COLOR),
+                  ),
                 ),
-              );
-            },
-            child: Text(
-              Language.locale(uiBloc.language, 'view_all'),
-              style: const TextStyle(color: PRIMARY_COLOR),
-            ),
-          ),
         ],
       ),
     );

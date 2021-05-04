@@ -9,6 +9,9 @@ import '../screens.dart';
 import '../widgets/widgets.dart';
 
 class SearchPage extends StatefulWidget {
+  final CustomAspectRatio ar;
+
+  const SearchPage({Key key, this.ar}) : super(key: key);
   @override
   _SearchPageState createState() => _SearchPageState();
 }
@@ -20,17 +23,22 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         actions: [
           IconButton(
-              icon: Icon(Ionicons.search, color: PRIMARY_COLOR),
-              onPressed: () {
-                showSearch(context: context, delegate: SongSearch());
-              })
+            icon: Icon(Ionicons.search, color: PRIMARY_COLOR),
+            onPressed: () {
+              showSearch(context: context, delegate: SongSearch(widget.ar));
+            },
+          ),
         ],
       ),
     );
   }
 }
 
-class SongSearch extends SearchDelegate<Song> {
+class SongSearch extends SearchDelegate<dynamic> {
+  final CustomAspectRatio ar;
+
+  SongSearch(this.ar);
+
   @override
   ThemeData appBarTheme(BuildContext context) {
     assert(context != null);
@@ -113,7 +121,9 @@ class SongSearch extends SearchDelegate<Song> {
 
   FutureBuilder<List<Song>> buildFutureBuilder(ApiBloc bloc) {
     return FutureBuilder(
-      future: bloc.searchSongs(query),
+      future: ar == CustomAspectRatio.SONG
+          ? bloc.searchSongs(query)
+          : bloc.searchPlayLists(query),
       builder: (BuildContext context, AsyncSnapshot<List<Song>> snapshot) {
         if (!snapshot.hasData) {
           return CustomLoader();

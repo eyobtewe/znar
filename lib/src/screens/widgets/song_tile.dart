@@ -40,6 +40,7 @@ class SongTile extends StatelessWidget {
           child: Row(
             children: [
               Container(
+                width: 60,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: CachedPicture(image: songs[index].coverArt ?? ''),
@@ -53,7 +54,12 @@ class SongTile extends StatelessWidget {
                   buildSongTitle(size),
                   Text(
                     songs[index].runtimeType == Song
-                        ? songs[index].artistStatic?.stageName ?? ''
+                        ?
+                        // songs[index].artistStatic?.stageName ==
+                        //         songs[index].artistStatic?.firstName
+                        //     ? songs[index].artistStatic.fullName
+                        //     : songs[index].artistStatic.stageName
+                        songs[index].artistStatic?.fullName ?? ''
                         : songs[index].artist ?? '',
                     style: const TextStyle(color: GRAY, fontFamilyFallback: f),
                   ),
@@ -105,7 +111,7 @@ class SongTile extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           fontFamilyFallback: f,
-          fontWeight: FontWeight.bold,
+          // fontWeight: FontWeight.bold,
         ),
       ),
     );

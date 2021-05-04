@@ -85,13 +85,19 @@ class PlayerBloc {
       songs.forEach((e) {
         String urle = e.fileUrl;
         String url = urle.replaceAll(RegExp(r' '), '%20');
-
+        // debugPrint('\n\n${e.artistStatic?.stageName}\n\n');
+        // debugPrint('\n\n$url\n\n');
+        // debugPrint('\n\n${e.artistStatic?.firstName}\n\n');
         Audio _song = Audio.network(
           url,
           metas: Metas(
             title: e.title ?? '',
             album: e.albumStatic?.name ?? '',
-            artist: e.artistStatic?.stageName ?? '',
+            artist:
+                // e.artistStatic.stageName != e.artistStatic.firstName
+                // ? e.artistStatic.stageName
+                // :
+                e.artistStatic.fullName,
             image: MetasImage.network(e.coverArt ?? ''),
             id: e.sId,
             extra: {'image': null},
