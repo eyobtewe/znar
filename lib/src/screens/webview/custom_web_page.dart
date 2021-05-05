@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../core/colors.dart';
 import '../../domain/models/models.dart';
@@ -24,12 +23,11 @@ class _CustomWebPageState extends State<CustomWebPage> {
   }
 
   void showToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      backgroundColor: BACKGROUND,
-      textColor: PURE_WHITE,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.BOTTOM,
+    ScaffoldMessengerState().showSnackBar(
+      SnackBar(
+        backgroundColor: BLUE,
+        content: Text(message),
+      ),
     );
   }
 

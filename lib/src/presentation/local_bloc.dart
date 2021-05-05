@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../core/core.dart';
 import '../domain/models/models.dart';
 import '../infrastructure/services/download_manager.dart';
 import '../infrastructure/services/services.dart';
@@ -162,15 +160,16 @@ class LocalSongsBloc {
     final permissionStatus = await Permission.storage.request();
 
     if (!permissionStatus.isGranted) {
-      Fluttertoast.showToast(
-        msg: 'Please give permission',
-        backgroundColor: BLUE,
+      ScaffoldMessengerState().showSnackBar(
+        SnackBar(
+          content: Text('Please give permission'),
+        ),
       );
     }
     return permissionStatus.isGranted;
   }
 
   void killDownloader() {
-    down.kill();
+    // down.kill();
   }
 }

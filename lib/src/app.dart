@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'core/core.dart';
 import 'presentation/bloc.dart';
-import 'screens/search/search.dart';
 
 // final FirebaseAnalytics kAnalytics = FirebaseAnalytics();
 // final FirebaseAnalyticsObserver _observer = FirebaseAnalyticsObserver(analytics: kAnalytics);

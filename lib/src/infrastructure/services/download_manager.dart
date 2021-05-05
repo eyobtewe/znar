@@ -1,17 +1,15 @@
 import 'dart:io';
 
 import 'package:dart_tags/dart_tags.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:path_provider/path_provider.dart';
 
-import '../../core/core.dart';
 import '../../domain/models/models.dart';
 
 class DownloadsManager {
-  CancelToken cancelToken = CancelToken();
-  Dio dio = Dio();
+  // CancelToken cancelToken = CancelToken();
+  // Dio dio = Dio();
   Directory externalDirectory;
 
   Future<String> downloadMusic(
@@ -22,27 +20,34 @@ class DownloadsManager {
     await setDirectory(platform);
 
     // Directory dir = Directory(externalDirectory.path);
-    Directory dir = Directory(externalDirectory.path + '/.musica');
+    Directory dir = Directory(externalDirectory.path + '/.znar');
     if (!dir.existsSync()) {
       dir.createSync();
     }
 
-    if (cancelToken.isCancelled) {
-      cancelToken = CancelToken();
-    }
+    // if (cancelToken.isCancelled) {
+    //   cancelToken = CancelToken();
+    // }
 
     try {
-      final id = await dio.download(
-        song.fileUrl,
-        dir.path + '/' + song.sId + '.mp3',
-        onReceiveProgress: onReceiveProgress,
-        cancelToken: cancelToken,
-      );
-
-      if (id.statusMessage == 'OK') {
-        showToast('Downloaded successfully');
-      }
-      return id.statusMessage;
+      // final id = await FlutterDownloader.enqueue(
+      //   url: song.fileUrl,
+      //   savedDir: dir.path,
+      //   showNotification: true,
+      //   openFileFromNotification: true,
+      //   fileName: song.title,
+      // );
+      // final id = await dio.download(
+      //   song.fileUrl,
+      //   dir.path + '/' + song.sId + '.mp3',
+      //   onReceiveProgress: onReceiveProgress,
+      //   cancelToken: cancelToken,
+      // );
+      // return id;
+      // if (id.statusMessage == 'OK') {
+      //   showToast('Downloaded successfully');
+      // }
+      // return id.statusMessage;
     } catch (e) {
       return null;
     }
@@ -52,7 +57,7 @@ class DownloadsManager {
     await setDirectory(platform);
 
     // final Directory directory = Directory(externalDirectory.path);
-    final Directory directory = Directory(externalDirectory.path + '/.musica');
+    final Directory directory = Directory(externalDirectory.path + '/.znar');
     if (!directory.existsSync()) {
       directory.createSync();
     }
@@ -98,8 +103,7 @@ class DownloadsManager {
   void deleteDownload(List<DownloadedSong> songs) {
     if (songs.isEmpty) {
       // final Directory directory = Directory(externalDirectory.path);
-      final Directory directory =
-          Directory(externalDirectory.path + '/.musica');
+      final Directory directory = Directory(externalDirectory.path + '/.znar');
       directory.deleteSync(recursive: true);
     } else {
       songs.forEach((element) {
@@ -109,15 +113,15 @@ class DownloadsManager {
     }
   }
 
-  void kill() {
-    cancelToken.cancel();
-  }
+  // void kill() {
+  //   cancelToken.cancel();
+  // }
 }
 
 Future showToast(String message) async {
-  await Fluttertoast.showToast(
-    msg: message,
-    backgroundColor: PURE_WHITE,
-    textColor: BACKGROUND,
+  ScaffoldMessengerState().showSnackBar(
+    SnackBar(
+      content: Text(message),
+    ),
   );
 }

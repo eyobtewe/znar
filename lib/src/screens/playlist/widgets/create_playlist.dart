@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:uuid/uuid.dart';
 
@@ -71,24 +70,40 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
             featureImage: '',
           );
           int data = await bloc.savePlaylist(playlist);
-          Fluttertoast.showToast(
-            msg: Language.locale(
-                uiBloc.language,
-                data == null
-                    ? 'create_playlist_failed'
-                    : 'create_playlist_success'),
-            backgroundColor: PURE_WHITE,
-            textColor: BACKGROUND,
+          ScaffoldMessengerState().showSnackBar(
+            SnackBar(
+              content: Text(
+                Language.locale(
+                    uiBloc.language,
+                    data == null
+                        ? 'create_playlist_failed'
+                        : 'create_playlist_success'),
+              ),
+            ),
           );
+          // Scaffold.of(context).showSnackBar(snackbar);
+          // Fluttertoast.showToast(
+          //   msg: Language.locale(
+          //       uiBloc.language,
+          //       data == null
+          //           ? 'create_playlist_failed'
+          //           : 'create_playlist_success'),
+          //   backgroundColor: PURE_WHITE,
+          //   textColor: BACKGROUND,
+          // );
           if (widget.song != null && data != null) {
             int songAddedOrNot =
                 await bloc.addSongToPlaylist(widget.song, playlist);
-            Fluttertoast.showToast(
-              msg: songAddedOrNot != null
-                  ? Language.locale(uiBloc.language, 'song_added')
-                  : Language.locale(uiBloc.language, 'failed_song_added'),
-              backgroundColor: PURE_WHITE,
-              textColor: BACKGROUND,
+
+            ScaffoldMessengerState().showSnackBar(
+              SnackBar(
+                backgroundColor: BLUE,
+                content: Text(
+                  songAddedOrNot != null
+                      ? Language.locale(uiBloc.language, 'song_added')
+                      : Language.locale(uiBloc.language, 'failed_song_added'),
+                ),
+              ),
             );
           }
           if (data != null) {

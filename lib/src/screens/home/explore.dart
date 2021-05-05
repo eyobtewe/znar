@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:znar/src/screens/search/search.dart';
 
 import '../../core/core.dart';
 import '../../presentation/bloc.dart';
+import '../search/search.dart';
 import 'widgets/widgets.dart';
 
 class ExplorerScreen extends StatefulWidget {

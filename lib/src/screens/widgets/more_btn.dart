@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -327,13 +326,17 @@ class _MoreBtnState extends State<MoreBtn> {
                         int b = await bloc.addSongToPlaylist(
                             widget.songs[widget.index], playlistList[index]);
                         Navigator.pop(context);
-                        Fluttertoast.showToast(
-                          msg: b != null
-                              ? Language.locale(uiBloc.language, 'song_added')
-                              : Language.locale(
-                                  uiBloc.language, 'failed_song_added'),
-                          backgroundColor: PURE_WHITE,
-                          textColor: BACKGROUND,
+                        ScaffoldMessengerState().showSnackBar(
+                          SnackBar(
+                            backgroundColor: BLUE,
+                            content: Text(
+                              b != null
+                                  ? Language.locale(
+                                      uiBloc.language, 'song_added')
+                                  : Language.locale(
+                                      uiBloc.language, 'failed_song_added'),
+                            ),
+                          ),
                         );
                       },
                     );

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:znar/src/screens/home/widgets/widgets.dart';
-import 'package:znar/src/screens/screens.dart';
-import 'package:znar/src/screens/search/search.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../presentation/bloc.dart';
+import '../home/widgets/widgets.dart';
+import '../screens.dart';
+import '../search/search.dart';
 import '../widgets/widgets.dart';
 
 class PlaylistsScreen extends StatefulWidget {

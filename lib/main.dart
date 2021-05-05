@@ -6,6 +6,10 @@ import 'src/core/core.dart';
 
 _initializeFlutterDownloader() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await FlutterDownloader.initialize(
+  //   debug: true,
+  //   // optional: set false to disable printing logs to console
+  // );
   // await Firebase.initializeApp();
 }
 

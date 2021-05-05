@@ -5,7 +5,6 @@ import 'package:http/http.dart' show Client;
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../abstracts/api.dart';
-import 'dummy_data.dart';
 
 class MusicApiService implements Api {
   Client _client = Client();

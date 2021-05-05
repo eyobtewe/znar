@@ -2,8 +2,10 @@ import 'dart:ui';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
+import '../../infrastructure/services/download_manager.dart';
 import '../../presentation/bloc.dart';
 import '../home/explore.dart';
 import '../widgets/widgets.dart';
@@ -61,9 +63,18 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     return AppBar(
       backgroundColor: BACKGROUND.withOpacity(0),
       elevation: 0,
-      // actions: (widget.isLocal || widget.isDownloaded)
-      //     ? [Container()]
-      //     : buildShareButton(),
+      actions: (widget.isLocal || widget.isDownloaded)
+          ? [Container()]
+          : [
+              IconButton(
+                icon: Icon(Ionicons.download),
+                onPressed: () async {
+                  DownloadsManager downloader = DownloadsManager();
+                  await downloader.downloadMusic(
+                      TargetPlatform.iOS, widget.songs[widget.i]);
+                },
+              )
+            ],
     );
   }
 

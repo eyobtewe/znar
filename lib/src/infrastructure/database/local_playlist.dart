@@ -1,4 +1,4 @@
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sembast/sembast.dart';
 
@@ -223,9 +223,13 @@ class LocalPlaylist implements LocalStorage {
     final permissionStatus = await Permission.storage.request();
 
     if (!permissionStatus.isGranted) {
-      Fluttertoast.showToast(
-        msg: 'Please give permission',
-        backgroundColor: BLUE,
+      ScaffoldMessengerState().showSnackBar(
+        SnackBar(
+          backgroundColor: BLUE,
+          content: Text(
+            'Please give permission',
+          ),
+        ),
       );
     }
     return permissionStatus.isGranted;

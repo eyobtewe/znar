@@ -51,23 +51,23 @@ Route onGeneratedRoute(RouteSettings settings) {
     case ALBUMS_PAGE_ROUTE:
       return _route(AlbumScreen());
     case SEARCH_MUSIC_VIDEOS_PAGE_ROUTE:
-      return _route(SearchMusicVideoScreen());
+
     case SEARCH_SONGS_PAGE_ROUTE:
-      return _route(SearchSongScreen());
+
     case SEARCH_LOCAL_SONGS_PAGE_ROUTE:
-      return _route(SearchSongScreen(isLocal: true));
+
     case SEARCH_PLAYLISTS_PAGE_ROUTE:
-      return _route(SearchPlaylistScreen());
+
     case SEARCH_ALBUMS_PAGE_ROUTE:
-      return _route(SearchAlbumScreen(isLocal: false));
+
     case SEARCH_LOCAL_ALBUMS_PAGE_ROUTE:
-      return _route(SearchAlbumScreen(isLocal: true));
+
     case SEARCH_ARTISTS_PAGE_ROUTE:
-      return _route(SearchArtistScreen(isLocal: false));
+
     case SEARCH_LOCAL_ARTISTS_PAGE_ROUTE:
-      return _route(SearchArtistScreen(isLocal: true));
+
     case SEARCH_HOME_PAGE_ROUTE:
-      return _route(SearchHomeScreen());
+
     case ARTISTS_PAGE_ROUTE:
       return _route(ArtistScreen());
     case ANNOUNCEMENTS_PAGE_ROUTE:
