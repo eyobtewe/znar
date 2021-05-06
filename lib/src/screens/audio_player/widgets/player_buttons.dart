@@ -127,8 +127,11 @@ class PlayerButtons extends StatelessWidget {
     return playerBloc.audioPlayer.builderPlayerState(
       builder: (BuildContext _, PlayerState playerState) {
         return (playerBloc?.audioPlayer?.realtimePlayingInfos?.valueWrapper
-                    ?.value?.playingPercent ==
-                null)
+                        ?.value?.playingPercent ==
+                    null ||
+                playerBloc?.audioPlayer?.realtimePlayingInfos?.valueWrapper
+                        ?.value?.duration ==
+                    Duration.zero)
             ? buildBuffering()
             : IconButton(
                 color: PRIMARY_COLOR,
@@ -161,7 +164,7 @@ class PlayerButtons extends StatelessWidget {
             size: 40,
             customColors: CustomSliderColors(
                 trackColor: LINK,
-                dotColor: PURE_WHITE,
+                dotColor: GRAY,
                 progressBarColors: [
                   PURPLE,
                   BLUE,

@@ -113,9 +113,17 @@ class ThumbnailCards extends StatelessWidget {
       onPressed: () {
         Navigator.pushNamed(context, _routePage(ar));
       },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(PRIMARY_COLOR),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
+        ),
+      ),
       child: Text(
         Language.locale(uiBloc.language, 'view_all'),
-        style: const TextStyle(color: PRIMARY_COLOR),
+        style: const TextStyle(color: BACKGROUND),
       ),
     );
   }
@@ -132,6 +140,7 @@ class ThumbnailCards extends StatelessWidget {
             child: Text(
               '$title',
               style: TextStyle(
+                color: GRAY,
                 fontWeight: FontWeight.w800,
                 fontSize: ScreenUtil().setSp(18),
                 fontFamilyFallback: f,

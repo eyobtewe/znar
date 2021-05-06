@@ -36,14 +36,14 @@ class ArtistThumbnail extends StatelessWidget {
                     height: size.width * 0.2,
                     width: size.width * 0.2,
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(500),
+                        borderRadius: BorderRadius.circular(5),
                         child: artist.runtimeType == Artist
                             ? CachedPicture(image: artist.photo ?? '')
                             : CustomFileImage(img: artist.artistArtPath)),
                   ),
             MusicTitle(
               title: artist.runtimeType == Artist
-                  ? artist.stageName ?? ''
+                  ? artist.fullName ?? ''
                   : artist.name,
               lines: 2,
               alignment: Alignment.center,

@@ -35,6 +35,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
     return DefaultTabController(
       length: 1,
       child: Scaffold(
+        bottomNavigationBar: BottomNavBar(currentIndex: 2),
         // bottomNavigationBar: widget.isHome ? null : BottomScreenPlayer(),
         appBar: widget.isHome ? null : buildAppBar(),
         body: buildBody(),

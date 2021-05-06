@@ -4,7 +4,7 @@ import '../helpers/custom_route.dart';
 import 'colors.dart';
 
 final ThemeData kDarkTheme = ThemeData(
-  fontFamily: 'Montserrat',
+  fontFamily: 'AvenirNext',
   brightness: Brightness.dark,
   scaffoldBackgroundColor: BACKGROUND,
   cardColor: BACKGROUND,
@@ -16,7 +16,7 @@ final ThemeData kDarkTheme = ThemeData(
 final ThemeData kLightTheme = ThemeData(
   // pageTransitionsTheme: pageTransitionsTheme(),s
   primaryColor: BACKGROUND,
-  fontFamily: 'Montserrat',
+  fontFamily: 'AvenirNext',
   accentColor: PRIMARY_COLOR,
   appBarTheme: AppBarTheme(
     color: BLUE,
@@ -34,8 +34,5 @@ PageTransitionsTheme pageTransitionsTheme() {
 }
 
 const List<String> f = [
-  'Wo', //*
-  'Hi', //*
-  'Ji', //*-
-  'Ab', //*-
+  'Kf',
 ];

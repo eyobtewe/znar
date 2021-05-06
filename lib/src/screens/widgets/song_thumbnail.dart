@@ -72,7 +72,7 @@ class SongThumbnail extends StatelessWidget {
                 //     ? song[i].artistStatic.stageName
                 //     : song[i].artistStatic.fullName,
                 lines: 1,
-                fontSize: 12,
+                fontSize: 10,
                 color: GRAY),
           ],
         ),

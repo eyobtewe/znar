@@ -142,6 +142,8 @@ class MusicApiService implements Api {
       data.add(Song.fromJson(item));
     });
 
+    data.shuffle();
+
     return data;
   }
 

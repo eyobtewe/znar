@@ -63,18 +63,18 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     return AppBar(
       backgroundColor: BACKGROUND.withOpacity(0),
       elevation: 0,
-      actions: (widget.isLocal || widget.isDownloaded)
-          ? [Container()]
-          : [
-              IconButton(
-                icon: Icon(Ionicons.download),
-                onPressed: () async {
-                  DownloadsManager downloader = DownloadsManager();
-                  await downloader.downloadMusic(
-                      TargetPlatform.iOS, widget.songs[widget.i]);
-                },
-              )
-            ],
+      // actions: (widget.isLocal || widget.isDownloaded)
+      //     ? [Container()]
+      //     : [
+      //         IconButton(
+      //           icon: Icon(Ionicons.download),
+      //           onPressed: () async {
+      //             DownloadsManager downloader = DownloadsManager();
+      //             await downloader.downloadMusic(
+      //                 TargetPlatform.iOS, widget.songs[widget.i]);
+      //           },
+      //         )
+      //       ],
     );
   }
 

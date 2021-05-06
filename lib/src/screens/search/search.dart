@@ -10,8 +10,9 @@ import '../widgets/widgets.dart';
 
 class SearchPage extends StatefulWidget {
   final CustomAspectRatio ar;
+  final trigger;
 
-  const SearchPage({Key key, this.ar}) : super(key: key);
+  const SearchPage({Key key, this.ar, this.trigger = false}) : super(key: key);
   @override
   _SearchPageState createState() => _SearchPageState();
 }
@@ -19,7 +20,11 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
+    if (widget.trigger) {
+      showSearch(context: context, delegate: SongSearch(widget.ar));
+    }
     return Scaffold(
+      bottomNavigationBar: BottomNavBar(currentIndex: 0),
       appBar: AppBar(
         actions: [
           IconButton(

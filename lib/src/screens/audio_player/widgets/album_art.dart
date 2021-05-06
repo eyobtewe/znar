@@ -56,9 +56,11 @@ class AlbumArt extends StatelessWidget {
       index: currentIndex,
       viewportFraction: 0.7,
       scale: 0.75,
+      physics: NeverScrollableScrollPhysics(),
       onIndexChanged: (int i) async {
-        await playerBloc.audioPlayer.playlistPlayAtIndex(i);
+        // await playerBloc.audioPlayer.playlistPlayAtIndex(i);
       },
+      autoplay: false,
       autoplayDisableOnInteraction: false,
       itemBuilder: (BuildContext context, int index) =>
           buildInkWell(context, playlist, index),
@@ -70,7 +72,7 @@ class AlbumArt extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Container(
         // width: size.width,
-        color: GRAY,
+        color: PURE_BLACK,
         child: CachedPicture(
           image: playlist[index].metas.image.path,
           boxFit: BoxFit.cover,

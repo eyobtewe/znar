@@ -110,7 +110,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       label: Text(
                         langs[index],
                         style: const TextStyle(
-                          color: PURE_WHITE,
+                          color: GRAY,
                           fontFamilyFallback: f,
                         ),
                       ),

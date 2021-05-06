@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
@@ -18,7 +19,9 @@ class SongTile extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final PlayerBloc playerBloc = PlayerProvider.of(context);
+
     final size = MediaQuery.of(context).size;
+    ScreenUtil.init(context, designSize: size);
 
     return InkWell(
       onTap: !clickable
@@ -31,7 +34,7 @@ class SongTile extends StatelessWidget {
         color: playerBloc.audioPlayer.current.valueWrapper?.value?.audio?.audio
                     ?.metas?.id ==
                 songs[index].sId
-            ? CANVAS_BLACK
+            ? PURE_BLACK
             : BACKGROUND,
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -50,7 +53,7 @@ class SongTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  buildSongTitle(size),
+                  buildSongTitle(size, playerBloc),
                   Text(
                     songs[index].runtimeType == Song
                         ?
@@ -60,7 +63,17 @@ class SongTile extends StatelessWidget {
                         //     : songs[index].artistStatic.stageName
                         songs[index].artistStatic?.fullName ?? ''
                         : songs[index].artist ?? '',
-                    style: const TextStyle(color: GRAY, fontFamilyFallback: f),
+                    style: TextStyle(
+                      // color: GRAY,
+                      color: playerBloc.audioPlayer.current.valueWrapper?.value
+                                  ?.audio?.audio?.metas?.id ==
+                              songs[index].sId
+                          ? PRIMARY_COLOR
+                          : GRAY,
+
+                      fontFamilyFallback: f,
+                      fontSize: ScreenUtil().setSp(10),
+                    ),
                   ),
                 ],
               ),
@@ -101,7 +114,7 @@ class SongTile extends StatelessWidget {
     );
   }
 
-  Container buildSongTitle(Size size) {
+  Container buildSongTitle(Size size, PlayerBloc playerBloc) {
     return Container(
       width: size.width - 140,
       child: Text(
@@ -109,8 +122,14 @@ class SongTile extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
+          color: playerBloc.audioPlayer.current.valueWrapper?.value?.audio
+                      ?.audio?.metas?.id ==
+                  songs[index].sId
+              ? PRIMARY_COLOR
+              : GRAY,
           fontFamilyFallback: f,
-          // fontWeight: FontWeight.bold,
+          fontSize: ScreenUtil().setSp(12),
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

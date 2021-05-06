@@ -79,37 +79,77 @@ flutter:
     # - assets/audios/
   #   - images/a_dot_ham.jpeg
   fonts:
-    - family: Montserrat
+    # - family: Montserrat
+    #   fonts:
+    #     - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
+    #     - asset: assets/fonts/Montserrat/Montserrat-Thin.ttf
+    #       weight: 100
+    #     - asset: assets/fonts/Montserrat/Montserrat-ExtraLight.ttf
+    #       weight: 200
+    #     - asset: assets/fonts/Montserrat/Montserrat-Light.ttf
+    #       weight: 300
+    #     - asset: assets/fonts/Montserrat/Montserrat-Medium.ttf
+    #       weight: 500
+    #     - asset: assets/fonts/Montserrat/Montserrat-SemiBold.ttf
+    #       weight: 600
+    #     - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
+    #       weight: 700
+    #     - asset: assets/fonts/Montserrat/Montserrat-ExtraBold.ttf
+    #       weight: 800
+    #     - asset: assets/fonts/Montserrat/Montserrat-Black.ttf
+    #       weight: 900
+    # - family: Ab
+    #   fonts:
+    #     - asset: assets/fonts/AbyssinicaSIL-R.ttf
+    - family: Kf
       fonts:
-        - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
-        - asset: assets/fonts/Montserrat/Montserrat-Thin.ttf
+        - asset: assets/fonts/Kefa.ttc
+    # - family: Hi
+    #   fonts:
+    #     - asset: assets/fonts/hiwua.ttf
+    # - family: Ji
+    #   fonts:
+    #     - asset: assets/fonts/jiret.ttf
+    # - family: Wo
+    #   fonts:
+    #     - asset: assets/fonts/wookianos.ttf
+    # - family: HN
+    #   fonts:
+    #     - asset: assets/fonts/HelveticaNeue.ttc
+    # - family: AN
+    #   fonts:
+    #     - asset: assets/fonts/AvenirNext/Metropolis-Regular.otf
+    #     - asset: assets/fonts/AvenirNext/Metropolis-Bold.otf
+    #       weight: 700
+    #     - asset: assets/fonts/AvenirNext/Metropolis-ExtraBold.otf
+    #       weight: 800
+    #     - asset: assets/fonts/AvenirNext/Metropolis-Black.otf
+    #       weight: 900
+    - family: AvenirNext
+      fonts:
+        - asset: assets/fonts/AvenirNext/Metropolis-Regular.otf
+        - asset: assets/fonts/AvenirNext/Metropolis-Thin.otf
           weight: 100
-        - asset: assets/fonts/Montserrat/Montserrat-ExtraLight.ttf
+        - asset: assets/fonts/AvenirNext/Metropolis-ExtraLight.otf
           weight: 200
-        - asset: assets/fonts/Montserrat/Montserrat-Light.ttf
+        - asset: assets/fonts/AvenirNext/Metropolis-Light.otf
           weight: 300
-        - asset: assets/fonts/Montserrat/Montserrat-Medium.ttf
+        - asset: assets/fonts/AvenirNext/Metropolis-Medium.otf
           weight: 500
-        - asset: assets/fonts/Montserrat/Montserrat-SemiBold.ttf
+        - asset: assets/fonts/AvenirNext/Metropolis-SemiBold.otf
           weight: 600
-        - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
+        - asset: assets/fonts/AvenirNext/Metropolis-Bold.otf
           weight: 700
-        - asset: assets/fonts/Montserrat/Montserrat-ExtraBold.ttf
+        - asset: assets/fonts/AvenirNext/Metropolis-ExtraBold.otf
           weight: 800
-        - asset: assets/fonts/Montserrat/Montserrat-Black.ttf
+        - asset: assets/fonts/AvenirNext/Metropolis-Black.otf
           weight: 900
-    - family: Ab
-      fonts:
-        - asset: assets/fonts/AbyssinicaSIL-R.ttf
-    - family: Hi
-      fonts:
-        - asset: assets/fonts/hiwua.ttf
-    - family: Ji
-      fonts:
-        - asset: assets/fonts/jiret.ttf
-    - family: Wo
-      fonts:
-        - asset: assets/fonts/wookianos.ttf
-    - family: HN
-      fonts:
-        - asset: assets/fonts/HelveticaNeue.ttc
+    # - family: PN
+    #   fonts:
+    #     - asset: assets/fonts/ProximaNova/ProximaNova-Regular.otf
+    #     - asset: assets/fonts/ProximaNova/ProximaNovaBold.otf
+    #       weight: 700
+    #     - asset: assets/fonts/ProximaNova/ProximaNovaExtrabold.otf
+    #       weight: 800
+    #     - asset: assets/fonts/ProximaNova/ProximaNovaBlack.otf
+    #       weight: 900

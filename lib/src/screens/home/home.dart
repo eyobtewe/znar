@@ -85,8 +85,8 @@ class _HomeState extends State<Home> {
 
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: BottomScreenPlayer(),
-        // bottomNavigationBar: buildBottomNavigationBar(),
+        bottomSheet: BottomScreenPlayer(),
+        bottomNavigationBar: BottomNavBar(currentIndex: 0),
         // appBar: buildAppBar(context),
 
         body: ExplorerScreen(),
@@ -94,64 +94,35 @@ class _HomeState extends State<Home> {
     );
   }
 
-  BottomNavigationBar buildBottomNavigationBar() {
-    return BottomNavigationBar(
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Ionicons.grid_outline),
-          label: 'Discover',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Ionicons.search_outline),
-          label: 'Search',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Ionicons.musical_note_outline),
-          label: 'Playlists',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Ionicons.person_outline),
-          label: 'Profile',
-        ),
-      ],
-      fixedColor: PRIMARY_COLOR,
-      showUnselectedLabels: true,
-      unselectedItemColor: GRAY,
-      backgroundColor: BACKGROUND,
-      type: BottomNavigationBarType.fixed,
-      elevation: 0,
-    );
-  }
-
-  Widget buildAppBar(BuildContext context) {
-    return AppBar(
-      // leading: IconButton(
-      //   onPressed: () {
-      //     // Navigator.pushNamed(context, SETTINGS_PAGE_ROUTE);
-      //     uiBloc.toggleLanguage();
-      //     setState(() {});
-      //     Fluttertoast.showToast(
-      //       msg: Language.locale(uiBloc.language, 'langauge_changed'),
-      //       backgroundColor: PURE_WHITE,
-      //       textColor: BACKGROUND,
-      //       gravity: ToastGravity.BOTTOM,
-      //       toastLength: Toast.LENGTH_SHORT,
-      //     );
-      //   },
-      //   icon: Icon(Icons.language),
-      // ),
-      actions: [
-        // IconButton(
-        //   onPressed: () {
-        //     Navigator.pushNamed(context, SEARCH_HOME_PAGE_ROUTE);
-        //   },
-        //   icon: const Icon(Icons.search),
-        // )
-      ],
-      elevation: 0,
-      centerTitle: true,
-    );
-  }
+  // Widget buildAppBar(BuildContext context) {
+  //   return AppBar(
+  //     leading: IconButton(
+  //       onPressed: () {
+  //         // Navigator.pushNamed(context, SETTINGS_PAGE_ROUTE);
+  //         uiBloc.toggleLanguage();
+  //         setState(() {});
+  //         Fluttertoast.showToast(
+  //           msg: Language.locale(uiBloc.language, 'langauge_changed'),
+  //           backgroundColor: PURE_WHITE,
+  //           textColor: BACKGROUND,
+  //           gravity: ToastGravity.BOTTOM,
+  //           toastLength: Toast.LENGTH_SHORT,
+  //         );
+  //       },
+  //       icon: Icon(Icons.language),
+  //     ),
+  //     actions: [
+  //       IconButton(
+  //         onPressed: () {
+  //           Navigator.pushNamed(context, SEARCH_HOME_PAGE_ROUTE);
+  //         },
+  //         icon: const Icon(Icons.search),
+  //       )
+  //     ],
+  //     elevation: 0,
+  //     centerTitle: true,
+  //   );
+  // }
 
   // void checkDynamicLinks() async {
   //   await kDynamicLinkService.handleDynamicLinks(

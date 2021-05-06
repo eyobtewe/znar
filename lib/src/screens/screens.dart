@@ -17,3 +17,4 @@ export 'setting/setting.dart';
 export 'song/songs_page.dart';
 export 'splash.dart';
 export 'webview/custom_web_page.dart';
+export 'profile/profile.dart';

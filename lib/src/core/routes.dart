@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:znar/src/screens/search/search.dart';
 
 import '../presentation/bloc.dart';
 import '../screens/screens.dart';
 
 const String HOME_PAGE_ROUTE = '/home';
+const String PROFILE_PAGE_ROUTE = '/profile';
 const String LOCAL_SONGS_PAGE_ROUTE = '/local-songs';
 const String SETTINGS_PAGE_ROUTE = '/setting';
 const String MUSIC_VIDEOS_PAGE_ROUTE = '/music-videos-page';
@@ -53,6 +55,9 @@ Route onGeneratedRoute(RouteSettings settings) {
     case SEARCH_MUSIC_VIDEOS_PAGE_ROUTE:
 
     case SEARCH_SONGS_PAGE_ROUTE:
+      return _route(SearchPage(trigger: true));
+    case PROFILE_PAGE_ROUTE:
+      return _route(ProfileScreen());
 
     case SEARCH_LOCAL_SONGS_PAGE_ROUTE:
 

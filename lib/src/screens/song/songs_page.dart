@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
@@ -72,34 +73,55 @@ class _SongScreenState extends State<SongScreen> {
       initialData: bloc.songs,
       builder: (BuildContext context, AsyncSnapshot<List<Song>> snapshot) {
         if (!snapshot.hasData) {
-          return const CustomScrollView(
+          return CustomScrollView(
             slivers: [
-              const SliverAppBar(),
+              // const SliverAppBar(),
+              buildSliverAppBar(context),
+
               const SliverFillRemaining(child: const CustomLoader()),
             ],
           );
         } else {
-          return CustomScrollView(
-            controller: scrollController,
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              buildSliverAppBar(bloc.songs, context),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext ctx, int i) {
-                    return SongTile(songs: bloc.songs, index: i);
-                  },
-                  childCount: bloc.songs?.length ?? 0,
+          return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              mini: true,
+              child: Icon(Ionicons.play),
+              onPressed: () {
+                if (playerBloc.audioPlayer != null) {
+                  playerBloc.audioPlayer.stop();
+                }
+                playerBloc.audioInit(0, snapshot);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext ctx) =>
+                        AudioPlayerScreen(songs: bloc.songs, i: 0),
+                  ),
+                );
+              },
+            ),
+            body: CustomScrollView(
+              controller: scrollController,
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                buildSliverAppBar(context),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext ctx, int i) {
+                      return SongTile(songs: bloc.songs, index: i);
+                    },
+                    childCount: bloc.songs?.length ?? 0,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }
       },
     );
   }
 
-  Widget buildSliverAppBar(List<Song> snapshot, BuildContext context) {
+  Widget buildSliverAppBar(BuildContext context) {
     return SliverAppBar(
       pinned: true,
       // elevation: 0,
@@ -112,24 +134,24 @@ class _SongScreenState extends State<SongScreen> {
         ),
       ),
       actions: [
-        snapshot.isNotEmpty
-            ? IconButton(
-                icon: const Icon(Icons.playlist_play),
-                onPressed: () {
-                  if (playerBloc.audioPlayer != null) {
-                    playerBloc.audioPlayer.stop();
-                  }
-                  playerBloc.audioInit(0, snapshot);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext ctx) =>
-                          AudioPlayerScreen(songs: snapshot, i: 0),
-                    ),
-                  );
-                },
-              )
-            : Container(),
+        // snapshot.isNotEmpty
+        //     ? IconButton(
+        //         icon: const Icon(Ionicons.play),
+        //         onPressed: () {
+        //           if (playerBloc.audioPlayer != null) {
+        //             playerBloc.audioPlayer.stop();
+        //           }
+        //           playerBloc.audioInit(0, snapshot);
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(
+        //               builder: (BuildContext ctx) =>
+        //                   AudioPlayerScreen(songs: snapshot, i: 0),
+        //             ),
+        //           );
+        //         },
+        //       )
+        //     : Container(),
         IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {

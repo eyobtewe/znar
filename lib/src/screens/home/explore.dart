@@ -40,12 +40,12 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
           color: TRANSPARENT,
           height: 40,
         ),
-        buildDiscoverAndSearch(),
+        buildDiscover(),
         // buildSearchBar(),
         // Divider(color: TRANSPARENT),
         // AnnouncementCards(size: size),
         buildDivider(),
-        buildDivider(),
+        // buildDivider(),
         ThumbnailCards(
           ar: CustomAspectRatio.PLAYLIST,
           title: Language.locale(uiBloc.language, 'popular_playlists'),
@@ -70,7 +70,7 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
     );
   }
 
-  Container buildDiscoverAndSearch() {
+  Container buildDiscover() {
     return Container(
       padding: const EdgeInsets.only(left: 10, bottom: 20),
       child: Row(
@@ -80,20 +80,21 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
             child: Text(
               'Discover',
               style: TextStyle(
-                fontWeight: FontWeight.w800,
+                color: GRAY,
+                fontWeight: FontWeight.w900,
                 fontSize: ScreenUtil().setSp(28),
                 fontFamilyFallback: f,
               ),
             ),
           ),
-          IconButton(
-            icon: Icon(Ionicons.search),
-            onPressed: () {
-              showSearch(
-                  context: context,
-                  delegate: SongSearch(CustomAspectRatio.SONG));
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Ionicons.search),
+          //   onPressed: () {
+          //     showSearch(
+          //         context: context,
+          //         delegate: SongSearch(CustomAspectRatio.SONG));
+          //   },
+          // ),
         ],
       ),
     );

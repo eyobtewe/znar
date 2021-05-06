@@ -25,9 +25,8 @@ class CustomLoader extends StatelessWidget {
               trackColor: isPlayer
                   ? Theme.of(context).scaffoldBackgroundColor
                   : PRIMARY_COLOR,
-              dotColor: isPlayer
-                  ? Theme.of(context).scaffoldBackgroundColor
-                  : PURE_WHITE,
+              dotColor:
+                  isPlayer ? Theme.of(context).scaffoldBackgroundColor : GRAY,
             ),
             customWidths: CustomSliderWidths(
               progressBarWidth: isPlayer ? 15 : 1,

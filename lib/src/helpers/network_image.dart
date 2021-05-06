@@ -39,7 +39,7 @@ class CachedPicture extends StatelessWidget {
             width: 95,
             height: 95,
             decoration: BoxDecoration(
-              color: GRAY,
+              // color: GRAY,
               image: DecorationImage(
                 image: AssetImage('assets/images/logo_y.png'),
               ),

@@ -82,7 +82,7 @@ class MusicTitle extends StatelessWidget {
     this.lines,
     this.color,
     this.alignment,
-    this.fontSize = 14,
+    this.fontSize = 12,
     this.textAlign = TextAlign.left,
   });
 
@@ -95,6 +95,8 @@ class MusicTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    ScreenUtil.init(context, designSize: size);
     return Container(
       alignment: alignment ?? Alignment.centerLeft,
       width: double.maxFinite,
@@ -106,7 +108,8 @@ class MusicTitle extends StatelessWidget {
         style: TextStyle(
           fontSize: ScreenUtil().setSp(fontSize),
           fontFamilyFallback: f,
-          color: color,
+          fontWeight: fontSize == 12 ? FontWeight.bold : FontWeight.normal,
+          color: fontSize == 12 ? GRAY : DARK_GRAY,
         ),
       ),
     );

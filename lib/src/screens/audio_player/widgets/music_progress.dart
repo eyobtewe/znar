@@ -34,9 +34,7 @@ class _MusicProgressState extends State<MusicProgress> {
           progressBarColor: PRIMARY_COLOR,
           thumbColor: PRIMARY_COLOR,
           timeLabelLocation: TimeLabelLocation.sides,
-          timeLabelTextStyle: TextStyle(
-            color: GRAY,
-          ),
+          timeLabelTextStyle: TextStyle(color: GRAY, fontFamily: 'Kf'),
           thumbRadius: 5,
           barHeight: 5,
           baseBarColor: GRAY,
