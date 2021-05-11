@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:znar/src/screens/widgets/widgets.dart';
+
+import '../widgets/widgets.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override

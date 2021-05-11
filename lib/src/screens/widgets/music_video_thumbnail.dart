@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../screens.dart';
+import '../video_player/video_player.dart';
 
 class MusicVideoThumbnail extends StatelessWidget {
   const MusicVideoThumbnail({
@@ -20,16 +22,16 @@ class MusicVideoThumbnail extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size);
+    final String videoId = YoutubePlayer.convertUrlToId(musicVideo.url);
+
     return InkWell(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (BuildContext ctx) => CustomWebPage(
-              url: musicVideo.url,
-              title: musicVideo?.channel?.name ?? '',
-              musicVideo: musicVideo,
-            ),
+            builder: (BuildContext ctx) => true
+                ? VideoPlayerScreen(musicVideo: musicVideo)
+                : CustomWebPage(url: musicVideo.url),
           ),
         );
       },
@@ -37,41 +39,47 @@ class MusicVideoThumbnail extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: <Widget>[
-            isSearchResult != null
-                ? Container()
-                : Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      image: DecorationImage(
-                        image: NetworkImage(musicVideo?.thumbnail ?? ' '),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: PRIMARY_COLOR.withOpacity(0.5),
-                              blurRadius: 15,
-                            ),
-                          ],
-                        ),
-                        child: const Icon(Ionicons.play_back_circle_outline,
-                            size: 40),
-                      ),
-                    ),
-                    height: 90,
-                  ),
-            MusicTitle(title: musicVideo?.title ?? '', lines: 2),
+            isSearchResult != null ? Container() : buildContainer(videoId),
             MusicTitle(
-                title: musicVideo?.artistStatic?.stageName ?? '',
-                lines: 2,
+              title: musicVideo.title ?? '',
+              lines: 1,
+              fontSize: 12,
+            ),
+            Divider(color: TRANSPARENT, height: 5),
+            MusicTitle(
+                title: musicVideo.artistStatic.fullName,
+                // !=
+                //         song[i].artistStatic.firstName
+                //     ? song[i].artistStatic.stageName
+                //     : song[i].artistStatic.fullName,
+                lines: 1,
+                fontSize: 10,
                 color: GRAY),
           ],
         ),
       ),
+    );
+  }
+
+  Container buildContainer(String videoId) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        image: DecorationImage(
+          image: NetworkImage(
+              'https://img.youtube.com/vi/$videoId/mqdefault.jpg' ??
+                  musicVideo?.thumbnail ??
+                  ' '),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Center(
+        child: Container(
+          child: const Icon(Ionicons.play_circle_outline, size: 40),
+        ),
+      ),
+      height: 90,
     );
   }
 }

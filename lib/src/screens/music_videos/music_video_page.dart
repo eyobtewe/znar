@@ -2,12 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../helpers/network_image.dart';
 import '../../presentation/bloc.dart';
 import '../screens.dart';
+import '../search/search.dart';
 import '../widgets/widgets.dart';
 
 class MusicVideoScreen extends StatefulWidget {
@@ -53,7 +56,8 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
     ScreenUtil.init(context, designSize: size);
     return Scaffold(
       appBar: buildAppBar(),
-      bottomNavigationBar: BottomScreenPlayer(),
+      bottomSheet: BottomScreenPlayer(),
+      bottomNavigationBar: BottomNavBar(currentIndex: 1),
       body: buildBody(),
     );
   }
@@ -74,11 +78,11 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
               children: <Widget>[
                 buildNewsMusicVideos(bloc.musicVideo),
                 Divider(color: TRANSPARENT),
-                buildTitle(
-                    Language.locale(uiBloc.language, 'youtube_channels')),
-                buildChannelsList(),
-                Divider(color: TRANSPARENT),
-                buildTitle(Language.locale(uiBloc.language, 'music_videos')),
+                // buildTitle(
+                //     Language.locale(uiBloc.language, 'youtube_channels')),
+                // buildChannelsList(),
+                // Divider(color: TRANSPARENT),
+                // buildTitle(Language.locale(uiBloc.language, 'music_videos')),
                 buildGridView(bloc.musicVideo),
                 // CupertinoActivityIndicator(),
               ],
@@ -89,44 +93,44 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
     );
   }
 
-  Widget buildChannelsList() {
-    return FutureBuilder(
-      future: bloc.fetchChannels(),
-      initialData: bloc.channels,
-      builder: (BuildContext context, AsyncSnapshot<List<Channel>> snapshot) {
-        if (!snapshot.hasData) {
-          return Container();
-        } else {
-          return Container(
-            height: 150,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: bloc.channels?.length ?? 0,
-              itemBuilder: (BuildContext context, int index) {
-                return ChannelThumbnail(
-                    i: index, channel: bloc.channels[index]);
-              },
-            ),
-          );
-        }
-      },
-    );
-  }
+  // Widget buildChannelsList() {
+  //   return FutureBuilder(
+  //     future: bloc.fetchChannels(),
+  //     initialData: bloc.channels,
+  //     builder: (BuildContext context, AsyncSnapshot<List<Channel>> snapshot) {
+  //       if (!snapshot.hasData) {
+  //         return Container();
+  //       } else {
+  //         return Container(
+  //           height: 150,
+  //           child: ListView.builder(
+  //             scrollDirection: Axis.horizontal,
+  //             itemCount: bloc.channels?.length ?? 0,
+  //             itemBuilder: (BuildContext context, int index) {
+  //               return ChannelThumbnail(
+  //                   i: index, channel: bloc.channels[index]);
+  //             },
+  //           ),
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
 
-  Container buildTitle(String title) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      child: Text(
-        '$title',
-        softWrap: true,
-        style: TextStyle(
-          fontWeight: FontWeight.w800,
-          fontFamilyFallback: f,
-          fontSize: ScreenUtil().setSp(18),
-        ),
-      ),
-    );
-  }
+  // Container buildTitle(String title) {
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+  //     child: Text(
+  //       '$title',
+  //       softWrap: true,
+  //       style: TextStyle(
+  //         fontWeight: FontWeight.w800,
+  //         fontFamilyFallback: f,
+  //         fontSize: ScreenUtil().setSp(18),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget buildGridView(List<MusicVideo> musicVideos) {
     return Container(
@@ -165,6 +169,8 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
 
   ClipRRect buildClipRRect(
       BuildContext context, List<MusicVideo> musicVideos, int index) {
+    final String videoId = YoutubePlayer.convertUrlToId(musicVideos[index].url);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
       child: InkWell(
@@ -172,17 +178,33 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext ctx) => CustomWebPage(
-                url: musicVideos[index].url,
-                title: musicVideos[index]?.channel?.name ?? '',
-                musicVideo: musicVideos[index],
-              ),
+              builder: (BuildContext ctx) =>
+                  CustomWebPage(url: musicVideos[index].url),
             ),
           );
         },
         child: Container(
           margin: EdgeInsets.zero,
-          child: CachedPicture(image: musicVideos[index].thumbnail),
+          color: GRAY,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: CachedPicture(
+                  image: 'https://img.youtube.com/vi/$videoId/mqdefault.jpg' ??
+                      musicVideos[index].thumbnail,
+                  isBackground: true,
+                ),
+              ),
+              Center(
+                child: Container(
+                  child: const Icon(
+                    Ionicons.play_circle_outline,
+                    size: 60,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -190,12 +212,14 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
-      centerTitle: true,
+      centerTitle: false,
       actions: <Widget>[
         IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(Ionicons.search),
             onPressed: () {
-              Navigator.pushNamed(context, SEARCH_MUSIC_VIDEOS_PAGE_ROUTE);
+              showSearch(
+                  context: context,
+                  delegate: SongSearch(CustomAspectRatio.VIDEO));
             }),
       ],
       title: Text(

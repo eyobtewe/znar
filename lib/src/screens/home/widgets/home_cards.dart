@@ -37,11 +37,11 @@ class HomeCards extends StatelessWidget {
       //   return Container(
       //     child: ChannelThumbnail(i: i, channel: data[i]),
       //   );
-      // case CustomAspectRatio.VIDEO:
-      //   return Container(
-      //     child: MusicVideoThumbnail(i: i, musicVideo: data[i]),
-      //     width: 180,
-      //   );
+      case CustomAspectRatio.VIDEO:
+        return Container(
+          child: MusicVideoThumbnail(i: i, musicVideo: data[i]),
+          // width: 180,
+        );
       default:
         return Container();
     }

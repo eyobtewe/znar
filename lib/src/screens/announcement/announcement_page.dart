@@ -27,23 +27,21 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   Widget build(BuildContext context) {
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
-    return SafeArea(
-      child: Scaffold(
-        body: widget.announcementId != null
-            ? FutureBuilder(
-                future: bloc.fetchAnnouncementDetails(widget.announcementId),
-                builder: (BuildContext context,
-                    AsyncSnapshot<Announcement> snapshot) {
-                  if (!snapshot.hasData) {
-                    return const CustomLoader();
-                  } else {
-                    return buildBody(snapshot.data);
-                  }
-                },
-              )
-            : buildBody(widget.announcement),
-        bottomNavigationBar: BottomScreenPlayer(),
-      ),
+    return Scaffold(
+      body: widget.announcementId != null
+          ? FutureBuilder(
+              future: bloc.fetchAnnouncementDetails(widget.announcementId),
+              builder:
+                  (BuildContext context, AsyncSnapshot<Announcement> snapshot) {
+                if (!snapshot.hasData) {
+                  return const CustomLoader();
+                } else {
+                  return buildBody(snapshot.data);
+                }
+              },
+            )
+          : buildBody(widget.announcement),
+      bottomNavigationBar: BottomScreenPlayer(),
     );
   }
 
@@ -104,8 +102,10 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
 
   Widget buildGoTo(Announcement announcement) {
     return announcement.targetType != ''
-        ? RaisedButton(
-            color: TRANSPARENT,
+        ? ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(TRANSPARENT),
+            ),
             onPressed: () {
               Navigator.push(
                 context,
@@ -161,8 +161,10 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
 
   Widget buildLearnMore(Announcement announcement) {
     return announcement.moreInfoLink != ''
-        ? RaisedButton(
-            color: TRANSPARENT,
+        ? ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(TRANSPARENT),
+            ),
             onPressed: () {
               Navigator.push(
                   context,

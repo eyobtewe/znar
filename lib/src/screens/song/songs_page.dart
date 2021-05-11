@@ -83,23 +83,7 @@ class _SongScreenState extends State<SongScreen> {
           );
         } else {
           return Scaffold(
-            floatingActionButton: FloatingActionButton(
-              mini: true,
-              child: Icon(Ionicons.play),
-              onPressed: () {
-                if (playerBloc.audioPlayer != null) {
-                  playerBloc.audioPlayer.stop();
-                }
-                playerBloc.audioInit(0, snapshot);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext ctx) =>
-                        AudioPlayerScreen(songs: bloc.songs, i: 0),
-                  ),
-                );
-              },
-            ),
+            floatingActionButton: PlayAllFAB(songs: bloc.songs),
             body: CustomScrollView(
               controller: scrollController,
               physics: const BouncingScrollPhysics(),
@@ -153,7 +137,7 @@ class _SongScreenState extends State<SongScreen> {
         //       )
         //     : Container(),
         IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(Ionicons.search),
             onPressed: () {
               showSearch(
                   context: context,
@@ -161,6 +145,34 @@ class _SongScreenState extends State<SongScreen> {
               // Navigator.pushNamed(context, SEARCH_SONGS_PAGE_ROUTE);
             }),
       ],
+    );
+  }
+}
+
+class PlayAllFAB extends StatelessWidget {
+  const PlayAllFAB({Key key, @required this.songs}) : super(key: key);
+
+  final List<dynamic> songs;
+
+  @override
+  Widget build(BuildContext context) {
+    final playerBloc = PlayerProvider.of(context);
+    return FloatingActionButton(
+      mini: true,
+      child: Icon(Ionicons.play),
+      onPressed: () {
+        if (playerBloc.audioPlayer != null) {
+          playerBloc.audioPlayer.stop();
+        }
+        playerBloc.audioInit(0, songs);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext ctx) =>
+                AudioPlayerScreen(songs: songs, i: 0),
+          ),
+        );
+      },
     );
   }
 }

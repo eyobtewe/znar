@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
@@ -36,7 +37,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
       length: 1,
       child: Scaffold(
         bottomNavigationBar: BottomNavBar(currentIndex: 2),
-        // bottomNavigationBar: widget.isHome ? null : BottomScreenPlayer(),
+        // bottomSheet: BottomScreenPlayer(),
         appBar: widget.isHome ? null : buildAppBar(),
         body: buildBody(),
       ),
@@ -44,34 +45,37 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
   }
 
   Widget buildBody() {
-    return TabBarView(
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        FutureBuilder(
-          future: bloc.fetchOnlinePlayList(1, 20),
-          initialData: bloc.onlinePlaylists,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
-            if (!snapshot.hasData) {
-              return const CustomLoader();
-            } else {
-              return buildOnlinePlaylist(bloc.onlinePlaylists);
-            }
-          },
-        ),
-        // FutureBuilder(
-        //   future: bloc.fetchLocalPlaylists(),
-        //   initialData: bloc.localPlaylists,
-        //   builder:
-        //       (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
-        //     if (!snapshot.hasData) {
-        //       return const CustomLoader();
-        //     } else {
-        //       return buildLocalPlaylist(snapshot.data);
-        //     }
-        //   },
-        // ),
-      ],
+    return Scaffold(
+      bottomSheet: BottomScreenPlayer(),
+      body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          FutureBuilder(
+            future: bloc.fetchOnlinePlayList(1, 20),
+            initialData: bloc.onlinePlaylists,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
+              if (!snapshot.hasData) {
+                return const CustomLoader();
+              } else {
+                return buildOnlinePlaylist(bloc.onlinePlaylists);
+              }
+            },
+          ),
+          // FutureBuilder(
+          //   future: bloc.fetchLocalPlaylists(),
+          //   initialData: bloc.localPlaylists,
+          //   builder:
+          //       (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
+          //     if (!snapshot.hasData) {
+          //       return const CustomLoader();
+          //     } else {
+          //       return buildLocalPlaylist(snapshot.data);
+          //     }
+          //   },
+          // ),
+        ],
+      ),
     );
   }
 
@@ -79,19 +83,19 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
     return AppBar(
       actions: <Widget>[
         IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(Ionicons.search),
             onPressed: () {
               showSearch(
                   context: context,
                   delegate: SongSearch(CustomAspectRatio.PLAYLIST));
-              // Navigator.pushNamed(context, SEARCH_PLAYLISTS_PAGE_ROUTE);
             }),
       ],
-      centerTitle: true,
+      centerTitle: false,
       title: Text(
         Language.locale(uiBloc.language, 'playlists'),
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.w800,
+          // fontSize: ScreenUtil().setSp(28),
           fontFamilyFallback: f,
         ),
       ),
@@ -142,6 +146,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
 
   Widget buildOnlinePlaylist(List<Playlist> playlists) {
     return CustomScrollView(
+      physics: BouncingScrollPhysics(),
       slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate(
@@ -219,9 +224,19 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
                       ),
                     );
                   },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(PRIMARY_COLOR),
+                    visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                  ),
                   child: Text(
                     Language.locale(uiBloc.language, 'more'),
-                    style: const TextStyle(color: PRIMARY_COLOR),
+                    style: const TextStyle(color: BACKGROUND),
                   ),
                 ),
         ],

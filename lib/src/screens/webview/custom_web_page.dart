@@ -1,78 +1,95 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-import '../../core/colors.dart';
-import '../../domain/models/models.dart';
-import '../../presentation/bloc.dart';
-import '../widgets/custom_loader.dart';
+import '../../core/core.dart';
 
 class CustomWebPage extends StatefulWidget {
   final String url;
   final String title;
-  final MusicVideo musicVideo;
 
-  const CustomWebPage({@required this.url, this.title, this.musicVideo});
+  const CustomWebPage({@required this.url, this.title});
 
   @override
   _CustomWebPageState createState() => _CustomWebPageState();
 }
 
 class _CustomWebPageState extends State<CustomWebPage> {
+  InAppWebViewController webView;
+  // String url = "";
+  double progress = 0;
+
   void initState() {
     super.initState();
   }
 
-  void showToast(String message) {
-    ScaffoldMessengerState().showSnackBar(
-      SnackBar(
-        backgroundColor: BLUE,
-        content: Text(message),
-      ),
-    );
-  }
+  // void showToast(String message) {
+  //   Fluttertoast.showToast(
+  //     msg: message,
+  //     backgroundColor: BLACK,
+  //     textColor: WHITE,
+  //     toastLength: Toast.LENGTH_LONG,
+  //     gravity: ToastGravity.BOTTOM,
+  //   );
+  // }
 
   bool isLoading = false;
+  double height = 10;
 
   @override
   Widget build(BuildContext context) {
-    showToast('Loading...');
-    final bloc = ApiProvider.of(context);
-    return WebviewScaffold(
-      url: widget.url,
-      appBar: AppBar(
-        // actions: [
-        //   widget.musicVideo == null
-        //       ? Container()
-        //       : IconButton(
-        //           icon: const Icon(Icons.share),
-        //           onPressed: () async {
-        //             final String link = await bloc.dynamikLinkService
-        //                 .createDynamicLink(widget.musicVideo);
+    final size = MediaQuery.of(context).size;
+    // showToast('Loading...');
 
-        //             Share.share(
-        //                 'Watch ${widget.musicVideo.artistStatic?.stageName ?? ''} - ${widget.musicVideo.title ?? ''} on IAAM streaming app \n$link');
-        //           },
-        //         ),
-        // ],
-        backgroundColor: TRANSPARENT,
-        elevation: 0,
-        centerTitle: false,
-        title: widget.title != null
-            ? Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Text(
-                  widget.musicVideo != null
-                      ? 'IAAM'
-                      : widget.title.toUpperCase() ?? '',
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
-              )
-            : Container(),
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   // backgroundColor: TRANSPARENT,
+        //   iconTheme: IconThemeData(color: BLACK),
+        //   elevation: height,
+        //   toolbarHeight: 48,
+        // ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.arrow_back),
+          mini: true,
+          backgroundColor: PRIMARY_COLOR,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            InAppWebView(
+              initialUrlRequest: URLRequest(url: Uri.parse(widget.url)),
+              initialOptions: InAppWebViewGroupOptions(
+                crossPlatform: InAppWebViewOptions(),
+              ),
+              onWebViewCreated: (InAppWebViewController controller) {
+                webView = controller;
+              },
+              onProgressChanged: (InAppWebViewController controller, int pro) {
+                setState(() {
+                  progress = pro / 100;
+                  if (progress == 100) {
+                    height = 0;
+                  }
+                });
+              },
+            ),
+            progress < 1.0
+                ? Positioned(
+                    child: LinearProgressIndicator(
+                      value: progress,
+                      backgroundColor: PRIMARY_COLOR.withOpacity(0.25),
+                      valueColor: AlwaysStoppedAnimation<Color>(PRIMARY_COLOR),
+                    ),
+                    bottom: 0,
+                    width: size.width,
+                  )
+                : Container(),
+          ],
+        ),
       ),
-      initialChild: const CustomLoader(),
-      supportMultipleWindows: true,
-      resizeToAvoidBottomInset: true,
-      allowFileURLs: true,
     );
   }
 }

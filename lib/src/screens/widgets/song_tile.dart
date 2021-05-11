@@ -56,38 +56,20 @@ class SongTile extends StatelessWidget {
                   buildSongTitle(size, playerBloc),
                   Text(
                     songs[index].runtimeType == Song
-                        ?
-                        // songs[index].artistStatic?.stageName ==
-                        //         songs[index].artistStatic?.firstName
-                        //     ? songs[index].artistStatic.fullName
-                        //     : songs[index].artistStatic.stageName
-                        songs[index].artistStatic?.fullName ?? ''
+                        ? songs[index].artistStatic?.fullName ?? ''
                         : songs[index].artist ?? '',
                     style: TextStyle(
-                      // color: GRAY,
                       color: playerBloc.audioPlayer.current.valueWrapper?.value
                                   ?.audio?.audio?.metas?.id ==
                               songs[index].sId
                           ? PRIMARY_COLOR
                           : GRAY,
-
                       fontFamilyFallback: f,
                       fontSize: ScreenUtil().setSp(10),
                     ),
                   ),
                 ],
               ),
-              // Spacer(),
-              // Builder(
-              //   builder: (BuildContext ctx) {
-              //     return playerBloc.audioPlayer.current.valueWrapper?.value?.audio
-              //                 ?.audio?.metas?.id ==
-              //             songs[index].sId
-              //         ? Icon(Ionicons.play)
-              //         : Container();
-              //   },
-              // ),
-              // playerBloc.audioPlayer.builderPlayerState
             ],
           ),
         ),

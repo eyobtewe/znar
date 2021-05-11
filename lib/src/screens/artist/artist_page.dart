@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../presentation/bloc.dart';
+import '../home/explore.dart';
+import '../search/search.dart';
 import '../widgets/widgets.dart';
 
 class ArtistScreen extends StatefulWidget {
@@ -52,7 +55,8 @@ class _ArtistScreenState extends State<ArtistScreen> {
 
     return Scaffold(
       appBar: buildAppBar(),
-      bottomNavigationBar: BottomScreenPlayer(),
+      bottomNavigationBar: BottomNavBar(currentIndex: 3),
+      // bottomSheet: BottomScreenPlayer(),
       body: FutureBuilder(
         future: bloc.fetchArtists(page, 30),
         initialData: bloc.artists,
@@ -68,15 +72,16 @@ class _ArtistScreenState extends State<ArtistScreen> {
   }
 
   Widget buildBody(List<Artist> artists) {
-    return Container(
-      child: GridView.builder(
+    return Scaffold(
+      bottomNavigationBar: BottomScreenPlayer(),
+      body: GridView.builder(
         controller: scrollController,
         physics: const BouncingScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ),
         itemCount: artists?.length ?? 0,
-        shrinkWrap: true,
+        // shrinkWrap: true,
         itemBuilder: (BuildContext ctx, int i) =>
             ArtistThumbnail(artist: artists[i]),
       ),
@@ -86,18 +91,21 @@ class _ArtistScreenState extends State<ArtistScreen> {
   Widget buildAppBar() {
     return AppBar(
       // elevation: 0,
-      centerTitle: true,
+      centerTitle: false,
       actions: <Widget>[
         IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(Ionicons.search),
             onPressed: () {
-              Navigator.pushNamed(context, SEARCH_ARTISTS_PAGE_ROUTE);
+              showSearch(
+                  context: context,
+                  delegate: SongSearch(CustomAspectRatio.ARTIST));
             }),
       ],
       title: Text(
         Language.locale(uiBloc.language, 'artists'),
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.w800,
+          // fontSize: ScreenUtil().setSp(28),
           fontFamilyFallback: f,
         ),
       ),

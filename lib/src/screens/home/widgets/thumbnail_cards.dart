@@ -41,29 +41,7 @@ class ThumbnailCards extends StatelessWidget {
                     Container(
                       child: CustomAspectRatio.PLAYLIST == ar
                           ? buildContainer(bloc, size)
-                          : GridView.builder(
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount:
-                                    3, // ar == CustomAspectRatio.SONG ? 3 : 2,
-                                childAspectRatio: _childAspectRatio(ar),
-                              ),
-                              itemBuilder: (BuildContext ctx, int index) {
-                                return Container(
-                                  // height: 150,
-                                  // width: 150,
-                                  child: HomeCards(
-                                    ar: ar,
-                                    data: bloc.buildInitialData(ar),
-                                    i: index,
-                                  ),
-                                );
-                              },
-                              // itemCount: bloc.buildInitialData(ar).length,
-                              itemCount: ar == CustomAspectRatio.SONG ? 6 : 4,
-                              shrinkWrap: true,
-                              primary: false,
-                            ),
+                          : buildGridView(bloc),
                     ),
                   ],
                 );
@@ -72,10 +50,32 @@ class ThumbnailCards extends StatelessWidget {
     );
   }
 
+  GridView buildGridView(ApiBloc bloc) {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: ar == CustomAspectRatio.SONG ? 3 : 2,
+        childAspectRatio: _childAspectRatio(ar),
+      ),
+      itemBuilder: (BuildContext ctx, int index) {
+        return HomeCards(
+          ar: ar,
+          data: bloc.buildInitialData(ar),
+          i: index,
+        );
+      },
+      itemCount:
+          (bloc.buildInitialData(ar).length > 6 && ar == CustomAspectRatio.SONG)
+              ? 6
+              : bloc.buildInitialData(ar).length,
+      shrinkWrap: true,
+      primary: false,
+    );
+  }
+
   double _childAspectRatio(CustomAspectRatio aspectRatio) {
     switch (aspectRatio) {
-      case CustomAspectRatio.PLAYLIST:
-      // return 0.8;
+      case CustomAspectRatio.VIDEO:
+        return 1.2;
       case CustomAspectRatio.SONG:
         return 0.7;
       case CustomAspectRatio.ARTIST:
@@ -87,14 +87,11 @@ class ThumbnailCards extends StatelessWidget {
 
   Container buildContainer(ApiBloc bloc, Size size) {
     return Container(
-      // color: PURPLE,
       height: size.width * 9 / 13,
-      // height: _cardHeight(ar),
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         key: PageStorageKey('$ar'),
         scrollDirection: Axis.horizontal,
-        // shrinkWrap: true,
         itemBuilder: (BuildContext context, int i) {
           return HomeCards(
             ar: ar,
@@ -111,10 +108,15 @@ class ThumbnailCards extends StatelessWidget {
       CustomAspectRatio ar, BuildContext context, UiBloc uiBloc) {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, _routePage(ar));
+        if (CustomAspectRatio.SONG == ar) {
+          Navigator.pushNamed(context, _routePage(ar));
+        } else {
+          Navigator.pushReplacementNamed(context, _routePage(ar));
+        }
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(PRIMARY_COLOR),
+        visualDensity: VisualDensity(horizontal: 0, vertical: -2),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
@@ -122,8 +124,11 @@ class ThumbnailCards extends StatelessWidget {
         ),
       ),
       child: Text(
-        Language.locale(uiBloc.language, 'view_all'),
-        style: const TextStyle(color: BACKGROUND),
+        Language.locale(uiBloc.language, 'more'),
+        style: const TextStyle(
+          color: BACKGROUND,
+          fontFamilyFallback: f,
+        ),
       ),
     );
   }
@@ -140,14 +145,14 @@ class ThumbnailCards extends StatelessWidget {
             child: Text(
               '$title',
               style: TextStyle(
-                color: GRAY,
-                fontWeight: FontWeight.w800,
                 fontSize: ScreenUtil().setSp(18),
                 fontFamilyFallback: f,
               ),
             ),
           ),
-          content.length > 6 ? buildMoreBtn(ar, context, uiBloc) : Container(),
+          // content.length > 6 ?
+          buildMoreBtn(ar, context, uiBloc)
+          //  : Container(),
         ],
       ),
     );

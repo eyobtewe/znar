@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dart_tags/dart_tags.dart';
 import 'package:flutter/material.dart';
-
 import 'package:path_provider/path_provider.dart';
 
 import '../../domain/models/models.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
@@ -39,7 +40,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
 
     return Scaffold(
       bottomNavigationBar: BottomScreenPlayer(),
-      floatingActionButton: HomeFAB(context: context),
+      // floatingActionButton: HomeFAB(context: context),
       body: widget.albumId != null
           ? FutureBuilder(
               future: bloc.fetchAlbumDetails(widget.albumId),
@@ -56,27 +57,28 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
   }
 
   Widget buildBody(dynamic album) {
-    return SafeArea(
-      child: FutureBuilder(
-        future: album.runtimeType == Album
-            ? bloc.fetchAlbumSongs(album.sId)
-            : localSongsBloc.getSongsFromAlbum(album.id),
-        initialData: album.runtimeType == Album
-            ? bloc.albumsSongs[album.sId]
-            : localSongsBloc.albumsSongs[album.id],
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (!snapshot.hasData) {
-            return const CustomScrollView(
-              primary: true,
-              physics: const BouncingScrollPhysics(),
-              slivers: <Widget>[
-                const SliverAppBar(),
-                const SliverFillRemaining(child: const CustomLoader()),
-              ],
-            );
-          } else {
-            dynamic songs = snapshot.data;
-            return CustomScrollView(
+    return FutureBuilder(
+      future: album.runtimeType == Album
+          ? bloc.fetchAlbumSongs(album.sId)
+          : localSongsBloc.getSongsFromAlbum(album.id),
+      initialData: album.runtimeType == Album
+          ? bloc.albumsSongs[album.sId]
+          : localSongsBloc.albumsSongs[album.id],
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (!snapshot.hasData) {
+          return const CustomScrollView(
+            primary: true,
+            physics: const BouncingScrollPhysics(),
+            slivers: <Widget>[
+              const SliverAppBar(),
+              const SliverFillRemaining(child: const CustomLoader()),
+            ],
+          );
+        } else {
+          dynamic songs = snapshot.data;
+          return Scaffold(
+            floatingActionButton: PlayAllFAB(songs: songs),
+            body: CustomScrollView(
               primary: true,
               physics: const BouncingScrollPhysics(),
               slivers: <Widget>[
@@ -90,10 +92,10 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
                   ),
                 ),
               ],
-            );
-          }
-        },
-      ),
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -173,7 +175,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
   IconButton buildPlayBtn(songs) {
     return IconButton(
       icon: const Icon(
-        Icons.play_circle_outline,
+        Ionicons.play,
         size: 32,
       ),
       onPressed: () {
@@ -197,7 +199,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
 
   Widget buildAppBarBackground(dynamic album) {
     return album.runtimeType == Album
-        ? CachedPicture(image: album.albumArt, isBackground: true)
-        : CustomFileImage(img: album.albumArt);
+        ? CachedPicture(image: album.SongArtwork, isBackground: true)
+        : CustomFileImage(img: album.SongArtwork);
   }
 }

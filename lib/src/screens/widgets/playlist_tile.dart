@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
@@ -21,11 +22,17 @@ class PlaylistTile extends StatelessWidget {
       // height: 170,
       padding: EdgeInsets.symmetric(horizontal: padded ?? 10),
       child: ListTile(
-        leading: Container(
-          color: CANVAS_BLACK,
-          width: 48,
-          height: 48,
-          child: const Icon(Icons.playlist_play, color: GRAY),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          child: Container(
+            color: PRIMARY_COLOR,
+            width: 48,
+            height: 48,
+            child: const Icon(
+              Ionicons.musical_notes_outline,
+              color: BACKGROUND,
+            ),
+          ),
         ),
         title: Text(
           playlist.name ?? '',

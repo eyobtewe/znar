@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../helpers/network_image.dart';
 import '../screens.dart';
@@ -46,6 +47,7 @@ class ArtistThumbnail extends StatelessWidget {
                   ? artist.fullName ?? ''
                   : artist.name,
               lines: 2,
+              color: GRAY,
               alignment: Alignment.center,
               textAlign: TextAlign.center,
             ),

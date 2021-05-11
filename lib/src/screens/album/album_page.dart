@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
@@ -148,7 +149,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
                   ),
                 );
               },
-              child: CachedPicture(image: albums[index].albumArt)),
+              child: CachedPicture(image: albums[index].SongArtwork)),
         ),
       ),
     );
@@ -160,7 +161,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
       centerTitle: true,
       actions: <Widget>[
         IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(Ionicons.search),
             onPressed: () {
               Navigator.pushNamed(context, SEARCH_ALBUMS_PAGE_ROUTE);
             }),

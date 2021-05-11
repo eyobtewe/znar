@@ -12,63 +12,61 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # http: ^0.13.1
+  http: ^0.13.1
   cached_network_image: ^3.0.0
   shared_preferences: ^2.0.5
   path_provider: ^2.0.1
-  progress_dialog: ^1.2.4
+  youtube_player_flutter: ^8.0.0
+  # progress_dialog: ^1.2.4
   # flutter_downloader: ^1.6.0
-
-  # assets_audio_player: ^2.0.9+2
+  # color_thief_flutter: ^1.0.2
+  # flutter_lyric: any
+  # auto_animated: ^3.0.0
   assets_audio_player: ^3.0.3+2
   sleek_circular_slider: ^2.0.0
-  # youtube_player_flutter: ^8.0.0
+
+  firebase_dynamic_links: ^2.0.3
+
   sembast: ^3.0.1
-  # flutter_staggered_grid_view: ^0.4.0
-  async: ^2.2.0
-
   flutter_swiper: ^1.1.6
-  # flappy_search_bar: ^1.7.2
-
-  # firebase_core: ^1.0.3
-  # firebase_dynamic_links: ^2.0.1
-  # firebase_analytics: ^8.0.1
-
   path: ^1.7.0
-  # fluttertoast: ^7.1.7
-  # flutter_icons: ^1.1.0
+
   flutter_svg: ^0.21.0+1
   flutter_screenutil: ^3.0.0
   url_launcher: ^6.0.3
   flutter_html: any
   share: ^2.0.1
-  # audio_video_progress_bar: ^0.3.1
+  flutter_inappwebview: ^5.2.1+1
 
-  flutter_webview_plugin: ^0.3.11
   permission_handler: ^6.1.1
   flutter_local_notifications: ^5.0.0+1
   flutter_audio_query: ^0.3.5+6
   draggable_scrollbar: ^0.1.0
   google_fonts: ^2.0.0
-  
-  # animated_text_kit: any
+
   dart_tags: ^0.3.1
-  # dio: ^4.0.0
+  dio: ^4.0.0
   device_info: ^2.0.0
   firebase_messaging: ^9.1.1
-  # cupertino_icons: ^1.0.2
+
   ionicons: ^0.1.2
-  # line_icons: ^2.0.1
 
 dev_dependencies:
-  # flutter_launcher_icons: ^0.7.5
   flutter_launcher_icons:
 
 flutter_icons:
-  android: true
+  # android: true
   ios: true
   remove_alpha_ios: true
   image_path: "assets/images/logo_y.png"
+
+# flutter_icons:
+#   android: true
+#   ios: true
+#   remove_alpha_ios: true
+#   image_path: "assets/images/logo_y.png"
+#   adaptive_icon_background: "#FF111111"
+#   adaptive_icon_foreground: "assets/images/logo_y.png"
 
 flutter:
   uses-material-design: true
@@ -76,55 +74,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    # - assets/audios/
-  #   - images/a_dot_ham.jpeg
+
   fonts:
-    # - family: Montserrat
-    #   fonts:
-    #     - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
-    #     - asset: assets/fonts/Montserrat/Montserrat-Thin.ttf
-    #       weight: 100
-    #     - asset: assets/fonts/Montserrat/Montserrat-ExtraLight.ttf
-    #       weight: 200
-    #     - asset: assets/fonts/Montserrat/Montserrat-Light.ttf
-    #       weight: 300
-    #     - asset: assets/fonts/Montserrat/Montserrat-Medium.ttf
-    #       weight: 500
-    #     - asset: assets/fonts/Montserrat/Montserrat-SemiBold.ttf
-    #       weight: 600
-    #     - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
-    #       weight: 700
-    #     - asset: assets/fonts/Montserrat/Montserrat-ExtraBold.ttf
-    #       weight: 800
-    #     - asset: assets/fonts/Montserrat/Montserrat-Black.ttf
-    #       weight: 900
-    # - family: Ab
-    #   fonts:
-    #     - asset: assets/fonts/AbyssinicaSIL-R.ttf
-    - family: Kf
+    - family: Kefa
       fonts:
         - asset: assets/fonts/Kefa.ttc
-    # - family: Hi
-    #   fonts:
-    #     - asset: assets/fonts/hiwua.ttf
-    # - family: Ji
-    #   fonts:
-    #     - asset: assets/fonts/jiret.ttf
-    # - family: Wo
-    #   fonts:
-    #     - asset: assets/fonts/wookianos.ttf
-    # - family: HN
-    #   fonts:
-    #     - asset: assets/fonts/HelveticaNeue.ttc
-    # - family: AN
-    #   fonts:
-    #     - asset: assets/fonts/AvenirNext/Metropolis-Regular.otf
-    #     - asset: assets/fonts/AvenirNext/Metropolis-Bold.otf
-    #       weight: 700
-    #     - asset: assets/fonts/AvenirNext/Metropolis-ExtraBold.otf
-    #       weight: 800
-    #     - asset: assets/fonts/AvenirNext/Metropolis-Black.otf
-    #       weight: 900
     - family: AvenirNext
       fonts:
         - asset: assets/fonts/AvenirNext/Metropolis-Regular.otf
@@ -144,12 +98,3 @@ flutter:
           weight: 800
         - asset: assets/fonts/AvenirNext/Metropolis-Black.otf
           weight: 900
-    # - family: PN
-    #   fonts:
-    #     - asset: assets/fonts/ProximaNova/ProximaNova-Regular.otf
-    #     - asset: assets/fonts/ProximaNova/ProximaNovaBold.otf
-    #       weight: 700
-    #     - asset: assets/fonts/ProximaNova/ProximaNovaExtrabold.otf
-    #       weight: 800
-    #     - asset: assets/fonts/ProximaNova/ProximaNovaBlack.otf
-    #       weight: 900

@@ -61,7 +61,7 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
 
   List<Widget> buildButtons(BuildContext context) {
     return [
-      FlatButton.icon(
+      ElevatedButton.icon(
         onPressed: () async {
           Playlist playlist = Playlist(
             name: _playlistTitle.text,
@@ -114,7 +114,7 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
         icon: const Icon(Ionicons.checkmark),
         label: Text(''),
       ),
-      FlatButton.icon(
+      ElevatedButton.icon(
           onPressed: () {
             Navigator.pop(context);
           },

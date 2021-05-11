@@ -49,24 +49,21 @@ class _ChannelDetailScreenState extends State<ChannelDetailScreen> {
     size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size);
 
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: BottomScreenPlayer(),
-        floatingActionButton: HomeFAB(context: context),
-        body: widget.channelId != null
-            ? FutureBuilder(
-                future: bloc.fetchChannelDetails(widget.channelId),
-                builder:
-                    (BuildContext context, AsyncSnapshot<Channel> snapshot) {
-                  if (!snapshot.hasData) {
-                    return const CustomLoader();
-                  } else {
-                    return buildBody(snapshot.data);
-                  }
-                },
-              )
-            : buildBody(widget.channel),
-      ),
+    return Scaffold(
+      bottomNavigationBar: BottomScreenPlayer(),
+      // floatingActionButton: HomeFAB(context: context),
+      body: widget.channelId != null
+          ? FutureBuilder(
+              future: bloc.fetchChannelDetails(widget.channelId),
+              builder: (BuildContext context, AsyncSnapshot<Channel> snapshot) {
+                if (!snapshot.hasData) {
+                  return const CustomLoader();
+                } else {
+                  return buildBody(snapshot.data);
+                }
+              },
+            )
+          : buildBody(widget.channel),
     );
   }
 

@@ -41,3 +41,5 @@ void main() {
 // banner: ca-app-pub-3023996001087093/2924268041
 // interstitial: ca-app-pub-3023996001087093/1069929196
 // rewarded: ca-app-pub-3023996001087093/9275722274
+
+// keytool -list -v -alias key -keystore sign.jks

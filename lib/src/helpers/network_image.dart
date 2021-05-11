@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../core/core.dart';
 
@@ -33,19 +32,7 @@ class CachedPicture extends StatelessWidget {
         );
       },
       errorWidget: (BuildContext context, String url, dynamic error) {
-        return Opacity(
-          opacity: 0.4,
-          child: Container(
-            width: 95,
-            height: 95,
-            decoration: BoxDecoration(
-              // color: GRAY,
-              image: DecorationImage(
-                image: AssetImage('assets/images/logo_y.png'),
-              ),
-            ),
-          ),
-        );
+        return buildErrorWidget();
       },
     );
   }
@@ -66,15 +53,24 @@ class CustomFileImage extends StatelessWidget {
       fit: BoxFit.cover,
       errorBuilder:
           (BuildContext context, Object exception, StackTrace stackTrace) {
-        return Opacity(
-          opacity: 0.5,
-          child: SvgPicture.asset(
-            'assets/images/grey-iaam.svg',
-            fit: BoxFit.contain,
-            width: 150,
-          ),
-        );
+        return buildErrorWidget();
       },
     );
   }
+}
+
+Widget buildErrorWidget() {
+  return Opacity(
+    opacity: 0.4,
+    child: Container(
+      width: 95,
+      height: 95,
+      decoration: BoxDecoration(
+        // color: GRAY,
+        image: DecorationImage(
+          image: AssetImage('assets/images/znar_transparent.png'),
+        ),
+      ),
+    ),
+  );
 }

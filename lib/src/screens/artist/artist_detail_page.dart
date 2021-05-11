@@ -35,8 +35,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
     size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size, allowFontScaling: true);
     return Scaffold(
-      bottomNavigationBar: BottomScreenPlayer(),
-      floatingActionButton: HomeFAB(context: context),
+      bottomSheet: BottomScreenPlayer(),
       body: widget.artistId != null
           ? FutureBuilder(
               future: bloc.fetchArtistDetails(widget.artistId),
@@ -53,8 +52,8 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
   }
 
   Widget buildBody(dynamic artist) {
-    return SafeArea(
-      child: CustomScrollView(
+    return Scaffold(
+      body: CustomScrollView(
         primary: true,
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
@@ -82,6 +81,27 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
           SliverList(
             delegate: SliverChildListDelegate.fixed(
               [
+                Container(
+                  width: size.width,
+                  child: CachedPicture(
+                    image: artist.photo ?? artist.photo,
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Text(
+                    artist.runtimeType == Artist
+                        ? artist.fullName ?? ''
+                        : artist.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontFamilyFallback: f,
+                      fontSize: ScreenUtil().setSp(20),
+                    ),
+                  ),
+                ),
                 buildAlbums(artist),
                 buildSongs(artist),
               ],
@@ -222,7 +242,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
       //   ),
       // ),
       title: Text(
-        artist.runtimeType == Artist ? artist.stageName ?? '' : artist.name,
+        artist.runtimeType == Artist ? artist.fullName ?? '' : artist.name,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,

@@ -39,7 +39,7 @@ const String ENDPOINT_SEARCH_MUSIC_VIDEOS =
 const String ENDPOINT_SONG_FILTER =
     'select=albumStatic,artistStatic,featuredArtists,title,isSingle,releaseDate,fileUrl,coverArt';
 const String ENDPOINT_ALBUM_FILTER =
-    'select=artistStatic,name,description,releaseDate,albumArt,songs';
+    'select=artistStatic,name,description,releaseDate,SongArtwork,songs';
 const String ENDPOINT_ARTIST_FILTER =
     'select=stageName,firstName,lastName,bio,photo,fullName,coverImage';
 const String ENDPOINT_CHANNEL_FILTER = 'select=name,description,photo,banner';

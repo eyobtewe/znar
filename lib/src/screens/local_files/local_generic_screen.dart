@@ -1,6 +1,7 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
 import '../../presentation/bloc.dart';
@@ -59,7 +60,7 @@ class _LocalSongsScreenState extends State<LocalSongsScreen> {
     return AppBar(
       actions: [
         IconButton(
-          icon: const Icon(Icons.search),
+          icon: const Icon(Ionicons.search),
           onPressed: () {
             String _route = SEARCH_LOCAL_SONGS_PAGE_ROUTE;
             switch (widget.categoryTitle) {

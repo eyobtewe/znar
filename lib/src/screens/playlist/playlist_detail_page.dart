@@ -4,7 +4,6 @@ import 'package:ionicons/ionicons.dart';
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../presentation/bloc.dart';
-import '../audio_player/audio_player.dart';
 import '../screens.dart';
 import '../widgets/widgets.dart';
 
@@ -35,7 +34,6 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
 
     return Scaffold(
       bottomNavigationBar: BottomScreenPlayer(),
-      floatingActionButton: HomeFAB(context: context),
       body: widget.playlistId != null
           ? FutureBuilder(
               future: bloc.fetchPlaylistDetails(widget.playlistId),
@@ -95,61 +93,28 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
   }
 
   Widget buildContentBody(Playlist playlist, BuildContext context) {
-    return Stack(
-      children: [
-        CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              title: Text(
-                playlist.name ?? '',
-                style: const TextStyle(fontFamilyFallback: f),
-              ),
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.playlist_play),
-                  onPressed: () {
-                    if (playerBloc.audioPlayer != null) {
-                      playerBloc.audioPlayer.stop();
-                    }
-
-                    playerBloc.audioInit(0, songs);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext ctx) =>
-                            AudioPlayerScreen(songs: songs, i: 0),
-                      ),
-                    );
-                  },
+    return Scaffold(
+      floatingActionButton: PlayAllFAB(songs: bloc.songs),
+      body: Stack(
+        children: [
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                title: Text(
+                  playlist.name ?? '',
+                  style: const TextStyle(fontFamilyFallback: f),
                 ),
-                // !playlist.isLocal
-                //     ? IconButton(
-                //         icon: const Icon(Icons.share),
-                //         onPressed: () async {
-                //           final String link = await bloc.dynamikLinkService
-                //               .createDynamicLink(playlist);
-                //           kAnalytics.logShare(
-                //               contentType: 'playlist',
-                //               itemId: playlist.name,
-                //               method: 'SharePlaylist');
-
-                //           Share.share(
-                //               'Checkout this playlist on IAAM streaming app\n${playlist.name} \n$link');
-                //         },
-                //       )
-                //     : Container(),
-              ],
-            ),
-            buildSliverList(playlist),
-          ],
-        ),
-        // DownloadProgress(),
-      ],
+              ),
+              buildSliverList(playlist),
+            ],
+          ),
+          // DownloadProgress(),
+        ],
+      ),
     );
   }
 
-  SliverList buildSliverList(Playlist playlist) {
+  Widget buildSliverList(Playlist playlist) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext ctx, int i) {

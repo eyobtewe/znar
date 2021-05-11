@@ -1,41 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:znar/src/core/core.dart';
-import 'package:znar/src/screens/screens.dart';
-import 'package:znar/src/screens/search/search.dart';
+
+import '../../core/core.dart';
+import '../../presentation/ui_provider.dart';
+import '../screens.dart';
+import '../search/search.dart';
 
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({
-    Key key,
-    @required this.currentIndex,
-  }) : super(key: key);
+  const BottomNavBar({Key key, @required this.currentIndex}) : super(key: key);
 
   final int currentIndex;
 
   @override
   Widget build(BuildContext context) {
+    final uBloc = UiProvider.of(context);
+    final size = MediaQuery.of(context).size;
+    ScreenUtil.init(context, designSize: size, allowFontScaling: true);
+
+    TextStyle _textStyle = TextStyle(
+      fontFamilyFallback: f,
+      fontSize: ScreenUtil().setSp(10),
+    );
+
     return BottomNavigationBar(
+      selectedLabelStyle: _textStyle,
+      unselectedLabelStyle: _textStyle,
       items: [
         BottomNavigationBarItem(
           icon: Icon(Ionicons.grid_outline),
-          label: 'Discover',
+          label: Language.locale(uBloc.language, 'discover'),
         ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Ionicons.videocam),
+        //   label: Language.locale(uBloc.language, 'videos'),
+        // ),
         BottomNavigationBarItem(
           icon: Icon(Ionicons.search_outline),
-          label: 'Search',
+          label: Language.locale(uBloc.language, 'search'),
         ),
         BottomNavigationBarItem(
           icon: Icon(Ionicons.musical_notes_outline),
-          label: 'Playlists',
+          label: Language.locale(uBloc.language, 'playlists_nav'),
         ),
         BottomNavigationBarItem(
           icon: Icon(Ionicons.people),
-          label: 'Artists',
+          label: Language.locale(uBloc.language, 'artists'),
         ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(Ionicons.person_outline),
-        //   label: 'Profile',
-        // ),
       ],
       currentIndex: currentIndex,
       onTap: (int index) {
@@ -43,6 +54,9 @@ class BottomNavBar extends StatelessWidget {
           case 0:
             Navigator.pushReplacementNamed(context, HOME_PAGE_ROUTE);
             break;
+          // case 1:
+          //   Navigator.pushReplacementNamed(context, MUSIC_VIDEOS_PAGE_ROUTE);
+          //   break;
           case 1:
             showSearch(
                 context: context, delegate: SongSearch(CustomAspectRatio.SONG));
@@ -53,9 +67,6 @@ class BottomNavBar extends StatelessWidget {
           case 3:
             Navigator.pushReplacementNamed(context, ARTISTS_PAGE_ROUTE);
             break;
-          // case 3:
-          //   Navigator.pushReplacementNamed(context, PROFILE_PAGE_ROUTE);
-          //   break;
           default:
             Navigator.pushReplacementNamed(context, HOME_PAGE_ROUTE);
             break;

@@ -10,11 +10,11 @@ final ThemeData kDarkTheme = ThemeData(
   cardColor: BACKGROUND,
   accentColor: PRIMARY_COLOR,
   appBarTheme: AppBarTheme(color: BACKGROUND),
-  // pageTransitionsTheme: pageTransitionsTheme(),
+  pageTransitionsTheme: pageTransitionsTheme(),
 );
 
 final ThemeData kLightTheme = ThemeData(
-  // pageTransitionsTheme: pageTransitionsTheme(),s
+  pageTransitionsTheme: pageTransitionsTheme(),
   primaryColor: BACKGROUND,
   fontFamily: 'AvenirNext',
   accentColor: PRIMARY_COLOR,
@@ -34,5 +34,5 @@ PageTransitionsTheme pageTransitionsTheme() {
 }
 
 const List<String> f = [
-  'Kf',
+  'Kefa',
 ];

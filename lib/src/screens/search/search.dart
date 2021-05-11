@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
-import '../../domain/models/models.dart';
 import '../../presentation/bloc.dart';
 import '../home/widgets/widgets.dart';
 import '../screens.dart';
@@ -101,7 +100,35 @@ class SongSearch extends SearchDelegate<dynamic> {
   Widget buildSuggestions(BuildContext context) {
     final uiBloc = UiProvider.of(context);
     final bloc = ApiProvider.of(context);
-    return query != '' ? buildFutureBuilder(bloc) : buildPlaceHolder(uiBloc);
+    return query != ''
+        ? FutureBuilder(
+            future: buildFutures(ar, bloc),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return CustomLoader();
+              } else {
+                return ListView.builder(
+                  itemBuilder: (BuildContext ctx, int k) {
+                    switch (ar) {
+                      case CustomAspectRatio.VIDEO:
+                        return MusicVideoTile(musicVideo: snapshot.data[k]);
+                      case CustomAspectRatio.SONG:
+                        return SongTile(songs: snapshot.data, index: k);
+                      case CustomAspectRatio.PLAYLIST:
+                        return PlaylistTile(playlist: snapshot.data[k]);
+                      case CustomAspectRatio.ARTIST:
+                        return ArtistTile(artist: snapshot.data[k]);
+                      default:
+                        return PlaylistTile(playlist: snapshot.data[k]);
+                    }
+                  },
+                  itemCount: snapshot.data.length,
+                  shrinkWrap: true,
+                );
+              }
+            },
+          )
+        : buildPlaceHolder(uiBloc);
   }
 
   ListView buildPlaceHolder(UiBloc uiBloc) {
@@ -109,12 +136,10 @@ class SongSearch extends SearchDelegate<dynamic> {
       physics: const BouncingScrollPhysics(),
       children: [
         buildDivider(),
-        buildDivider(),
         ThumbnailCards(
           ar: CustomAspectRatio.PLAYLIST,
           title: Language.locale(uiBloc.language, 'trending_playlists'),
         ),
-        // buildDivider(),
         buildDivider(),
         ThumbnailCards(
           ar: CustomAspectRatio.SONG,
@@ -124,24 +149,23 @@ class SongSearch extends SearchDelegate<dynamic> {
     );
   }
 
-  FutureBuilder<List<Song>> buildFutureBuilder(ApiBloc bloc) {
-    return FutureBuilder(
-      future: ar == CustomAspectRatio.SONG
-          ? bloc.searchSongs(query)
-          : bloc.searchPlayLists(query),
-      builder: (BuildContext context, AsyncSnapshot<List<Song>> snapshot) {
-        if (!snapshot.hasData) {
-          return CustomLoader();
-        } else {
-          return ListView.builder(
-            itemBuilder: (BuildContext ctx, int k) {
-              return SongTile(songs: bloc.songs, index: k);
-            },
-            itemCount: snapshot.data.length,
-            shrinkWrap: true,
-          );
-        }
-      },
-    );
+  dynamic buildResultTile(
+      CustomAspectRatio ar, List<dynamic> data, int k) async {}
+
+  Future buildFutures(CustomAspectRatio ar, ApiBloc bloc) async {
+    switch (ar) {
+      case CustomAspectRatio.ALBUM:
+        return bloc.searchAlbums(query);
+      case CustomAspectRatio.ARTIST:
+        return bloc.searchArtist(query);
+      case CustomAspectRatio.PLAYLIST:
+        return bloc.searchPlayLists(query);
+      case CustomAspectRatio.VIDEO:
+        return bloc.searchMusicVideos(query);
+      case CustomAspectRatio.SONG:
+        return bloc.searchSongs(query);
+
+      default:
+    }
   }
 }

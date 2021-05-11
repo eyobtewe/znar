@@ -139,7 +139,7 @@ class BottomScreenPlayer extends StatelessWidget {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: BACKGROUND.withOpacity(0.75),
+                    color: BACKGROUND.withOpacity(0.65),
                   ),
                   child: IconButton(
                     color: PRIMARY_COLOR,
@@ -159,16 +159,25 @@ class BottomScreenPlayer extends StatelessWidget {
         title: Text(
           songMetaData?.title ?? '',
           maxLines: 2,
-          style: const TextStyle(fontFamilyFallback: f, color: GRAY),
+          style: TextStyle(
+            fontFamilyFallback: f,
+            color: GRAY,
+            fontSize: ScreenUtil().setSp(12),
+          ),
         ),
         subtitle: Text(
           songMetaData?.artist ?? '',
           maxLines: 1,
-          style: const TextStyle(color: DARK_GRAY, fontFamilyFallback: f),
+          style: TextStyle(
+            color: DARK_GRAY,
+            fontFamilyFallback: f,
+            fontSize: ScreenUtil().setSp(10),
+          ),
         ),
         dense: true,
         trailing: IconButton(
             icon: Icon(Ionicons.close_outline),
+            color: PRIMARY_COLOR,
             onPressed: () async {
               await playerBloc.stop();
             }),

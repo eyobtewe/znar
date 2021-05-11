@@ -62,11 +62,7 @@ class PlayerDynamicLinkCatcher extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (BuildContext ctx) => CustomWebPage(
-            url: snapshot.data.url,
-            title: snapshot.data?.channel?.name ?? '',
-            musicVideo: snapshot.data,
-          ),
+          builder: (BuildContext ctx) => CustomWebPage(url: snapshot.data.url),
         ),
       );
     }

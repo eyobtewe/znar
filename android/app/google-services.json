@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "463504742601",
-    "project_id": "znar-71d24",
-    "storage_bucket": "znar-71d24.appspot.com"
+    "project_number": "514591476510",
+    "project_id": "znar-70fab",
+    "storage_bucket": "znar-70fab.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:463504742601:android:ee61b2a5e818eaa5001518",
+        "mobilesdk_app_id": "1:514591476510:android:5b39bec3548264ef0f570f",
         "android_client_info": {
           "package_name": "music.streaming.znar"
         }
       },
       "oauth_client": [
         {
-          "client_id": "463504742601-g285gjlmq8p1a313bob11635j2jnbnaf.apps.googleusercontent.com",
+          "client_id": "514591476510-3u8pchmq9sv9n7j39ie5l7ou7dhpnjpa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "music.streaming.znar",
+            "certificate_hash": "3a532fa43bf8aee99efb0bfeae844a19d4b0b9ad"
+          }
+        },
+        {
+          "client_id": "514591476510-4f4u6ea4u0090kv7t3of0kim5hmr5nph.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDzpOGmyOZT8sQ_w-6mplOpgqZTGBGyp38"
+          "current_key": "AIzaSyCnvHCrLfhMmuQmvzy5rhAZqODVZDb9pzk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "463504742601-g285gjlmq8p1a313bob11635j2jnbnaf.apps.googleusercontent.com",
+              "client_id": "514591476510-4f4u6ea4u0090kv7t3of0kim5hmr5nph.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

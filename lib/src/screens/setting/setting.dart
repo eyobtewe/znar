@@ -27,110 +27,107 @@ class _SettingScreenState extends State<SettingScreen> {
 
     Size size = MediaQuery.of(context).size;
 
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: BottomScreenPlayer(),
-        appBar: AppBar(
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, HOME_PAGE_ROUTE, (Route<dynamic> route) => false);
-              }),
-          title: Text(
-            Language.locale(uiBloc.language, 'setting'),
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontFamilyFallback: f,
-            ),
+    return Scaffold(
+      bottomNavigationBar: BottomScreenPlayer(),
+      appBar: AppBar(
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, HOME_PAGE_ROUTE, (Route<dynamic> route) => false);
+            }),
+        title: Text(
+          Language.locale(uiBloc.language, 'setting'),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamilyFallback: f,
           ),
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(
-              vertical: size.height * 0.05, horizontal: size.width * 0.1),
-          child: Column(
-            children: <Widget>[
-              // Wrap(
-              //   direction: Axis.horizontal,
-              //   children: <Widget>[
-              //     Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: ChoiceChip(
-              //         label: Text(
-              //           'English',
-              //           style: TextStyle(
-              //             color: chip1 ? PURE_WHITE : BACKGROUND,
-              //             fontWeight: chip1 ? FontWeight.bold : FontWeight.normal,
-              //           ),
-              //         ),
-              //         selectedColor: PRIMARY_COLOR,
-              //         selected: chip1,
-              //         onSelected: (bool selected) {
-              //           if (selected) {
-              //             setState(() {
-              //               chip1 = selected;
-              //               chip2 = !selected;
-              //             });
-              //             changeLanguage();
-              //           }
-              //         },
-              //       ),
-              //     ),
-              //     Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: ChoiceChip(
-              //         label: Text(
-              //           'አማርኛ',
-              //           style: TextStyle(
-              //             fontFamilyFallback: f,
-              //             color: chip2 ? PURE_WHITE : BACKGROUND,
-              //             fontWeight: chip2 ? FontWeight.bold : FontWeight.normal,
-              //           ),
-              //         ),
-              //         selectedColor: PRIMARY_COLOR,
-              //         selected: chip2,
-              //         onSelected: (bool selected) {
-              //           if (selected) {
-              //             setState(() {
-              //               chip1 = !selected;
-              //               chip2 = selected;
-              //             });
-              //             changeLanguage();
-              //           }
-              //         },
-              //       ),
-              //     ),
-              //   ],
-              // )
-              Wrap(
-                children: List<Widget>.generate(
-                  langs.length,
-                  (int index) {
-                    return ChoiceChip(
-                      label: Text(
-                        langs[index],
-                        style: const TextStyle(
-                          color: GRAY,
-                          fontFamilyFallback: f,
-                        ),
+      ),
+      body: Container(
+        padding: EdgeInsets.symmetric(
+            vertical: size.height * 0.05, horizontal: size.width * 0.1),
+        child: Column(
+          children: <Widget>[
+            // Wrap(
+            //   direction: Axis.horizontal,
+            //   children: <Widget>[
+            //     Padding(
+            //       padding: const EdgeInsets.all(8.0),
+            //       child: ChoiceChip(
+            //         label: Text(
+            //           'English',
+            //           style: TextStyle(
+            //             color: chip1 ? PURE_WHITE : BACKGROUND,
+            //             fontWeight: chip1 ? FontWeight.bold : FontWeight.normal,
+            //           ),
+            //         ),
+            //         selectedColor: PRIMARY_COLOR,
+            //         selected: chip1,
+            //         onSelected: (bool selected) {
+            //           if (selected) {
+            //             setState(() {
+            //               chip1 = selected;
+            //               chip2 = !selected;
+            //             });
+            //             changeLanguage();
+            //           }
+            //         },
+            //       ),
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.all(8.0),
+            //       child: ChoiceChip(
+            //         label: Text(
+            //           'አማርኛ',
+            //           style: TextStyle(
+            //             fontFamilyFallback: f,
+            //             color: chip2 ? PURE_WHITE : BACKGROUND,
+            //             fontWeight: chip2 ? FontWeight.bold : FontWeight.normal,
+            //           ),
+            //         ),
+            //         selectedColor: PRIMARY_COLOR,
+            //         selected: chip2,
+            //         onSelected: (bool selected) {
+            //           if (selected) {
+            //             setState(() {
+            //               chip1 = !selected;
+            //               chip2 = selected;
+            //             });
+            //             changeLanguage();
+            //           }
+            //         },
+            //       ),
+            //     ),
+            //   ],
+            // )
+            Wrap(
+              children: List<Widget>.generate(
+                langs.length,
+                (int index) {
+                  return ChoiceChip(
+                    label: Text(
+                      langs[index],
+                      style: const TextStyle(
+                        color: GRAY,
+                        fontFamilyFallback: f,
                       ),
-                      // padding: EdgeInsets.zero,
-                      backgroundColor:
-                          Theme.of(context).scaffoldBackgroundColor,
-                      selectedColor: PRIMARY_COLOR,
-                      selected: _value == index,
-                      onSelected: (bool selected) {
-                        setState(() {
-                          _value = selected ? index : null;
-                        });
-                        changeLanguage();
-                      },
-                    );
-                  },
-                ).toList(),
-              )
-            ],
-          ),
+                    ),
+                    // padding: EdgeInsets.zero,
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    selectedColor: PRIMARY_COLOR,
+                    selected: _value == index,
+                    onSelected: (bool selected) {
+                      setState(() {
+                        _value = selected ? index : null;
+                      });
+                      changeLanguage();
+                    },
+                  );
+                },
+              ).toList(),
+            )
+          ],
         ),
       ),
     );

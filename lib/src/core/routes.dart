@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:znar/src/screens/search/search.dart';
 
 import '../presentation/bloc.dart';
 import '../screens/screens.dart';
+import '../screens/search/search.dart';
 
 const String HOME_PAGE_ROUTE = '/home';
 const String PROFILE_PAGE_ROUTE = '/profile';
