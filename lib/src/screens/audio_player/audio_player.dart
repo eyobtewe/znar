@@ -62,6 +62,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                 onPressed: () async {
                   final String link = await kDynamicLinkService
                       .createDynamicLink(widget.songs[widget.i]);
+
                   Share.share(
                       '${widget.songs[widget.i].title} - ${widget.songs[widget.i].artistStatic.fullName} \n\n$link');
                 },
