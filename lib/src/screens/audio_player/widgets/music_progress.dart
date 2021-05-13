@@ -1,12 +1,12 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+
 // import 'package:flutter_lyric/lyric_util.dart';
 // import 'package:flutter_lyric/lyric_widget.dart';
 
 import '../../../../external_src/audio_progress_bar/audio_player_progress_bar.dart';
 import '../../../core/core.dart';
 import '../../../presentation/bloc.dart';
-import '../../screens.dart';
 
 class MusicProgress extends StatefulWidget {
   const MusicProgress({Key key, this.isBottombar = false}) : super(key: key);

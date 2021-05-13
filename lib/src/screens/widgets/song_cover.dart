@@ -1,9 +1,10 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:znar/src/core/core.dart';
-import 'package:znar/src/helpers/network_image.dart';
-import 'package:znar/src/presentation/bloc.dart';
+
+import '../../core/core.dart';
+import '../../helpers/network_image.dart';
+import '../../presentation/bloc.dart';
 
 class SongCover extends StatelessWidget {
   const SongCover({Key key}) : super(key: key);

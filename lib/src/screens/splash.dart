@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../core/core.dart';
 import '../presentation/bloc.dart';
@@ -22,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     bloc.fetchAll();
 
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(milliseconds: 2000), () {
       Navigator.pushReplacementNamed(context, HOME_PAGE_ROUTE);
     });
 
@@ -40,9 +39,9 @@ class _SplashScreenState extends State<SplashScreen> {
               style: TextStyle(
                 fontSize: 38,
                 fontFamilyFallback: f,
-                fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                fontFamily: 'Didot',
                 color: PRIMARY_COLOR,
-                fontWeight: FontWeight.w900,
+                // fontWeight: FontWeight.w900,
               ),
             ),
           ),

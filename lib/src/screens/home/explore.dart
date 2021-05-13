@@ -5,7 +5,6 @@ import 'package:ionicons/ionicons.dart';
 import '../../core/core.dart';
 import '../../presentation/bloc.dart';
 import '../search/search.dart';
-import '../widgets/widgets.dart';
 import 'widgets/widgets.dart';
 
 class ExplorerScreen extends StatefulWidget {

@@ -138,7 +138,7 @@ class SongSearch extends SearchDelegate<dynamic> {
         buildDivider(),
         ThumbnailCards(
           ar: CustomAspectRatio.PLAYLIST,
-          title: Language.locale(uiBloc.language, 'trending_playlists'),
+          title: Language.locale(uiBloc.language, 'popular_playlists'),
         ),
         buildDivider(),
         ThumbnailCards(

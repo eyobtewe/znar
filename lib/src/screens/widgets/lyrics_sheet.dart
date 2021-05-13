@@ -2,9 +2,10 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:znar/src/core/core.dart';
-import 'package:znar/src/infrastructure/services/dummy_data.dart';
-import 'package:znar/src/presentation/bloc.dart';
+
+import '../../core/core.dart';
+import '../../infrastructure/services/dummy_data.dart';
+import '../../presentation/bloc.dart';
 
 class LyricsBtn extends StatefulWidget {
   const LyricsBtn({Key key}) : super(key: key);

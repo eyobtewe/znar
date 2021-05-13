@@ -79,6 +79,9 @@ flutter:
     - family: Kefa
       fonts:
         - asset: assets/fonts/Kefa.ttc
+    - family: Didot
+      fonts:
+        - asset: assets/fonts/Didot.ttc
     - family: AvenirNext
       fonts:
         - asset: assets/fonts/AvenirNext/Metropolis-Regular.otf

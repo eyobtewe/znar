@@ -2,17 +2,14 @@ import 'dart:ui';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:ionicons/ionicons.dart';
 import 'package:share/share.dart';
-import 'package:znar/src/infrastructure/services/dummy_data.dart';
-import 'package:znar/src/screens/widgets/song_cover.dart';
 
 import '../../core/core.dart';
 import '../../infrastructure/services/services.dart';
 import '../../presentation/bloc.dart';
 import '../screens.dart';
+import '../widgets/song_cover.dart';
 import '../widgets/widgets.dart';
 import 'widgets/widgets.dart';
 
@@ -89,10 +86,10 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
             SongDetails(),
             PlayerButtons(),
             Divider(color: TRANSPARENT),
-            Row(
-              children: [Spacer(), LyricsBtn(), Spacer()],
-            ),
-            Divider(color: TRANSPARENT),
+            // Row(
+            //   children: [Spacer(), LyricsBtn(), Spacer()],
+            // ),
+            // Divider(color: TRANSPARENT),
             // buildContainer(),
           ],
         ),
