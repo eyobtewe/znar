@@ -6,7 +6,7 @@ class Album {
   String name;
   Artist artist;
   String releaseDate;
-  String SongArtwork;
+  String albumArt;
 
   Album({
     this.artistStatic,
@@ -14,7 +14,7 @@ class Album {
     this.name,
     this.artist,
     this.releaseDate,
-    this.SongArtwork,
+    this.albumArt,
   });
 
   Album.fromJson(Map<String, dynamic> json) {
@@ -29,7 +29,7 @@ class Album {
             : Artist.fromJson(json['artist']))
         : null;
     releaseDate = json['releaseDate'] ?? '';
-    SongArtwork = json['SongArtwork'] ?? '';
+    albumArt = json['albumArt'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -41,7 +41,7 @@ class Album {
     data['name'] = this.name;
     data['artist'] = this.artist;
     data['releaseDate'] = this.releaseDate;
-    data['SongArtwork'] = this.SongArtwork;
+    data['albumArt'] = this.albumArt;
     return data;
   }
 }

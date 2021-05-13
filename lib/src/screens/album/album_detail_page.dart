@@ -199,7 +199,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
 
   Widget buildAppBarBackground(dynamic album) {
     return album.runtimeType == Album
-        ? CachedPicture(image: album.SongArtwork, isBackground: true)
-        : CustomFileImage(img: album.SongArtwork);
+        ? CachedPicture(image: album.albumArt, isBackground: true)
+        : CustomFileImage(img: album.albumArt);
   }
 }

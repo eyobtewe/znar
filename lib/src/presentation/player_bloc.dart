@@ -114,7 +114,7 @@ class PlayerBloc {
               title: e.title ?? '',
               album: e.album ?? '',
               artist: e.artist ?? '',
-              image: MetasImage.file(e.SongArtworkwork ?? ''),
+              image: MetasImage.file(e.albumArtwork ?? ''),
               id: e.id ?? '',
               extra: {'image': null},
             ));

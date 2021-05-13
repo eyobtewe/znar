@@ -1,3 +1,78 @@
+List<String> kLYRIC = [
+"አቤት አቤት አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+"ሰጠው ሁሉን ነገር",
+
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+
+"ዉበትና ፍቅር ልቤን ስለገዛው",
+"አቤት አቤት አፈጣጠር",
+"ያመላልሰኛል ነጋ መሸ በዚያው",
+"አቤት አቤት አፈጣጠር",
+"አቤት የሱ ሥራ መገን አፈጣጠር",
+"አቤት አቤት አፈጣጠር",
+"ልቅም አርጎ ሰርቶ አደለው መፈቀር",
+"አቤት አቤት አፈጣጠር",
+"አቤት አቤት አፈጣጠር",
+
+"ስንቱን አዳርሼ እጨርሰዋለሁ",
+"አይና ተቀምጬ ሁሉን አየዋለሁ",
+"ሁሉ ሸጋ ብቻ ሁሉ መልከ-ቀና",
+"አይጠረጠርም ወሎ በቁንጅና",
+
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+
+"ቡልቡላ ደርሼ ገዳማቱ ስፍራ",
+"እጅግ ተገረምኩኝ በፈጣሪ ስራ",
+"ወላቲ ማርያምን እስቲ ላንጎራጉረው",
+"የማር የወተቱ የጥጋብ አገር ነው",
+
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+
+"ተወዳጅነቱን ከላይ ተቀብቶ",
+"አቤት አቤት አፈጣጠር",
+"አሁን ማን ይወጣል ሐሳቡን አግብቶ",
+"አቤት አቤት አፈጣጠር",
+"ክርስቲያን ሙስሊሙ ተዋዶ ይኖራል",
+"አቤት አቤት አፈጣጠር",
+"ትንሹም ትልቁም ሰው ይከባበራል",
+"አቤት አቤት አፈጣጠር",
+"አቤት አቤት አፈጣጠር",
+
+"የጦሳ ተራራ ደሴ መሃል ያለው",
+"የተፈጥሮ ፀጋ እሱም አንድ ዉበት ነው",
+"ስንቱ ተዘርዝሮ ተነግሮ ያበቃል",
+"ውሎ ጋራገር ነው ሁሉ ይደነቃል",
+
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+
+"በዱከት በድሪው ሴቱ ተከሽሮ",
+"በቀጭን ሹሩባ ፀጉሩን ተበጥሮ",
+"ክምክም ጎፈሬውን ተነቅሶ አምሮበት",
+"ሁሉን የተሰጠው አገረ-ገነት",
+
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+"መገን መገን አፈጣጠር",
+"ወሎን ሰጠው ሁሉን ነገር",
+];
+
 const Map<String, dynamic> MOCK_SONGS = {
   "success": true,
   "results": 32,
@@ -1033,24 +1108,24 @@ const Map<String, dynamic> MOCK_ALBUMS = {
       "artistStatic": {"stageName": "IAAM Various Artists"},
       "_id": "5f6f342e5f070a069292409a",
       "name": "IAAM #1",
-      "SongArtwork":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/albums/covers/SongArtwork-b359d4f298d4-1601126245927.jpeg",
+      "albumArt":
+          "https://d3853gs02vq4o.cloudfront.net/images/listings/albums/covers/albumArt-b359d4f298d4-1601126245927.jpeg",
       "id": "5f6f342e5f070a069292409a"
     },
     {
       "artistStatic": {"stageName": "IAAM Various Artists"},
       "_id": "5ff1940f65cb6028d5bd100a",
       "name": "IAAM #2",
-      "SongArtwork":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/albums/covers/SongArtwork-a428aaaff15a-1609788782461.jpeg",
+      "albumArt":
+          "https://d3853gs02vq4o.cloudfront.net/images/listings/albums/covers/albumArt-a428aaaff15a-1609788782461.jpeg",
       "id": "5ff1940f65cb6028d5bd100a"
     },
     {
       "artistStatic": {"stageName": "IAAM Various Artists"},
       "_id": "5ff1967a65cb6028d5bd100b",
       "name": "IAAM #3",
-      "SongArtwork":
-          "https://d3853gs02vq4o.cloudfront.net/images/listings/albums/covers/SongArtwork-e3838cde8e97-1609668218653.jpeg",
+      "albumArt":
+          "https://d3853gs02vq4o.cloudfront.net/images/listings/albums/covers/albumArt-e3838cde8e97-1609668218653.jpeg",
       "id": "5ff1967a65cb6028d5bd100b"
     }
   ]

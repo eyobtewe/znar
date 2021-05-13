@@ -90,18 +90,18 @@ class _HomeState extends State<Home> {
             MaterialPageRoute(builder: (BuildContext ctx) {
               switch (id?.values?.single) {
                 // case 'album':
-                //   return AlbumDetailScreen(albumId: id.keys.single); //*
+                //   return AlbumDetailScreen(albumId: id.keys.single);
                 case 'musicvideo':
                   return PlayerDynamicLinkCatcher(
-                      isAudio: false, songId: id.keys.single); //*
+                      isAudio: false, songId: id.keys.single);
                 case 'artist':
-                  return ArtistDetailScreen(artistId: id.keys.single); //*
+                  return ArtistDetailScreen(artistId: id.keys.single);
                 case 'playlist':
-                  return PlaylistDetailScreen(playlistId: id.keys.single); //*
+                  return PlaylistDetailScreen(playlistId: id.keys.single);
                 // case 'channel':
-                //   return ChannelDetailScreen(channelId: id.keys.single); //*
+                //   return ChannelDetailScreen(channelId: id.keys.single);
                 // case 'announcement':
-                //   return AnnouncementScreen(announcementId: id.keys.single); //*
+                //   return AnnouncementScreen(announcementId: id.keys.single);
                 case 'song':
                   return PlayerDynamicLinkCatcher(
                       isAudio: true, songId: id.keys.single); //*

@@ -44,14 +44,14 @@ class AlbumThumbnail extends StatelessWidget {
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: CachedPicture(
-                              image: album.SongArtwork,
+                              image: album.albumArt,
                               isBackground: true,
                             ),
                           )
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: CustomFileImage(
-                              img: album.SongArtwork,
+                              img: album.albumArt,
                               isBackground: true,
                             ),
                           ),

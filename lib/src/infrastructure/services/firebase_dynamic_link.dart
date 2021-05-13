@@ -41,7 +41,7 @@ class DynamicLinkService {
         return await _createDynamicLink(entity.sId, entity.photo, 'artist');
       // case Album:
       //   return await _createDynamicLink(
-      //       entity.sId, entity.SongArtwork, 'album');
+      //       entity.sId, entity.albumArt, 'album');
       case Song:
         return await _createDynamicLink(entity.sId, entity.coverArt, 'song');
       case Playlist:

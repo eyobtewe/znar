@@ -149,7 +149,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
                   ),
                 );
               },
-              child: CachedPicture(image: albums[index].SongArtwork)),
+              child: CachedPicture(image: albums[index].albumArt)),
         ),
       ),
     );
