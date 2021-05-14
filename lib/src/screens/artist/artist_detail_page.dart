@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/src/rendering/sliver_persistent_header.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:znar/src/screens/home/widgets/widgets.dart';
 import 'package:znar/src/screens/screens.dart';
 
@@ -29,13 +31,16 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
   ApiBloc bloc;
   LocalSongsBloc localSongsBloc;
   UiBloc uiBloc;
+  PlayerBloc playerBloc;
 
   Widget build(BuildContext context) {
+    playerBloc = PlayerProvider.of(context);
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
     localSongsBloc = LocalSongsProvider.of(context);
     size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size, allowFontScaling: true);
+
     return Scaffold(
       bottomSheet: BottomScreenPlayer(),
       body: widget.artistId != null
@@ -59,56 +64,30 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
         primary: true,
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
-          SliverPersistentHeader(
-            delegate: ArtistPageHeader(
-              artist: widget.artist,
-            ),
+          SliverAppBar(
+            pinned: true,
+            elevation: 0,
+            stretch: true,
+            flexibleSpace: buildFlexibleSpaceBar(artist),
+            expandedHeight: size.width * 9 / 16,
           ),
-          // SliverAppBar(
-          //   pinned: true,
-          //   elevation: 0,
-          //   stretch: true,
-          //   actions: [
-          //     // artist.runtimeType == Artist
-          //     //     ? IconButton(
-          //     //         icon: Icon(Icons.share),
-          //     //         onPressed: () async {
-          //     //           final String link = await bloc.dynamikLinkService
-          //     //               .createDynamicLink(artist);
-
-          //     //           Share.share(
-          //     //               'Checkout ${artist.stageName}\'s songs \n\n$link');
-          //     //         },
-          //     //       )
-          //     //     : Container(),
-          //   ],
-          //   flexibleSpace: buildFlexibleSpaceBar(artist),
-          //   expandedHeight: size.width * 9 / 16 - 30,
-          // ),
           SliverList(
             delegate: SliverChildListDelegate.fixed(
               [
-                // Container(
-                //   width: size.width,
-                //   child: CachedPicture(
-                //     image: artist.photo ?? artist.photo,
-                //   ),
-                // ),
-                // Container(
-                //   padding:
-                //       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                //   child: Text(
-                //     artist.runtimeType == Artist
-                //         ? artist.fullName ?? ''
-                //         : artist.name,
-                //     overflow: TextOverflow.ellipsis,
-                //     style: TextStyle(
-                //       fontWeight: FontWeight.w800,
-                //       fontFamilyFallback: f,
-                //       fontSize: ScreenUtil().setSp(20),
-                //     ),
-                //   ),
-                // ),
+                Container(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                  child: Text(
+                    artist.runtimeType == Artist
+                        ? artist.fullName ?? ''
+                        : artist.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontFamilyFallback: f,
+                      fontSize: ScreenUtil().setSp(20),
+                    ),
+                  ),
+                ),
                 buildAlbums(artist),
                 buildMusicVideos(artist),
                 buildSongs(artist),
@@ -126,24 +105,26 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
       initialData: bloc.artistMusicVideos[artist.sId],
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
-          return Container();
+          return CustomLoader();
         } else {
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1.2,
-            ),
-            itemBuilder: (BuildContext ctx, int index) {
-              return HomeCards(
-                ar: CustomAspectRatio.VIDEO,
-                data: bloc.artistMusicVideos[artist.sId],
-                i: index,
-              );
-            },
-            itemCount: bloc.artistMusicVideos[artist.sId].length,
-            shrinkWrap: true,
-            primary: false,
-          );
+          return bloc.artistMusicVideos[artist.sId].isEmpty
+              ? Container()
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1.2,
+                  ),
+                  itemBuilder: (BuildContext ctx, int index) {
+                    return HomeCards(
+                      ar: CustomAspectRatio.VIDEO,
+                      data: bloc.artistMusicVideos[artist.sId],
+                      i: index,
+                    );
+                  },
+                  itemCount: bloc.artistMusicVideos[artist.sId].length,
+                  shrinkWrap: true,
+                  primary: false,
+                );
         }
       },
     );
@@ -171,7 +152,8 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   index == 0
-                      ? buildTitle(Language.locale(uiBloc.language, 'songs'))
+                      ? buildTitle(
+                          Language.locale(uiBloc.language, 'songs'), songs)
                       : Container(),
                   SongTile(index: index, songs: songs),
                 ],
@@ -201,7 +183,8 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildTitle(Language.locale(uiBloc.language, 'albums')),
+                    buildTitle(
+                        Language.locale(uiBloc.language, 'albums'), null),
                     Container(
                       height: 200,
                       child: ListView.builder(
@@ -225,46 +208,27 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
     );
   }
 
-  // FlexibleSpaceBar buildFlexibleSpaceBar(dynamic artist) {
-  //   return FlexibleSpaceBar(
-  //     stretchModes: <StretchMode>[
-  //       StretchMode.zoomBackground,
-  //       StretchMode.fadeTitle,
-  //     ],
-  //     centerTitle: true,
-  //     title: Container(
-  //       width: size.width,
-  //       child: buildArtistProfile(artist),
-  //       decoration: BoxDecoration(
-  //         gradient: LinearGradient(
-  //           colors: [
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(1),
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.7),
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.6),
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.4),
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.3),
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.2),
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.1),
-  //             Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
-  //           ],
-  //           begin: FractionalOffset.bottomCenter,
-  //           end: FractionalOffset.topCenter,
-  //         ),
-  //       ),
-  //     ),
-  //     titlePadding: EdgeInsets.zero,
-  //     background: buildAppBarBackground(artist),
-  //   );
-  // }
+  FlexibleSpaceBar buildFlexibleSpaceBar(dynamic artist) {
+    return FlexibleSpaceBar(
+      // stretchModes: <StretchMode>[
+      //   StretchMode.zoomBackground,
+      //   StretchMode.fadeTitle,
+      // ],
+      // centerTitle: true,
+      // title: Container(
+      //   width: size.width,
+      //   child: buildArtistProfile(artist),
+      // ),
+      // titlePadding: EdgeInsets.zero,
+      background: buildAppBarBackground(artist),
+    );
+  }
 
-  // Widget buildAppBarBackground(dynamic artist) {
-  //   return artist.runtimeType == Artist
-  //       ? CachedPicture(image: artist.coverImage, isBackground: true)
-  //       : CustomFileImage(img: artist.artistArtPath);
-  // }
+  Widget buildAppBarBackground(dynamic artist) {
+    return artist.runtimeType == Artist
+        ? CachedPicture(image: artist.coverImage, isBackground: true)
+        : CustomFileImage(img: artist.artistArtPath);
+  }
 
   // Widget buildArtistProfile(dynamic artist) {
   //   return ListTile(
@@ -292,49 +256,41 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
   //   );
   // }
 
-  Container buildTitle(String title) {
+  Container buildTitle(String title, List<Song> songs) {
     return Container(
-      padding: const EdgeInsets.only(top: 20, bottom: 10, right: 10, left: 10),
-      child: Text(
-        '$title',
-        style: TextStyle(
-          fontWeight: FontWeight.w800,
-          fontSize: ScreenUtil().setSp(18),
-          fontFamilyFallback: f,
-        ),
+      padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 10),
+      child: Row(
+        children: [
+          Text(
+            '$title',
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: ScreenUtil().setSp(18),
+              fontFamilyFallback: f,
+            ),
+          ),
+          Spacer(),
+          IconButton(
+            icon: Icon(Ionicons.play),
+            color: PRIMARY_COLOR,
+            onPressed: () {
+              if (playerBloc.audioPlayer != null) {
+                playerBloc.audioPlayer.stop();
+              }
+
+              playerBloc.audioInit(0, songs);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext ctx) =>
+                      AudioPlayerScreen(songs: songs, i: 0),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
-  }
-}
-
-class ArtistPageHeader extends SliverPersistentHeaderDelegate {
-  ArtistPageHeader({this.artist, this.minExtent, this.maxExtent});
-
-  final double minExtent;
-  final double maxExtent;
-  final dynamic artist;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        CachedPicture(image: artist.coverImage),
-        Text(
-          artist.name,
-          style: TextStyle(
-            fontWeight: FontWeight.w800,
-            fontSize: ScreenUtil().setSp(18),
-            fontFamilyFallback: f,
-          ),
-        ),
-      ],
-    );
-  }
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
   }
 }

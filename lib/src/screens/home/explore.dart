@@ -43,11 +43,11 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
           title: Language.locale(uiBloc.language, 'popular_playlists'),
         ),
         buildDivider(),
-        // ThumbnailCards(
-        //   ar: CustomAspectRatio.VIDEO,
-        //   title: Language.locale(uiBloc.language, 'music_videos'),
-        // ),
-        // buildDivider(),
+        ThumbnailCards(
+          ar: CustomAspectRatio.VIDEO,
+          title: Language.locale(uiBloc.language, 'music_videos'),
+        ),
+        buildDivider(),
         ThumbnailCards(
           ar: CustomAspectRatio.SONG,
           title: Language.locale(uiBloc.language, 'timeless_songs'),
@@ -76,23 +76,13 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
               ),
             ),
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              // color: PRIMARY_COLOR,
-              child: IconButton(
-                // visualDensity: VisualDensity.compact,
-                icon: Icon(
-                  Ionicons.search,
-                  // color: BACKGROUND,
-                ),
-                onPressed: () {
-                  showSearch(
-                      context: context,
-                      delegate: SongSearch(CustomAspectRatio.SONG));
-                },
-              ),
-            ),
+          IconButton(
+            icon: Icon(Ionicons.search),
+            onPressed: () {
+              showSearch(
+                  context: context,
+                  delegate: SongSearch(CustomAspectRatio.SONG));
+            },
           ),
         ],
       ),

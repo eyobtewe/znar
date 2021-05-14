@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' show Client;
 
 import '../../core/core.dart';
@@ -268,15 +269,24 @@ class MusicApiService implements Api {
 
   Future<List<MusicVideo>> fetchArtistMusicVideos(
       String artistId, String musicVideoId) async {
-    String url = ENDPOINT_BASE +
-        '/listings/artists/$artistId/videos/published' +
-        '?_id[ne]=$musicVideoId&' +
-        ENDPOINT_MUSIC_VIDEO_FILTER;
-
+    String url = '';
+    debugPrint('\n\n\n$musicVideoId\n\n\n');
+    if (musicVideoId != null && musicVideoId.length > 5) {
+      url = ENDPOINT_BASE +
+          '/listings/artists/$artistId/videos/published?' +
+          '_id[ne]=$musicVideoId&' +
+          ENDPOINT_MUSIC_VIDEO_FILTER;
+    } else {
+      url = ENDPOINT_BASE +
+          '/listings/artists/$artistId/videos/published?' +
+          ENDPOINT_MUSIC_VIDEO_FILTER;
+    }
+    debugPrint('\n\n\n$url\n\n\n');
     final parsedJson = await _getter(url);
     List<MusicVideo> data = [];
     parsedJson.forEach((var item) {
       data.add(MusicVideo.fromJson(item));
+      debugPrint(MusicVideo.fromJson(item).title);
     });
     return data;
   }

@@ -63,9 +63,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           expandedHeight: size.width * 9 / 16,
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.none,
-            background: YoutubePlayer(
-              controller: _youtubeController,
-            ),
+            background: YoutubePlayer(controller: _youtubeController),
           ),
           pinned: true,
         ),
@@ -120,7 +118,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       future: other
           ? bloc.fetchMusicVideos(1, 30)
           : bloc.fetchArtistMusicVideos(
-              widget.musicVideo.artist ?? '', widget.musicVideo.sId),
+              widget.musicVideo.artist ?? '', '' /*widget.musicVideo.sId*/),
       builder:
           (BuildContext context, AsyncSnapshot<List<MusicVideo>> snapshot) {
         if (!snapshot.hasData) {
@@ -128,12 +126,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         } else {
           List<MusicVideo> clips = snapshot.data;
 
-          // if (other) {
-          //   clips.removeWhere(
-          //       (MusicVideo e) => e.artist == widget.musicVideo.artist);
-          // } else {
-          //   clips.removeWhere((MusicVideo e) => e.sId == widget.musicVideo.sId);
-          // }
+          if (other) {
+            clips.removeWhere(
+                (MusicVideo e) => e.artist == widget.musicVideo.artist);
+          } else {
+            clips.removeWhere((MusicVideo e) => e.sId == widget.musicVideo.sId);
+          }
 
           return clips.isEmpty
               ? Container()
