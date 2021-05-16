@@ -56,9 +56,13 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
     ScreenUtil.init(context, designSize: size);
     return Scaffold(
       appBar: buildAppBar(),
-      bottomSheet: BottomScreenPlayer(),
       bottomNavigationBar: BottomNavBar(currentIndex: 1),
-      body: buildBody(),
+      body: Stack(
+        children: [
+          buildBody(),
+          ExpandableBottomPlayer(),
+        ],
+      ),
     );
   }
 

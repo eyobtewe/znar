@@ -39,20 +39,26 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
     ScreenUtil.init(context, designSize: size, allowFontScaling: true);
 
     return Scaffold(
-      bottomNavigationBar: BottomScreenPlayer(),
-      // floatingActionButton: HomeFAB(context: context),
-      body: widget.albumId != null
-          ? FutureBuilder(
-              future: bloc.fetchAlbumDetails(widget.albumId),
-              builder: (BuildContext context, AsyncSnapshot<Album> snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(child: const CustomLoader());
-                } else {
-                  return buildBody(snapshot.data);
-                }
-              },
-            )
-          : buildBody(widget.album),
+      body: Stack(
+        children: [
+          Container(
+            child: widget.albumId != null
+                ? FutureBuilder(
+                    future: bloc.fetchAlbumDetails(widget.albumId),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<Album> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(child: const CustomLoader());
+                      } else {
+                        return buildBody(snapshot.data);
+                      }
+                    },
+                  )
+                : buildBody(widget.album),
+          ),
+          ExpandableBottomPlayer(),
+        ],
+      ),
     );
   }
 
@@ -183,16 +189,16 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
           playerBloc.audioPlayer.stop();
         }
         playerBloc.audioInit(0, songs, songs[0].runtimeType == SongInfo);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext ctx) => AudioPlayerScreen(
-              songs: songs,
-              i: 0,
-              isLocal: songs[0].runtimeType == SongInfo,
-            ),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (BuildContext ctx) => AudioPlayerScreen(
+        //       songs: songs,
+        //       i: 0,
+        //       isLocal: songs[0].runtimeType == SongInfo,
+        //     ),
+        //   ),
+        // );
       },
     );
   }

@@ -50,8 +50,6 @@ class _ChannelDetailScreenState extends State<ChannelDetailScreen> {
     ScreenUtil.init(context, designSize: size);
 
     return Scaffold(
-      bottomNavigationBar: BottomScreenPlayer(),
-      // floatingActionButton: HomeFAB(context: context),
       body: widget.channelId != null
           ? FutureBuilder(
               future: bloc.fetchChannelDetails(widget.channelId),

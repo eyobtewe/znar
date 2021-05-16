@@ -62,8 +62,12 @@ class _SongScreenState extends State<SongScreen> {
 
     ScreenUtil.init(context, allowFontScaling: true, designSize: size);
     return Scaffold(
-      bottomNavigationBar: BottomScreenPlayer(),
-      body: buildBody(),
+      body: Stack(
+        children: [
+          buildBody(),
+          ExpandableBottomPlayer(),
+        ],
+      ),
     );
   }
 
@@ -89,14 +93,30 @@ class _SongScreenState extends State<SongScreen> {
               physics: const BouncingScrollPhysics(),
               slivers: [
                 buildSliverAppBar(context),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext ctx, int i) {
-                      return SongTile(songs: bloc.songs, index: i);
+                SliverToBoxAdapter(
+                  child: ListView.separated(
+                    primary: false,
+                    itemBuilder: (BuildContext ctx, int k) {
+                      return SongTile(songs: bloc.songs, index: k);
                     },
-                    childCount: bloc.songs?.length ?? 0,
+                    separatorBuilder: (BuildContext ctx, int k) {
+                      return Divider(height: 1);
+                    },
+                    itemCount: bloc.songs.length,
+                    shrinkWrap: true,
                   ),
                 ),
+                SliverToBoxAdapter(
+                  child: SizedBox(height: 66),
+                ),
+                // SliverList(
+                //   delegate: SliverChildBuilderDelegate(
+                //     (BuildContext ctx, int i) {
+                //       return SongTile(songs: bloc.songs, index: i);
+                //     },
+                //     childCount: bloc.songs?.length ?? 0,
+                //   ),
+                // ),
               ],
             ),
           );

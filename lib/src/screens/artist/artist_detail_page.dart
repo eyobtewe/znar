@@ -1,16 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/rendering/sliver_persistent_header.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:znar/src/screens/home/widgets/widgets.dart';
-import 'package:znar/src/screens/screens.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../helpers/network_image.dart';
 import '../../presentation/bloc.dart';
+import '../home/widgets/widgets.dart';
+import '../screens.dart';
 import '../widgets/widgets.dart';
 
 class ArtistDetailScreen extends StatefulWidget {
@@ -42,60 +41,60 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
     ScreenUtil.init(context, designSize: size, allowFontScaling: true);
 
     return Scaffold(
-      bottomSheet: BottomScreenPlayer(),
-      body: widget.artistId != null
-          ? FutureBuilder(
-              future: bloc.fetchArtistDetails(widget.artistId),
-              builder: (BuildContext context, AsyncSnapshot<Artist> snapshot) {
-                if (!snapshot.hasData) {
-                  return const CustomLoader();
-                } else {
-                  return buildBody(snapshot.data);
-                }
-              },
-            )
-          : buildBody(widget.artist),
+      body: Container(
+        child: widget.artistId != null
+            ? FutureBuilder(
+                future: bloc.fetchArtistDetails(widget.artistId),
+                builder:
+                    (BuildContext context, AsyncSnapshot<Artist> snapshot) {
+                  if (!snapshot.hasData) {
+                    return const CustomLoader();
+                  } else {
+                    return buildBody(snapshot.data);
+                  }
+                },
+              )
+            : buildBody(widget.artist),
+      ),
     );
   }
 
   Widget buildBody(dynamic artist) {
-    return Scaffold(
-      body: CustomScrollView(
-        primary: true,
-        physics: const BouncingScrollPhysics(),
-        slivers: <Widget>[
-          SliverAppBar(
-            pinned: true,
-            elevation: 0,
-            stretch: true,
-            flexibleSpace: buildFlexibleSpaceBar(artist),
-            expandedHeight: size.width * 9 / 16,
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate.fixed(
-              [
-                Container(
-                  padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
-                  child: Text(
-                    artist.runtimeType == Artist
-                        ? artist.fullName ?? ''
-                        : artist.name,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontFamilyFallback: f,
-                      fontSize: ScreenUtil().setSp(20),
-                    ),
+    return CustomScrollView(
+      primary: true,
+      physics: const BouncingScrollPhysics(),
+      slivers: <Widget>[
+        SliverAppBar(
+          pinned: true,
+          elevation: 0,
+          stretch: true,
+          flexibleSpace: buildFlexibleSpaceBar(artist),
+          expandedHeight: size.width * 9 / 16,
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate.fixed(
+            [
+              Container(
+                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                child: Text(
+                  artist.runtimeType == Artist
+                      ? artist.fullName ?? ''
+                      : artist.name,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontFamilyFallback: f,
+                    fontSize: ScreenUtil().setSp(20),
                   ),
                 ),
-                buildAlbums(artist),
-                buildMusicVideos(artist),
-                buildSongs(artist),
-              ],
-            ),
+              ),
+              buildAlbums(artist),
+              buildMusicVideos(artist),
+              buildSongs(artist),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -105,7 +104,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
       initialData: bloc.artistMusicVideos[artist.sId],
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
-          return CustomLoader();
+          return Container();
         } else {
           return bloc.artistMusicVideos[artist.sId].isEmpty
               ? Container()
@@ -280,13 +279,13 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
 
               playerBloc.audioInit(0, songs);
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext ctx) =>
-                      AudioPlayerScreen(songs: songs, i: 0),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (BuildContext ctx) =>
+              //         AudioPlayerScreen(songs: songs, i: 0),
+              //   ),
+              // );
             },
           ),
         ],

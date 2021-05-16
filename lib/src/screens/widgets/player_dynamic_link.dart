@@ -51,13 +51,13 @@ class PlayerDynamicLinkCatcher extends StatelessWidget {
       }
       playerBloc.audioInit(0, [snapshot.data]);
 
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => AudioPlayerScreen(
-                    i: 0,
-                    songs: [snapshot.data],
-                  )));
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (BuildContext context) => AudioPlayerScreen(
+      //               i: 0,
+      //               songs: [snapshot.data],
+      //             )));
     } else {
       Navigator.push(
         context,

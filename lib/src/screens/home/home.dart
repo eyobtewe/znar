@@ -1,6 +1,6 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:miniplayer/miniplayer.dart';
 
 import '../../infrastructure/services/services.dart';
 import '../../presentation/bloc.dart';
@@ -15,13 +15,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String messageTitle = "Empty";
-  String notificationAlert = "alert";
+  // String messageTitle = "Empty";
+  // String notificationAlert = "alert";
+
+  MiniplayerController miniPlayerController;
 
   // FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   // FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   void initState() {
+    miniPlayerController = MiniplayerController();
     super.initState();
     listenForNotification();
 
@@ -33,12 +36,12 @@ class _HomeState extends State<Home> {
   void listenForNotification() async {
     // await _firebaseMessaging.requestPermission();
     // debugPrint(await _firebaseMessaging.getToken());
-    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      setState(() {
-        messageTitle = event.notification.title;
-        // notificationAlert =
-      });
-    });
+    // FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+    //   setState(() {
+    //     messageTitle = event.notification.title;
+    //     // notificationAlert =
+    //   });
+    // });
     // _firebaseMessaging.configure(
     //   onLaunch: (message) async {
     //     setState(() {
@@ -65,7 +68,7 @@ class _HomeState extends State<Home> {
   UiBloc uiBloc;
   PlayerBloc playerBloc;
   Size size;
-  @override
+
   Widget build(BuildContext context) {
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
@@ -75,9 +78,13 @@ class _HomeState extends State<Home> {
     ScreenUtil.init(context, allowFontScaling: true, designSize: size);
 
     return Scaffold(
-      bottomSheet: BottomScreenPlayer(),
       bottomNavigationBar: BottomNavBar(currentIndex: 0),
-      body: ExplorerScreen(),
+      body: Stack(
+        children: [
+          ExplorerScreen(),
+          ExpandableBottomPlayer(),
+        ],
+      ),
     );
   }
 
@@ -104,7 +111,7 @@ class _HomeState extends State<Home> {
                 //   return AnnouncementScreen(announcementId: id.keys.single);
                 case 'song':
                   return PlayerDynamicLinkCatcher(
-                      isAudio: true, songId: id.keys.single); //*
+                      isAudio: true, songId: id.keys.single);
                 default:
                   return Home();
               }

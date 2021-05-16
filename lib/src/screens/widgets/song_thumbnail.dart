@@ -5,7 +5,6 @@ import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../helpers/network_image.dart';
 import '../../presentation/bloc.dart';
-import '../screens.dart';
 import 'widgets.dart';
 
 class SongThumbnail extends StatelessWidget {
@@ -30,12 +29,12 @@ class SongThumbnail extends StatelessWidget {
           _playerBloc.audioPlayer.stop();
         }
         _playerBloc.audioInit(i, song);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext ctx) => AudioPlayerScreen(songs: song, i: i),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (BuildContext ctx) => AudioPlayerScreen(songs: song, i: i),
+        //   ),
+        // );
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),

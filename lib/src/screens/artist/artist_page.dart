@@ -56,35 +56,37 @@ class _ArtistScreenState extends State<ArtistScreen> {
     return Scaffold(
       appBar: buildAppBar(),
       bottomNavigationBar: BottomNavBar(currentIndex: 3),
-      // bottomSheet: BottomScreenPlayer(),
-      body: FutureBuilder(
-        future: bloc.fetchArtists(page, 30),
-        initialData: bloc.artists,
-        builder: (BuildContext context, AsyncSnapshot<List<Artist>> snapshot) {
-          if (!snapshot.hasData) {
-            return const CustomLoader();
-          } else {
-            return buildBody(bloc.artists);
-          }
-        },
+      body: Stack(
+        children: [
+          FutureBuilder(
+            future: bloc.fetchArtists(page, 30),
+            initialData: bloc.artists,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Artist>> snapshot) {
+              if (!snapshot.hasData) {
+                return const CustomLoader();
+              } else {
+                return buildBody(bloc.artists);
+              }
+            },
+          ),
+          ExpandableBottomPlayer(),
+        ],
       ),
     );
   }
 
   Widget buildBody(List<Artist> artists) {
-    return Scaffold(
-      bottomNavigationBar: BottomScreenPlayer(),
-      body: GridView.builder(
-        controller: scrollController,
-        physics: const BouncingScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-        ),
-        itemCount: artists?.length ?? 0,
-        // shrinkWrap: true,
-        itemBuilder: (BuildContext ctx, int i) =>
-            ArtistThumbnail(artist: artists[i]),
+    return GridView.builder(
+      controller: scrollController,
+      physics: const BouncingScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
       ),
+      itemCount: artists?.length ?? 0,
+      // shrinkWrap: true,
+      itemBuilder: (BuildContext ctx, int i) =>
+          ArtistThumbnail(artist: artists[i]),
     );
   }
 

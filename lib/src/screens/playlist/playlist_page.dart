@@ -37,45 +37,46 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
       length: 1,
       child: Scaffold(
         bottomNavigationBar: BottomNavBar(currentIndex: 2),
-        // bottomSheet: BottomScreenPlayer(),
         appBar: widget.isHome ? null : buildAppBar(),
-        body: buildBody(),
+        body: Stack(
+          children: [
+            buildBody(),
+            ExpandableBottomPlayer(),
+          ],
+        ),
       ),
     );
   }
 
   Widget buildBody() {
-    return Scaffold(
-      bottomSheet: BottomScreenPlayer(),
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        children: [
-          FutureBuilder(
-            future: bloc.fetchOnlinePlayList(1, 20),
-            initialData: bloc.onlinePlaylists,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
-              if (!snapshot.hasData) {
-                return const CustomLoader();
-              } else {
-                return buildOnlinePlaylist(bloc.onlinePlaylists);
-              }
-            },
-          ),
-          // FutureBuilder(
-          //   future: bloc.fetchLocalPlaylists(),
-          //   initialData: bloc.localPlaylists,
-          //   builder:
-          //       (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
-          //     if (!snapshot.hasData) {
-          //       return const CustomLoader();
-          //     } else {
-          //       return buildLocalPlaylist(snapshot.data);
-          //     }
-          //   },
-          // ),
-        ],
-      ),
+    return TabBarView(
+      physics: const NeverScrollableScrollPhysics(),
+      children: [
+        FutureBuilder(
+          future: bloc.fetchOnlinePlayList(1, 20),
+          initialData: bloc.onlinePlaylists,
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
+            if (!snapshot.hasData) {
+              return const CustomLoader();
+            } else {
+              return buildOnlinePlaylist(bloc.onlinePlaylists);
+            }
+          },
+        ),
+        // FutureBuilder(
+        //   future: bloc.fetchLocalPlaylists(),
+        //   initialData: bloc.localPlaylists,
+        //   builder:
+        //       (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
+        //     if (!snapshot.hasData) {
+        //       return const CustomLoader();
+        //     } else {
+        //       return buildLocalPlaylist(snapshot.data);
+        //     }
+        //   },
+        // ),
+      ],
     );
   }
 

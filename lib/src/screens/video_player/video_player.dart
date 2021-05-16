@@ -51,8 +51,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     ScreenUtil.init(context, allowFontScaling: true, designSize: size);
 
     return Scaffold(
-      bottomNavigationBar: BottomScreenPlayer(),
-      body: buildBody(context),
+      body: Stack(
+        children: [
+          buildBody(context),
+          ExpandableBottomPlayer(),
+        ],
+      ),
     );
   }
 

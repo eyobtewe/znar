@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../presentation/bloc.dart';
-import '../screens.dart';
 import '../widgets/widgets.dart';
 
 class DownloadedSongsScreen extends StatefulWidget {
@@ -37,31 +36,35 @@ class _DownloadedSongsScreenState extends State<DownloadedSongsScreen> {
 
     return Scaffold(
       appBar: widget.isHome ? null : buildAppBar(context),
-      bottomNavigationBar: widget.isHome ? null : BottomScreenPlayer(),
-      body: FutureBuilder(
-        future: localBloc.getDownloadedMusic(Theme.of(context).platform),
-        initialData: localBloc.downloadedSongs,
-        builder: (BuildContext context,
-            AsyncSnapshot<List<DownloadedSong>> snapshot) {
-          if (!snapshot.hasData) {
-            // if (snapshot.connectionState != ConnectionState.done) {
-            return CustomLoader();
-            // } else {
-            //   return Center(child: Text('DONE'));
-            // }
-          } else if (snapshot.data.length == 0) {
-            return Center(
-              child: Text(
-                '0 ' + Language.locale(uiBloc.language, 'songs'),
-                style: TextStyle(
-                  fontFamilyFallback: f,
-                ),
-              ),
-            );
-          } else {
-            return buildBody(localBloc.downloadedSongs);
-          }
-        },
+      body: Stack(
+        children: [
+          FutureBuilder(
+            future: localBloc.getDownloadedMusic(Theme.of(context).platform),
+            initialData: localBloc.downloadedSongs,
+            builder: (BuildContext context,
+                AsyncSnapshot<List<DownloadedSong>> snapshot) {
+              if (!snapshot.hasData) {
+                // if (snapshot.connectionState != ConnectionState.done) {
+                return CustomLoader();
+                // } else {
+                //   return Center(child: Text('DONE'));
+                // }
+              } else if (snapshot.data.length == 0) {
+                return Center(
+                  child: Text(
+                    '0 ' + Language.locale(uiBloc.language, 'songs'),
+                    style: TextStyle(
+                      fontFamilyFallback: f,
+                    ),
+                  ),
+                );
+              } else {
+                return buildBody(localBloc.downloadedSongs);
+              }
+            },
+          ),
+          ExpandableBottomPlayer(),
+        ],
       ),
     );
   }
@@ -162,17 +165,17 @@ class _DownloadedSongsScreenState extends State<DownloadedSongsScreen> {
           playerBloc.audioPlayer.stop();
         }
         playerBloc.audioInit(index, songs, false, true);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext ctx) => AudioPlayerScreen(
-              // songs: songs,
-              i: index,
-              isLocal: false,
-              isDownloaded: true,
-            ),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (BuildContext ctx) => AudioPlayerScreen(
+        //       // songs: songs,
+        //       i: index,
+        //       isLocal: false,
+        //       isDownloaded: true,
+        //     ),
+        //   ),
+        // );
       },
     );
   }

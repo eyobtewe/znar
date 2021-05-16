@@ -44,19 +44,16 @@ class _SongArtworkState extends State<SongArtwork> {
   }
 
   Widget buildSongCover(String img, Size size) {
-    return Card(
-      // elevation: 150,
-      // shadowColor: PRIMARY_COLOR.withOpacity(0.25),
+    return Center(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          height: size.width * 0.75,
-          // width: size.width * 0.75,
-          // color: PURE_BLACK,
+          height: size.width * 0.5,
+          // width: size.width * 0.5,
           child: CachedPicture(
             image: img,
             boxFit: BoxFit.cover,
-            isBackground: true,
+            // isBackground: true,
           ),
         ),
       ),

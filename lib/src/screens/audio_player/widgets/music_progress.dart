@@ -1,9 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 
-// import 'package:flutter_lyric/lyric_util.dart';
-// import 'package:flutter_lyric/lyric_widget.dart';
-
 import '../../../../external_src/audio_progress_bar/audio_player_progress_bar.dart';
 import '../../../core/core.dart';
 import '../../../presentation/bloc.dart';
@@ -26,20 +23,19 @@ class _MusicProgressState extends State<MusicProgress> {
     return playerBloc.audioPlayer.builderRealtimePlayingInfos(
         builder: (BuildContext ctx, RealtimePlayingInfos r) {
       return Container(
-        width: size.width,
+        width: size.width * 0.8,
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: ProgressBar(
           progress: r.currentPosition,
           total: r.duration,
-          bufferedBarColor: BLUE,
           progressBarColor: PRIMARY_COLOR,
           thumbColor: PRIMARY_COLOR,
-          timeLabelLocation: TimeLabelLocation.sides,
+          timeLabelLocation: TimeLabelLocation.none,
           timeLabelTextStyle: TextStyle(color: GRAY, fontFamily: 'Kefa'),
           thumbRadius: 5,
           barHeight: 5,
           baseBarColor: GRAY,
-          thumbGlowRadius: 20,
+          thumbGlowRadius: 15,
           onSeek: (Duration d) {
             playerBloc.audioPlayer.seek(d);
           },

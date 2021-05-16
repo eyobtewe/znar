@@ -52,6 +52,7 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
           ar: CustomAspectRatio.SONG,
           title: Language.locale(uiBloc.language, 'timeless_songs'),
         ),
+        SizedBox(height: 66),
         // ThumbnailCards(
         //   ar: CustomAspectRatio.ARTIST,
         //   title: Language.locale(widget.uiBloc.language, 'artists'),

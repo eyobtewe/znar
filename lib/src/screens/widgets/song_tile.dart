@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:share/share.dart';
+import 'package:znar/src/infrastructure/services/firebase_dynamic_link.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../helpers/network_image.dart';
 import '../../presentation/bloc.dart';
-import '../screens.dart';
 
 class SongTile extends StatelessWidget {
   final List<dynamic> songs;
@@ -19,6 +22,7 @@ class SongTile extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final PlayerBloc playerBloc = PlayerProvider.of(context);
+    final UiBloc uiBloc = UiProvider.of(context);
 
     final size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size);
@@ -37,7 +41,7 @@ class SongTile extends StatelessWidget {
             ? PURE_BLACK
             : BACKGROUND,
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          margin: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 0),
           height: 60,
           child: Row(
             children: [
@@ -70,10 +74,77 @@ class SongTile extends StatelessWidget {
                   ),
                 ],
               ),
+              buildPopupMenuButton(uiBloc, context, playerBloc),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildPopupMenuButton(
+      UiBloc uiBloc, BuildContext context, PlayerBloc playerBloc) {
+    return PopupMenuButton(
+      color: PURE_BLACK,
+      padding: EdgeInsets.zero,
+      icon: Icon(
+        Ionicons.ellipsis_vertical_outline,
+        color: GRAY,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      itemBuilder: (BuildContext ctx) {
+        return <PopupMenuEntry>[
+          PopupMenuItem(
+            height: 35,
+            child: ListTile(
+              dense: false,
+              contentPadding: EdgeInsets.zero,
+              minVerticalPadding: 0,
+              horizontalTitleGap: 0,
+              visualDensity: VisualDensity.compact,
+              leading: Icon(Ionicons.play, color: GRAY),
+              title: Text(
+                Language.locale(uiBloc.language, 'play'),
+                style: TextStyle(
+                  fontFamilyFallback: f,
+                ),
+              ),
+              onTap: () {
+                _onTap(context, playerBloc);
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          PopupMenuDivider(),
+          PopupMenuItem(
+            height: 35,
+            child: ListTile(
+              dense: false,
+              contentPadding: EdgeInsets.zero,
+              minVerticalPadding: 0,
+              horizontalTitleGap: 0,
+              visualDensity: VisualDensity.compact,
+              leading: Icon(Ionicons.share_social_outline, color: GRAY),
+              title: Text(
+                Language.locale(uiBloc.language, 'share'),
+                style: TextStyle(
+                  fontFamilyFallback: f,
+                ),
+              ),
+              onTap: () async {
+                final String link =
+                    await kDynamicLinkService.createDynamicLink(songs[index]);
+
+                Share.share(
+                    '${songs[index].title} - ${songs[index].artistStatic.fullName} \n\n$link');
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ];
+      },
     );
   }
 
@@ -84,21 +155,21 @@ class SongTile extends StatelessWidget {
 
     playerBloc.audioInit(index, songs, songs[index].runtimeType == SongInfo);
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext ctx) => AudioPlayerScreen(
-          songs: songs,
-          i: index,
-          isLocal: songs[index].runtimeType == SongInfo,
-        ),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (BuildContext ctx) => AudioPlayerScreen(
+    //       songs: songs,
+    //       i: index,
+    //       isLocal: songs[index].runtimeType == SongInfo,
+    //     ),
+    //   ),
+    // );
   }
 
   Container buildSongTitle(Size size, PlayerBloc playerBloc) {
     return Container(
-      width: size.width - 140,
+      width: size.width - 165,
       child: Text(
         songs[index].title ?? '',
         maxLines: 1,

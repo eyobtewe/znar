@@ -33,20 +33,26 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
     playerBloc = PlayerProvider.of(context);
 
     return Scaffold(
-      bottomNavigationBar: BottomScreenPlayer(),
-      body: widget.playlistId != null
-          ? FutureBuilder(
-              future: bloc.fetchPlaylistDetails(widget.playlistId),
-              builder:
-                  (BuildContext context, AsyncSnapshot<Playlist> snapshot) {
-                if (!snapshot.hasData) {
-                  return const CustomLoader();
-                } else {
-                  return buildBody(snapshot.data);
-                }
-              },
-            )
-          : buildBody(widget.playlist),
+      body: Stack(
+        children: [
+          Container(
+            child: widget.playlistId != null
+                ? FutureBuilder(
+                    future: bloc.fetchPlaylistDetails(widget.playlistId),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<Playlist> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const CustomLoader();
+                      } else {
+                        return buildBody(snapshot.data);
+                      }
+                    },
+                  )
+                : buildBody(widget.playlist),
+          ),
+          ExpandableBottomPlayer(),
+        ],
+      ),
     );
   }
 

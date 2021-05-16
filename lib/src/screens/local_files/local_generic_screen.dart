@@ -33,25 +33,29 @@ class _LocalSongsScreenState extends State<LocalSongsScreen> {
 
     return Scaffold(
       appBar: buildAppBar(context),
-      bottomNavigationBar: BottomScreenPlayer(),
-      body: FutureBuilder(
-        future: bloc.buildFutures(widget.categoryTitle),
-        initialData: bloc.buildInitialData(widget.categoryTitle),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (!snapshot.hasData) {
-            return CustomLoader();
-          } else if (snapshot.data.length == 0) {
-            return Center(
-              child: Text(
-                '0 ' + 'songs',
-                style: TextStyle(fontFamilyFallback: f),
-              ),
-            );
-          } else {
-            return buildBody(bloc.buildInitialData(widget.categoryTitle),
-                widget.categoryTitle);
-          }
-        },
+      body: Stack(
+        children: [
+          FutureBuilder(
+            future: bloc.buildFutures(widget.categoryTitle),
+            initialData: bloc.buildInitialData(widget.categoryTitle),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (!snapshot.hasData) {
+                return CustomLoader();
+              } else if (snapshot.data.length == 0) {
+                return Center(
+                  child: Text(
+                    '0 ' + 'songs',
+                    style: TextStyle(fontFamilyFallback: f),
+                  ),
+                );
+              } else {
+                return buildBody(bloc.buildInitialData(widget.categoryTitle),
+                    widget.categoryTitle);
+              }
+            },
+          ),
+          ExpandableBottomPlayer(),
+        ],
       ),
     );
   }

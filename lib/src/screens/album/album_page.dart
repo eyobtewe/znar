@@ -69,17 +69,22 @@ class _AlbumScreenState extends State<AlbumScreen> {
     ScreenUtil.init(context, designSize: size);
     return Scaffold(
       appBar: buildAppBar(),
-      bottomNavigationBar: BottomScreenPlayer(),
-      body: FutureBuilder(
-        future: bloc.fetchAlbums(page, 30),
-        initialData: bloc.albums,
-        builder: (BuildContext context, AsyncSnapshot<List<Album>> snapshot) {
-          if (!snapshot.hasData) {
-            return const CustomLoader();
-          } else {
-            return buildBody(bloc.albums);
-          }
-        },
+      body: Stack(
+        children: [
+          FutureBuilder(
+            future: bloc.fetchAlbums(page, 30),
+            initialData: bloc.albums,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Album>> snapshot) {
+              if (!snapshot.hasData) {
+                return const CustomLoader();
+              } else {
+                return buildBody(bloc.albums);
+              }
+            },
+          ),
+          ExpandableBottomPlayer(),
+        ],
       ),
     );
   }

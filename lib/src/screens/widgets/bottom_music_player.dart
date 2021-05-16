@@ -6,7 +6,6 @@ import 'package:ionicons/ionicons.dart';
 import '../../core/core.dart';
 import '../../helpers/network_image.dart';
 import '../../presentation/bloc.dart';
-import '../screens.dart';
 
 class BottomScreenPlayer extends StatelessWidget {
   const BottomScreenPlayer({Key key}) : super(key: key);
@@ -111,14 +110,14 @@ class BottomScreenPlayer extends StatelessWidget {
         builder: (BuildContext context, Playing playing) {
       final Metas songMetaData = playing.audio?.audio?.metas;
       return ListTile(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext ctx) => AudioPlayerScreen(
-                        isFromBottomBar: true,
-                      )));
-        },
+        // onTap: () {
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (BuildContext ctx) => AudioPlayerScreen(
+        //               isFromBottomBar: true,
+        //             )));
+        // },
         leading: Stack(
           children: [
             ClipRRect(

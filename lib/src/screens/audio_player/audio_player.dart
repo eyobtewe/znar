@@ -2,11 +2,8 @@ import 'dart:ui';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:share/share.dart';
 
 import '../../core/core.dart';
-import '../../infrastructure/services/services.dart';
 import '../../presentation/bloc.dart';
 import '../screens.dart';
 import '../widgets/song_cover.dart';
@@ -52,16 +49,16 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
       actions: (widget.isLocal || widget.isDownloaded)
           ? null
           : [
-              IconButton(
-                icon: Icon(Ionicons.share_social_outline),
-                onPressed: () async {
-                  final String link = await kDynamicLinkService
-                      .createDynamicLink(widget.songs[widget.i]);
+              // IconButton(
+              //   icon: Icon(Ionicons.share_social_outline),
+              //   onPressed: () async {
+              //     final String link = await kDynamicLinkService
+              //         .createDynamicLink(widget.songs[widget.i]);
 
-                  Share.share(
-                      '${widget.songs[widget.i].title} - ${widget.songs[widget.i].artistStatic.fullName} \n\n$link');
-                },
-              ),
+              //     Share.share(
+              //         '${widget.songs[widget.i].title} - ${widget.songs[widget.i].artistStatic.fullName} \n\n$link');
+              //   },
+              // ),
             ],
     );
   }

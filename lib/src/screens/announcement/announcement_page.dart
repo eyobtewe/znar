@@ -28,20 +28,27 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
     return Scaffold(
-      body: widget.announcementId != null
-          ? FutureBuilder(
-              future: bloc.fetchAnnouncementDetails(widget.announcementId),
-              builder:
-                  (BuildContext context, AsyncSnapshot<Announcement> snapshot) {
-                if (!snapshot.hasData) {
-                  return const CustomLoader();
-                } else {
-                  return buildBody(snapshot.data);
-                }
-              },
-            )
-          : buildBody(widget.announcement),
-      bottomNavigationBar: BottomScreenPlayer(),
+      body: Stack(
+        children: [
+          Container(
+            child: widget.announcementId != null
+                ? FutureBuilder(
+                    future:
+                        bloc.fetchAnnouncementDetails(widget.announcementId),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<Announcement> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const CustomLoader();
+                      } else {
+                        return buildBody(snapshot.data);
+                      }
+                    },
+                  )
+                : buildBody(widget.announcement),
+          ),
+          ExpandableBottomPlayer(),
+        ],
+      ),
     );
   }
 
