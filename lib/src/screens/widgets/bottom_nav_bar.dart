@@ -20,7 +20,8 @@ class BottomNavBar extends StatelessWidget {
 
     TextStyle _textStyle = TextStyle(
       fontFamilyFallback: f,
-      fontSize: ScreenUtil().setSp(10),
+      fontSize: ScreenUtil().setSp(12),
+      height: 1.5,
     );
 
     return BottomNavigationBar(

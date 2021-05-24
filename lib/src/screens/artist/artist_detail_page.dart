@@ -40,22 +40,27 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
     size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size, allowFontScaling: true);
 
-    return Scaffold(
-      body: Container(
-        child: widget.artistId != null
-            ? FutureBuilder(
-                future: bloc.fetchArtistDetails(widget.artistId),
-                builder:
-                    (BuildContext context, AsyncSnapshot<Artist> snapshot) {
-                  if (!snapshot.hasData) {
-                    return const CustomLoader();
-                  } else {
-                    return buildBody(snapshot.data);
-                  }
-                },
-              )
-            : buildBody(widget.artist),
-      ),
+    return Stack(
+      children: [
+        Scaffold(
+          body: Container(
+            child: widget.artistId != null
+                ? FutureBuilder(
+                    future: bloc.fetchArtistDetails(widget.artistId),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<Artist> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const CustomLoader();
+                      } else {
+                        return buildBody(snapshot.data);
+                      }
+                    },
+                  )
+                : buildBody(widget.artist),
+          ),
+        ),
+        ExpandableBottomPlayer(),
+      ],
     );
   }
 
@@ -91,6 +96,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
               buildAlbums(artist),
               buildMusicVideos(artist),
               buildSongs(artist),
+              SizedBox(height: 66),
             ],
           ),
         ),
@@ -142,17 +148,22 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
           return const CustomLoader();
         } else {
           dynamic songs = snapshot.data;
-          return ListView.builder(
+          return ListView.separated(
             itemCount: songs.length,
             shrinkWrap: true,
             primary: false,
+            separatorBuilder: (BuildContext ctx, int k) {
+              return Divider(height: 1);
+            },
             itemBuilder: (BuildContext context, int index) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   index == 0
                       ? buildTitle(
-                          Language.locale(uiBloc.language, 'songs'), songs)
+                          '${songs.length > 1 ? songs.length : ''} ' +
+                              Language.locale(uiBloc.language, 'songs'),
+                          songs)
                       : Container(),
                   SongTile(index: index, songs: songs),
                 ],
@@ -265,7 +276,8 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
             style: TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: ScreenUtil().setSp(18),
-              fontFamilyFallback: f,
+              // fontFamilyFallback: f,
+              fontFamily: f.single,
             ),
           ),
           Spacer(),

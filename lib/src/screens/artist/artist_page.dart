@@ -58,17 +58,20 @@ class _ArtistScreenState extends State<ArtistScreen> {
       bottomNavigationBar: BottomNavBar(currentIndex: 3),
       body: Stack(
         children: [
-          FutureBuilder(
-            future: bloc.fetchArtists(page, 30),
-            initialData: bloc.artists,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Artist>> snapshot) {
-              if (!snapshot.hasData) {
-                return const CustomLoader();
-              } else {
-                return buildBody(bloc.artists);
-              }
-            },
+          Container(
+            padding: EdgeInsets.only(bottom: 66),
+            child: FutureBuilder(
+              future: bloc.fetchArtists(page, 30),
+              initialData: bloc.artists,
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Artist>> snapshot) {
+                if (!snapshot.hasData) {
+                  return const CustomLoader();
+                } else {
+                  return buildBody(bloc.artists);
+                }
+              },
+            ),
           ),
           ExpandableBottomPlayer(),
         ],

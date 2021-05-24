@@ -18,9 +18,9 @@ class CustomLoader extends StatelessWidget {
             spinnerMode: true,
             customColors: CustomSliderColors(
               progressBarColors: [
-                PURPLE,
-                BLUE,
-                PRIMARY_COLOR,
+                Colors.orange,
+                Colors.red,
+                // PRIMARY_COLOR,
               ],
               trackColor: isPlayer
                   ? Theme.of(context).scaffoldBackgroundColor

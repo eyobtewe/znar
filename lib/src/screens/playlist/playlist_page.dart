@@ -171,6 +171,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
                             Divider(color: TRANSPARENT),
                             buildContainer(
                                 bloc, bloc.playlistSongs[playlists[k].sId]),
+                            SizedBox(height: 66),
                           ],
                         );
                       }
@@ -237,7 +238,10 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
                   ),
                   child: Text(
                     Language.locale(uiBloc.language, 'more'),
-                    style: const TextStyle(color: BACKGROUND),
+                    style: const TextStyle(
+                      color: BACKGROUND,
+                      fontFamilyFallback: f,
+                    ),
                   ),
                 ),
         ],

@@ -4,6 +4,7 @@ import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:share/share.dart';
+import 'package:znar/src/infrastructure/services/download_manager.dart';
 import 'package:znar/src/infrastructure/services/firebase_dynamic_link.dart';
 
 import '../../core/core.dart';
@@ -113,6 +114,29 @@ class SongTile extends StatelessWidget {
               ),
               onTap: () {
                 _onTap(context, playerBloc);
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          PopupMenuDivider(),
+          PopupMenuItem(
+            height: 35,
+            child: ListTile(
+              dense: false,
+              contentPadding: EdgeInsets.zero,
+              minVerticalPadding: 0,
+              horizontalTitleGap: 0,
+              visualDensity: VisualDensity.compact,
+              leading: Icon(Ionicons.download, color: GRAY),
+              title: Text(
+                Language.locale(uiBloc.language, 'download'),
+                style: TextStyle(
+                  fontFamilyFallback: f,
+                ),
+              ),
+              onTap: () async {
+                await DownloadsManager()
+                    .downloadMusic(TargetPlatform.android, songs[index]);
                 Navigator.pop(context);
               },
             ),

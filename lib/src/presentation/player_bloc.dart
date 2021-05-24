@@ -26,6 +26,7 @@ class PlayerBloc {
 
   Future<bool> audioInit(int index, dynamic songs,
       [bool isLocal = false, bool isDownloaded = false]) async {
+    // audioPlayer = AssetsAudioPlayer.withId('id');
     List<Audio> _audios = fillAudio(songs, isLocal, isDownloaded);
 
     try {
@@ -34,9 +35,7 @@ class PlayerBloc {
         Playlist(audios: _audios, startIndex: index),
         loopMode: LoopMode.playlist,
         showNotification: true,
-        notificationSettings: NotificationSettings(
-          stopEnabled: false,
-        ),
+        notificationSettings: NotificationSettings(),
         playInBackground: PlayInBackground.enabled,
         audioFocusStrategy: AudioFocusStrategy.request(),
         autoStart: true,

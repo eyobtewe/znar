@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
 import '../../presentation/bloc.dart';
-import '../search/search.dart';
+
 import 'widgets/widgets.dart';
 
 class ExplorerScreen extends StatefulWidget {
@@ -64,28 +63,15 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
   Container buildDiscover() {
     return Container(
       padding: const EdgeInsets.only(left: 10, bottom: 20, right: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            child: Text(
-              Language.locale(uiBloc.language, 'discover'),
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: ScreenUtil().setSp(28),
-                fontFamilyFallback: f,
-              ),
-            ),
+      child: Container(
+        child: Text(
+          Language.locale(uiBloc.language, 'discover'),
+          style: TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: ScreenUtil().setSp(28),
+            fontFamilyFallback: f,
           ),
-          IconButton(
-            icon: Icon(Ionicons.search),
-            onPressed: () {
-              showSearch(
-                  context: context,
-                  delegate: SongSearch(CustomAspectRatio.SONG));
-            },
-          ),
-        ],
+        ),
       ),
     );
   }

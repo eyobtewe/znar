@@ -18,20 +18,23 @@ dependencies:
   path_provider: ^2.0.1
   youtube_player_flutter: ^8.0.0
   # progress_dialog: ^1.2.4
-  # flutter_downloader: ^1.6.0
+  flutter_downloader: ^1.6.0
   # color_thief_flutter: ^1.0.2
   # flutter_lyric: any
   # auto_animated: ^3.0.0
+  
   assets_audio_player: ^3.0.3+2
   sleek_circular_slider: ^2.0.0
   miniplayer: ^1.0.0+2
 
   firebase_dynamic_links: ^2.0.3
-  cloud_firestore: ^2.1.0
+  # cloud_firestore: ^2.1.0
+  # firebase_core: ^1.2.0
 
   sembast: ^3.0.1
   flutter_swiper: ^1.1.6
   path: ^1.7.0
+  # responsive_sizer: ^2.0.1
 
   flutter_svg: ^0.21.0+1
   flutter_screenutil: ^3.0.0
@@ -49,7 +52,7 @@ dependencies:
   dart_tags: ^0.3.1
   dio: ^4.0.0
   device_info: ^2.0.0
-  firebase_messaging: ^9.1.1
+  # firebase_messaging: ^9.1.1
 
   ionicons: ^0.1.2
 

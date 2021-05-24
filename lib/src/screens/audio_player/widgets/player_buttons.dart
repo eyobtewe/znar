@@ -116,10 +116,13 @@ class PlayerButtons extends StatelessWidget {
       iconSize: ScreenUtil().setSp(28),
       color: GRAY,
       icon: const Icon(Ionicons.play_skip_forward_outline),
-      onPressed: () {
-        // playerBloc.audioPlayer.pause();
-        playerBloc.audioPlayer.next();
-      },
+      onPressed:
+          playerBloc.audioPlayer.current.valueWrapper?.value?.hasNext == false
+              ? null
+              : () {
+                  playerBloc.audioPlayer.pause();
+                  playerBloc.audioPlayer.next();
+                },
     );
   }
 

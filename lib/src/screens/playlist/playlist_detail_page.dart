@@ -112,6 +112,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
                 ),
               ),
               buildSliverList(playlist),
+              SliverToBoxAdapter(child: SizedBox(height: 66)),
             ],
           ),
           // DownloadProgress(),

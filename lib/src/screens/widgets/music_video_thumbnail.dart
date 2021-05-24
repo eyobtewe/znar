@@ -29,10 +29,12 @@ class MusicVideoThumbnail extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (BuildContext ctx) => true
-                ? VideoPlayerScreen(musicVideo: musicVideo)
-                : CustomWebPage(url: musicVideo.url),
-          ),
+              builder: (BuildContext ctx) =>
+                  // true
+                  //     ?
+                  VideoPlayerScreen(musicVideo: musicVideo)
+              // : CustomWebPage(url: musicVideo.url),
+              ),
         );
       },
       child: Container(

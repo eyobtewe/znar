@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dart_tags/dart_tags.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../domain/models/models.dart';
@@ -29,20 +30,20 @@ class DownloadsManager {
     // }
 
     try {
-      // final id = await FlutterDownloader.enqueue(
-      //   url: song.fileUrl,
-      //   savedDir: dir.path,
-      //   showNotification: true,
-      //   openFileFromNotification: true,
-      //   fileName: song.title,
-      // );
-      // final id = await dio.download(
-      //   song.fileUrl,
-      //   dir.path + '/' + song.sId + '.mp3',
-      //   onReceiveProgress: onReceiveProgress,
-      //   cancelToken: cancelToken,
-      // );
-      // return id;
+      final id = await FlutterDownloader.enqueue(
+        url: song.fileUrl,
+        savedDir: dir.path,
+        showNotification: true,
+        openFileFromNotification: true,
+        fileName: song.title,
+      );
+      // // final id = await dio.download(
+      // //   song.fileUrl,
+      // //   dir.path + '/' + song.sId + '.mp3',
+      // //   onReceiveProgress: onReceiveProgress,
+      // //   cancelToken: cancelToken,
+      // // );
+      return id;
       // if (id.statusMessage == 'OK') {
       //   showToast('Downloaded successfully');
       // }
@@ -50,6 +51,7 @@ class DownloadsManager {
     } catch (e) {
       return null;
     }
+    return '';
   }
 
   Future<List<DownloadedSong>> getDownloaded(TargetPlatform platform) async {

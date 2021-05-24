@@ -73,8 +73,12 @@ class BottomScreenPlayer extends StatelessWidget {
     // final Metas songMetaData = playing.audio?.audio?.metas;
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
+          color: Theme.of(context).scaffoldBackgroundColor,
+          border: Border(
+              top: BorderSide(
+            color: GRAY,
+            width: 1,
+          ))),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

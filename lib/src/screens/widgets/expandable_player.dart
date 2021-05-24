@@ -37,10 +37,10 @@ class _ExpandableBottomPlayerState extends State<ExpandableBottomPlayer> {
               : Miniplayer(
                   controller: miniPlayerController,
                   curve: Curves.easeInOutCubic,
-                  minHeight: 66,
+                  minHeight: 67,
                   maxHeight: size.height * 0.65,
                   builder: (double height, double percentage) {
-                    return height == 66 ? buildSmallPlayer() : buildBigPlayer();
+                    return height == 67 ? buildSmallPlayer() : buildBigPlayer();
                   });
         });
   }

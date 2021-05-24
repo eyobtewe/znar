@@ -27,10 +27,12 @@ class _MusicVideoTileState extends State<MusicVideoTile> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (BuildContext ctx) => true
-                ? VideoPlayerScreen(musicVideo: widget.musicVideo)
-                : CustomWebPage(url: widget.musicVideo.url),
-          ),
+              builder: (BuildContext ctx) =>
+                  // true
+                  // ?
+                  VideoPlayerScreen(musicVideo: widget.musicVideo)
+              // : CustomWebPage(url: widget.musicVideo.url),
+              ),
         );
       },
       child: Container(

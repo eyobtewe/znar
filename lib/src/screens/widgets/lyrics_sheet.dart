@@ -30,7 +30,10 @@ class _LyricsBtnState extends State<LyricsBtn> {
       },
       child: Text(
         Language.locale(uiBloc.language, 'lyric'),
-        style: TextStyle(color: BACKGROUND),
+        style: TextStyle(
+          color: BACKGROUND,
+          fontFamilyFallback: f,
+        ),
       ),
       style: ButtonStyle(
         padding: MaterialStateProperty.all(EdgeInsets.zero),

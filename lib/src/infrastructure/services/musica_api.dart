@@ -256,7 +256,7 @@ class MusicApiService implements Api {
   Future<List<Song>> fetchArtistSongs(String artistId) async {
     String url = ENDPOINT_BASE +
         '/listings/artists/$artistId/songs/published' +
-        '?' +
+        '?limit=50&' +
         ENDPOINT_SONG_FILTER;
 
     final parsedJson = await _getter(url);

@@ -138,24 +138,6 @@ class _SongScreenState extends State<SongScreen> {
         ),
       ),
       actions: [
-        // snapshot.isNotEmpty
-        //     ? IconButton(
-        //         icon: const Icon(Ionicons.play),
-        //         onPressed: () {
-        //           if (playerBloc.audioPlayer != null) {
-        //             playerBloc.audioPlayer.stop();
-        //           }
-        //           playerBloc.audioInit(0, snapshot);
-        //           Navigator.push(
-        //             context,
-        //             MaterialPageRoute(
-        //               builder: (BuildContext ctx) =>
-        //                   AudioPlayerScreen(songs: snapshot, i: 0),
-        //             ),
-        //           );
-        //         },
-        //       )
-        //     : Container(),
         IconButton(
             icon: const Icon(Ionicons.search),
             onPressed: () {
@@ -185,13 +167,13 @@ class PlayAllFAB extends StatelessWidget {
           playerBloc.audioPlayer.stop();
         }
         playerBloc.audioInit(0, songs);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext ctx) =>
-                AudioPlayerScreen(songs: songs, i: 0),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (BuildContext ctx) =>
+        //         AudioPlayerScreen(songs: songs, i: 0),
+        //   ),
+        // );
       },
     );
   }
