@@ -45,14 +45,14 @@ class _SettingScreenState extends State<SettingScreen> {
       ),
       body: Stack(
         children: [
-          buildBody(size, context),
+          buildBody(size),
           ExpandableBottomPlayer(),
         ],
       ),
     );
   }
 
-  Container buildBody(Size size, BuildContext context) {
+  Container buildBody(Size size) {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: size.height * 0.05, horizontal: size.width * 0.1),

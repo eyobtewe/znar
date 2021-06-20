@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../presentation/bloc.dart';
 import '../home/explore.dart';
@@ -63,8 +62,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
             child: FutureBuilder(
               future: bloc.fetchArtists(page, 30),
               initialData: bloc.artists,
-              builder:
-                  (BuildContext context, AsyncSnapshot<List<Artist>> snapshot) {
+              builder: (_, AsyncSnapshot<List<Artist>> snapshot) {
                 if (!snapshot.hasData) {
                   return const CustomLoader();
                 } else {
@@ -85,11 +83,11 @@ class _ArtistScreenState extends State<ArtistScreen> {
       physics: const BouncingScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
+        childAspectRatio: 0.8,
       ),
       itemCount: artists?.length ?? 0,
       // shrinkWrap: true,
-      itemBuilder: (BuildContext ctx, int i) =>
-          ArtistThumbnail(artist: artists[i]),
+      itemBuilder: (_, int i) => ArtistThumbnail(artist: artists[i]),
     );
   }
 
@@ -106,14 +104,14 @@ class _ArtistScreenState extends State<ArtistScreen> {
                   delegate: SongSearch(CustomAspectRatio.ARTIST));
             }),
       ],
-      title: Text(
-        Language.locale(uiBloc.language, 'artists'),
-        style: TextStyle(
-          fontWeight: FontWeight.w800,
-          // fontSize: ScreenUtil().setSp(28),
-          fontFamilyFallback: f,
-        ),
-      ),
+      // title: Text(
+      //   Language.locale(uiBloc.language, 'artists'),
+      //   style: TextStyle(
+      //     fontWeight: FontWeight.w800,
+      //     // fontSize: ScreenUtil().setSp(28),
+      //     fontFamilyFallback: f,
+      //   ),
+      // ),
     );
   }
 }

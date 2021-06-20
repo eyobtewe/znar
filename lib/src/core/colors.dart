@@ -5,7 +5,8 @@ const Color GRAY = Color(0xFFc0c0c0);
 const Color DARK_GRAY = Colors.grey;
 
 const Color LINK = Color(0xFF007bff);
-const Color BACKGROUND = Color(0xFF16151a);
+// const Color BACKGROUND = Color(0xFF16151a);
+const Color BACKGROUND = Color(0xFF000000);
 // const Color PURE_WHITE = Color(0xffFFFFFF);
 const Color YELLOW = Color(0xFFffdc00);
 

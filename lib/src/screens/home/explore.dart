@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/core.dart';
 import '../../presentation/bloc.dart';
-
 import 'widgets/widgets.dart';
 
 class ExplorerScreen extends StatefulWidget {
@@ -29,6 +28,7 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
 
   ListView buildListView() {
     return ListView(
+      shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       children: <Widget>[
         Divider(
@@ -51,11 +51,12 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
           ar: CustomAspectRatio.SONG,
           title: Language.locale(uiBloc.language, 'timeless_songs'),
         ),
-        SizedBox(height: 66),
-        // ThumbnailCards(
-        //   ar: CustomAspectRatio.ARTIST,
-        //   title: Language.locale(widget.uiBloc.language, 'artists'),
-        // ),
+        buildDivider(),
+        ThumbnailCards(
+          ar: CustomAspectRatio.ARTIST,
+          title: Language.locale(uiBloc.language, 'artists'),
+        ),
+        SizedBox(height: 76),
       ],
     );
   }

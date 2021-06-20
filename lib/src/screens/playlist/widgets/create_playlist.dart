@@ -55,11 +55,11 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
           },
         ),
       ),
-      actions: buildButtons(context),
+      actions: buildButtons(),
     );
   }
 
-  List<Widget> buildButtons(BuildContext context) {
+  List<Widget> buildButtons() {
     return [
       ElevatedButton.icon(
         onPressed: () async {

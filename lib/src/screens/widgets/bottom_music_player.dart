@@ -17,7 +17,7 @@ class BottomScreenPlayer extends StatelessWidget {
     ScreenUtil.init(context, designSize: size, allowFontScaling: true);
 
     return playerBloc.audioPlayer.builderPlayerState(
-        builder: (BuildContext ctx, PlayerState playerState) {
+        builder: (_, PlayerState playerState) {
       if (playerState == null || playerBloc.playerStatus == PlayerInit.SLEEP) {
         return Container(height: 0);
       } else {
@@ -26,7 +26,7 @@ class BottomScreenPlayer extends StatelessWidget {
     });
     // return StreamBuilder(
     //     stream: playerBloc.audioPlayer.playerState,
-    //     builder: (BuildContext context, AsyncSnapshot<PlayerState> snapshot) {
+    //     builder: (_, AsyncSnapshot<PlayerState> snapshot) {
     //       if (!snapshot.hasData) {
     //         return Container(height: 0);
     //       } else {
@@ -73,17 +73,13 @@ class BottomScreenPlayer extends StatelessWidget {
     // final Metas songMetaData = playing.audio?.audio?.metas;
     return Container(
       decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          border: Border(
-              top: BorderSide(
-            color: GRAY,
-            width: 1,
-          ))),
+        color: Theme.of(context).scaffoldBackgroundColor,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           playerBloc.audioPlayer.builderRealtimePlayingInfos(
-            builder: (BuildContext ctx, RealtimePlayingInfos rInfo) {
+            builder: (_, RealtimePlayingInfos rInfo) {
               if (rInfo == null) {
                 return LinearProgressIndicator(
                   valueColor: AlwaysStoppedAnimation(PRIMARY_COLOR),
@@ -103,29 +99,28 @@ class BottomScreenPlayer extends StatelessWidget {
               }
             },
           ),
-          buildListTile(context, playerBloc),
+          buildListTile(playerBloc),
         ],
       ),
     );
   }
 
-  Widget buildListTile(BuildContext context, PlayerBloc playerBloc) {
-    return playerBloc.audioPlayer.builderCurrent(
-        builder: (BuildContext context, Playing playing) {
+  Widget buildListTile(PlayerBloc playerBloc) {
+    return playerBloc.audioPlayer.builderCurrent(builder: (_, Playing playing) {
       final Metas songMetaData = playing.audio?.audio?.metas;
       return ListTile(
         // onTap: () {
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
-        //         builder: (BuildContext ctx) => AudioPlayerScreen(
+        //         builder: (_) => AudioPlayerScreen(
         //               isFromBottomBar: true,
         //             )));
         // },
         leading: Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(0),
               child: Container(
                 width: 48,
                 height: 48,
@@ -137,7 +132,7 @@ class BottomScreenPlayer extends StatelessWidget {
               ),
             ),
             playerBloc.audioPlayer.builderIsPlaying(
-              builder: (BuildContext ctx, bool isPlaying) {
+              builder: (_, bool isPlaying) {
                 return Container(
                   width: 48,
                   height: 48,

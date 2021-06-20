@@ -55,8 +55,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
         FutureBuilder(
           future: bloc.fetchOnlinePlayList(1, 20),
           initialData: bloc.onlinePlaylists,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
+          builder: (_, AsyncSnapshot<List<Playlist>> snapshot) {
             if (!snapshot.hasData) {
               return const CustomLoader();
             } else {
@@ -68,7 +67,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
         //   future: bloc.fetchLocalPlaylists(),
         //   initialData: bloc.localPlaylists,
         //   builder:
-        //       (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
+        //       (_, AsyncSnapshot<List<Playlist>> snapshot) {
         //     if (!snapshot.hasData) {
         //       return const CustomLoader();
         //     } else {
@@ -92,14 +91,14 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
             }),
       ],
       centerTitle: false,
-      title: Text(
-        Language.locale(uiBloc.language, 'playlists'),
-        style: TextStyle(
-          fontWeight: FontWeight.w800,
-          // fontSize: ScreenUtil().setSp(28),
-          fontFamilyFallback: f,
-        ),
-      ),
+      // title: Text(
+      //   Language.locale(uiBloc.language, 'playlists'),
+      //   style: TextStyle(
+      //     fontWeight: FontWeight.w800,
+      //     // fontSize: ScreenUtil().setSp(28),
+      //     fontFamilyFallback: f,
+      //   ),
+      // ),
       // bottom: TabBar(
       //   labelPadding: const EdgeInsets.all(10),
       //   indicatorSize: TabBarIndicatorSize.label,
@@ -133,7 +132,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
         // key: PageStorageKey('$ar'),
         scrollDirection: Axis.horizontal,
         // shrinkWrap: true,
-        itemBuilder: (BuildContext context, int i) {
+        itemBuilder: (_, int i) {
           return HomeCards(
             ar: CustomAspectRatio.SONG,
             data: songs,
@@ -151,15 +150,14 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
       slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (BuildContext ctx, int k) {
+            (_, int k) {
               return Container(
                 // height: 200,
                 width: size.width,
                 child: FutureBuilder(
                     future: bloc.fetchPlaylistSong(playlists[k].sId),
                     initialData: bloc.playlistSongs[playlists[k].sId],
-                    builder:
-                        (BuildContext ctx, AsyncSnapshot<List<Song>> snapshot) {
+                    builder: (_, AsyncSnapshot<List<Song>> snapshot) {
                       if (!snapshot.hasData) {
                         return Container();
                       } else {
@@ -171,7 +169,6 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
                             Divider(color: TRANSPARENT),
                             buildContainer(
                                 bloc, bloc.playlistSongs[playlists[k].sId]),
-                            SizedBox(height: 66),
                           ],
                         );
                       }
@@ -192,7 +189,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
     //   itemCount: playlists.length,
     //   shrinkWrap: true,
     //   primary: false,
-    //   itemBuilder: (BuildContext ctx, int i) =>
+    //   itemBuilder: (_, int i) =>
     //       PlaylistThumbnail(playlist: playlists[i]),
     // );
   }
@@ -216,30 +213,50 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
           ),
           songs.length < 5
               ? Container()
-              : TextButton(
+              // : IconButton(
+              //     onPressed: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (_) =>
+              //               PlaylistDetailScreen(playlist: playlist),
+              //         ),
+              //       );
+              //     },
+              //     icon: Icon(
+              //       Icons.chevron_right_rounded,
+              //       size: 28,
+              //       color: PRIMARY_COLOR,
+              //     ),
+              //   ),
+              : ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext ctx) =>
+                        builder: (_) =>
                             PlaylistDetailScreen(playlist: playlist),
                       ),
                     );
                   },
                   style: ButtonStyle(
+                    // elevation: MaterialStateProperty.all(0),
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(PRIMARY_COLOR),
-                    visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+                        MaterialStateProperty.all<Color>(BACKGROUND),
+                    // visualDensity: VisualDensity(horizontal: 0, vertical: -2),
                     shape: MaterialStateProperty.all<OutlinedBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100),
-                      ),
+                          borderRadius: BorderRadius.circular(100),
+                          side: BorderSide(
+                            color: CANVAS_BLACK,
+                            width: 2,
+                          )),
                     ),
                   ),
                   child: Text(
                     Language.locale(uiBloc.language, 'more'),
                     style: const TextStyle(
-                      color: BACKGROUND,
+                      color: PRIMARY_COLOR,
                       fontFamilyFallback: f,
                     ),
                   ),
@@ -259,18 +276,18 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
   //             onPressed: () async {
   //               await showDialog(
   //                 context: context,
-  //                 builder: (BuildContext ctx) => CreatePlaylist(),
+  //                 builder: (_) => CreatePlaylist(),
   //               );
   //               setState(() {});
   //             },
   //           ),
   //     body: ListView.separated(
-  //       separatorBuilder: (BuildContext ctx, int i) => Divider(),
+  //       separatorBuilder: (_, int i) => Divider(),
   //       physics: const BouncingScrollPhysics(),
   //       itemCount: playlists.length,
   //       shrinkWrap: true,
   //       primary: false,
-  //       itemBuilder: (BuildContext ctx, int i) =>
+  //       itemBuilder: (_, int i) =>
   //           buildDismissible(playlists, i),
   //     ),
   //   );

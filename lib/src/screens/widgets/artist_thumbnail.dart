@@ -21,12 +21,13 @@ class ArtistThumbnail extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (BuildContext ctx) => ArtistDetailScreen(artist: artist),
+            builder: (_) => ArtistDetailScreen(artist: artist),
           ),
         );
       },
       child: Container(
-        // color: BACKGROUND,
+        // height: 150,
+        // width: 150,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: <Widget>[
@@ -34,14 +35,17 @@ class ArtistThumbnail extends StatelessWidget {
                 ? Container()
                 : Container(
                     margin: const EdgeInsets.only(bottom: 5, top: 10),
-                    height: size.width * 0.2,
-                    width: size.width * 0.2,
+                    // height: size.width * 0.25,
+                    // width: size.width * 0.25,
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(500),
                         child: artist.runtimeType == Artist
                             ? CachedPicture(image: artist.photo ?? '')
                             : CustomFileImage(img: artist.artistArtPath)),
                   ),
+            Divider(
+              height: 5,
+            ),
             MusicTitle(
               title: artist.runtimeType == Artist
                   ? artist.fullName ?? ''

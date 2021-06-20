@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_audio_query/flutter_audio_query.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -45,8 +45,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
             child: widget.albumId != null
                 ? FutureBuilder(
                     future: bloc.fetchAlbumDetails(widget.albumId),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<Album> snapshot) {
+                    builder: (_, AsyncSnapshot<Album> snapshot) {
                       if (!snapshot.hasData) {
                         return Center(child: const CustomLoader());
                       } else {
@@ -64,13 +63,17 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
 
   Widget buildBody(dynamic album) {
     return FutureBuilder(
-      future: album.runtimeType == Album
-          ? bloc.fetchAlbumSongs(album.sId)
-          : localSongsBloc.getSongsFromAlbum(album.id),
-      initialData: album.runtimeType == Album
-          ? bloc.albumsSongs[album.sId]
-          : localSongsBloc.albumsSongs[album.id],
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+      future:
+          //  album.runtimeType == Album
+          // ?
+          bloc.fetchAlbumSongs(album.sId),
+      // : localSongsBloc.getSongsFromAlbum(album.id),
+      initialData:
+          // album.runtimeType == Album
+          //     ?
+          bloc.albumsSongs[album.sId],
+      // : localSongsBloc.albumsSongs[album.id],
+      builder: (_, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return const CustomScrollView(
             primary: true,
@@ -91,7 +94,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
                 buildSliverAppBar(album, songs),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (BuildContext ctx, int i) {
+                    (_, int i) {
                       return SongTile(songs: songs, index: i);
                     },
                     childCount: songs.length,
@@ -188,11 +191,11 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
         if (playerBloc.audioPlayer != null) {
           playerBloc.audioPlayer.stop();
         }
-        playerBloc.audioInit(0, songs, songs[0].runtimeType == SongInfo);
+        playerBloc.audioInit(0, songs, songs[0].runtimeType != Song);
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(
-        //     builder: (BuildContext ctx) => AudioPlayerScreen(
+        //     builder: (_) => AudioPlayerScreen(
         //       songs: songs,
         //       i: 0,
         //       isLocal: songs[0].runtimeType == SongInfo,

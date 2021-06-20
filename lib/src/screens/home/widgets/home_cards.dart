@@ -16,6 +16,7 @@ class HomeCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final size = MediaQuery.of(context).size;
     switch (ar) {
       case CustomAspectRatio.SONG:
         return Container(
@@ -26,7 +27,7 @@ class HomeCards extends StatelessWidget {
       case CustomAspectRatio.ARTIST:
         return Container(
           child: ArtistThumbnail(artist: data[i]),
-          width: 100,
+          width: 135,
         );
       case CustomAspectRatio.PLAYLIST:
         return Container(

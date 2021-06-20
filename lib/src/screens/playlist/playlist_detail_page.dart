@@ -62,7 +62,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
           ? bloc.fetchLocalSongs(playlist)
           : bloc.fetchPlaylistSong(playlist.sId),
       initialData: bloc.playlistSongs[playlist.sId],
-      builder: (BuildContext context, AsyncSnapshot<List<Song>> snapshot) {
+      builder: (_, AsyncSnapshot<List<Song>> snapshot) {
         if (!snapshot.hasData) {
           return CustomScrollView(
             slivers: [
@@ -124,7 +124,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
   Widget buildSliverList(Playlist playlist) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (BuildContext ctx, int i) {
+        (_, int i) {
           return playlist.isLocal
               ? Dismissible(
                   background: Container(
@@ -167,10 +167,10 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
                   backgroundColor: CANVAS_BLACK,
                   // barrierColor: Theme.of(context).scaffoldBackgroundColor,
                   context: context,
-                  builder: (BuildContext ctx) {
+                  builder: (_) {
                     return DraggableScrollableSheet(
                       expand: false,
-                      builder: (BuildContext ctx, ScrollController ctr) {
+                      builder: (_, ScrollController ctr) {
                         return buildSongsList(bloc);
                       },
                     );
@@ -187,7 +187,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
       child: FutureBuilder(
         future: bloc.fetchSongs(1, 100),
         initialData: bloc.songs,
-        builder: (BuildContext context, AsyncSnapshot<List<Song>> snapshot) {
+        builder: (_, AsyncSnapshot<List<Song>> snapshot) {
           if (!snapshot.hasData) {
             return Container(child: const CustomLoader(), height: 100);
           } else {
@@ -197,7 +197,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
             return ListView.builder(
               itemCount: songsList.length,
               shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
+              itemBuilder: (_, int index) {
                 return index == 0
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

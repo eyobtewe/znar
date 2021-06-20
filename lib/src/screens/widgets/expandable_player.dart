@@ -4,7 +4,6 @@ import 'package:miniplayer/miniplayer.dart';
 
 import '../../core/core.dart';
 import '../../presentation/bloc.dart';
-import '../screens.dart';
 import 'widgets.dart';
 
 class ExpandableBottomPlayer extends StatefulWidget {
@@ -24,14 +23,15 @@ class _ExpandableBottomPlayerState extends State<ExpandableBottomPlayer> {
     super.initState();
   }
 
+  PlayerBloc playerBloc;
   @override
   Widget build(BuildContext context) {
-    final PlayerBloc playerBloc = PlayerProvider.of(context);
+    playerBloc = PlayerProvider.of(context);
     final Size size = MediaQuery.of(context).size;
 
     return StreamBuilder(
         stream: playerBloc.audioPlayer.playerState,
-        builder: (BuildContext ctx, AsyncSnapshot<PlayerState> snapshot) {
+        builder: (_, AsyncSnapshot<PlayerState> snapshot) {
           return (!snapshot.hasData || snapshot.data == PlayerState.stop)
               ? Container()
               : Miniplayer(
@@ -62,30 +62,36 @@ class _ExpandableBottomPlayerState extends State<ExpandableBottomPlayer> {
     return Container(
       color: BACKGROUND,
       child: Center(
-        child: ListView(
-          primary: false,
-          shrinkWrap: true,
-          children: [
-            InkWell(
-              child: SongArtwork(),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext ctx) => AudioPlayerScreen(),
+        child: StreamBuilder<Playing>(
+            stream: playerBloc.audioPlayer.current,
+            builder: (_, AsyncSnapshot<Playing> snapshot) {
+              return ListView(
+                primary: false,
+                shrinkWrap: true,
+                children: [
+                  InkWell(
+                    child: SongArtwork(
+                      songArt: snapshot?.data?.audio?.audio?.metas?.image?.path,
+                    ),
+                    onTap: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (_) => AudioPlayerScreen(),
+                      //   ),
+                      // );
+                    },
                   ),
-                );
-              },
-            ),
-            Divider(color: TRANSPARENT),
-            SongDetails(),
-            PlayerButtons(),
-            // Divider(color: TRANSPARENT),
-            // Row(
-            //   children: [Spacer(), LyricsBtn(), Spacer()],
-            // ),
-          ],
-        ),
+                  Divider(color: TRANSPARENT),
+                  SongDetails(),
+                  PlayerButtons(),
+                  // Divider(color: TRANSPARENT),
+                  // Row(
+                  //   children: [Spacer(), LyricsBtn(), Spacer()],
+                  // ),
+                ],
+              );
+            }),
       ),
     );
   }

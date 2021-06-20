@@ -1,3 +1,4 @@
+export '../screens/login/login.dart';
 export '../screens/video_player/video_player.dart';
 export 'album/album_detail_page.dart';
 export 'album/album_page.dart';
@@ -5,7 +6,6 @@ export 'announcement/announcement_page.dart';
 export 'artist/artist_detail_page.dart';
 export 'artist/artist_page.dart';
 export 'audio_player/audio_player.dart';
-export 'channel/channel_detail_page.dart';
 export 'home/explore.dart';
 export 'home/home.dart';
 export 'local_files/downloaded_songs_page.dart';

@@ -26,7 +26,7 @@ class AlbumThumbnail extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext ctx) => AlbumDetailScreen(album: album),
+              builder: (_) => AlbumDetailScreen(album: album),
             ),
           );
         },

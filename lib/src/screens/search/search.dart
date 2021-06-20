@@ -3,7 +3,6 @@ import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
 import '../../presentation/bloc.dart';
-import '../home/widgets/widgets.dart';
 import '../screens.dart';
 import '../widgets/widgets.dart';
 
@@ -103,12 +102,12 @@ class SongSearch extends SearchDelegate<dynamic> {
     return query != ''
         ? FutureBuilder(
             future: buildFutures(ar, bloc),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
+            builder: (_, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
                 return CustomLoader();
               } else {
                 return ListView.builder(
-                  itemBuilder: (BuildContext ctx, int k) {
+                  itemBuilder: (_, int k) {
                     switch (ar) {
                       case CustomAspectRatio.VIDEO:
                         return MusicVideoTile(musicVideo: snapshot.data[k]);
@@ -131,22 +130,61 @@ class SongSearch extends SearchDelegate<dynamic> {
         : buildPlaceHolder(uiBloc);
   }
 
-  ListView buildPlaceHolder(UiBloc uiBloc) {
-    return ListView(
-      physics: const BouncingScrollPhysics(),
-      children: [
-        buildDivider(),
-        ThumbnailCards(
-          ar: CustomAspectRatio.PLAYLIST,
-          title: Language.locale(uiBloc.language, 'popular_playlists'),
+  Widget buildPlaceHolder(UiBloc uiBloc) {
+    List<String> titles = [
+      'Chill',
+      'Sundays',
+      'Happy',
+      'Moody',
+      'Tuesdays',
+      'Club Nights'
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 1.5,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
         ),
-        buildDivider(),
-        ThumbnailCards(
-          ar: CustomAspectRatio.SONG,
-          title: Language.locale(uiBloc.language, 'songs'),
-        ),
-      ],
+        children: titles
+            .map((e) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: CANVAS_BLACK,
+                  ),
+                  // margin: EdgeInsets.all(15),
+                  child: Tab(
+                    child: Text(
+                      e,
+                      style: TextStyle(
+                        color: PRIMARY_COLOR,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ))
+            .toList(),
+      ),
     );
+    // return ListView(
+    //   physics: const BouncingScrollPhysics(),
+    //   children: [
+    //     buildDivider(),
+    //     ThumbnailCards(
+    //       ar: CustomAspectRatio.PLAYLIST,
+    //       title: Language.locale(uiBloc.language, 'popular_playlists'),
+    //     ),
+    //     buildDivider(),
+    //     ThumbnailCards(
+    //       ar: CustomAspectRatio.SONG,
+    //       title: Language.locale(uiBloc.language, 'songs'),
+    //     ),
+    //   ],
+    // );
   }
 
   dynamic buildResultTile(

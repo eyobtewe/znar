@@ -21,7 +21,7 @@ class PlayerDynamicLinkCatcher extends StatelessWidget {
         future: isAudio
             ? bloc.fetchSongDetails(songId)
             : bloc.fetchMusicVideoDetails(songId),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        builder: (_, AsyncSnapshot<dynamic> snapshot) {
           if (!snapshot.hasData) {
             return const CustomLoader();
           } else {
@@ -62,7 +62,7 @@ class PlayerDynamicLinkCatcher extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (BuildContext ctx) => CustomWebPage(url: snapshot.data.url),
+          builder: (_) => CustomWebPage(url: snapshot.data.url),
         ),
       );
     }

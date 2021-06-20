@@ -94,7 +94,7 @@ class _HomeState extends State<Home> {
         if (id != null) {
           return Navigator.push(
             context,
-            MaterialPageRoute(builder: (BuildContext ctx) {
+            MaterialPageRoute(builder: (_) {
               switch (id?.values?.single) {
                 // case 'album':
                 //   return AlbumDetailScreen(albumId: id.keys.single);

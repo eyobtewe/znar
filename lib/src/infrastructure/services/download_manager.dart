@@ -4,6 +4,7 @@ import 'package:dart_tags/dart_tags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
+import '../../core/colors.dart';
 
 import '../../domain/models/models.dart';
 
@@ -51,7 +52,7 @@ class DownloadsManager {
     } catch (e) {
       return null;
     }
-    return '';
+    // return '';
   }
 
   Future<List<DownloadedSong>> getDownloaded(TargetPlatform platform) async {
@@ -119,10 +120,13 @@ class DownloadsManager {
   // }
 }
 
-Future showToast(String message) async {
+showToast(String message) {
   ScaffoldMessengerState().showSnackBar(
     SnackBar(
-      content: Text(message),
+      content: Text(
+        message,
+        style: TextStyle(color: GRAY),
+      ),
     ),
   );
 }

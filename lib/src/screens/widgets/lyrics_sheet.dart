@@ -23,7 +23,7 @@ class _LyricsBtnState extends State<LyricsBtn> {
     final size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size, allowFontScaling: true);
 
-    return TextButton(
+    return ElevatedButton(
       onPressed: () {
         ScrollController sc = ScrollController();
         buildShowModalBottomSheet(context, playerBloc, sc, size);
@@ -31,18 +31,22 @@ class _LyricsBtnState extends State<LyricsBtn> {
       child: Text(
         Language.locale(uiBloc.language, 'lyric'),
         style: TextStyle(
-          color: BACKGROUND,
+          color: PRIMARY_COLOR,
+          // fontWeight: FontWeight.bold,
           fontFamilyFallback: f,
         ),
       ),
       style: ButtonStyle(
-        padding: MaterialStateProperty.all(EdgeInsets.zero),
-        backgroundColor: MaterialStateProperty.all<Color>(PRIMARY_COLOR),
-        visualDensity: VisualDensity.compact,
+        // elevation: MaterialStateProperty.all(0),
+        backgroundColor: MaterialStateProperty.all<Color>(BACKGROUND),
+        // visualDensity: VisualDensity(horizontal: 0, vertical: -2),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
-          ),
+              borderRadius: BorderRadius.circular(100),
+              side: BorderSide(
+                color: PRIMARY_COLOR,
+                width: 1,
+              )),
         ),
       ),
     );
@@ -55,9 +59,9 @@ class _LyricsBtnState extends State<LyricsBtn> {
         backgroundColor: BACKGROUND.withOpacity(0.5),
         isScrollControlled: true,
         enableDrag: true,
-        builder: (BuildContext ctx) {
+        builder: (_) {
           return playerBloc.audioPlayer.builderRealtimePlayingInfos(
-              builder: (BuildContext ctx, RealtimePlayingInfos r) {
+              builder: (_, RealtimePlayingInfos r) {
             if (sc.hasClients && !scrollable) {
               sc.animateTo(
                   (r.currentPosition.inSeconds / r.duration.inSeconds) *
@@ -98,14 +102,14 @@ class _LyricsBtnState extends State<LyricsBtn> {
                 .toList(),
           ),
           Align(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.topRight,
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 30),
               child: IconButton(
                   visualDensity: VisualDensity.compact,
                   color: PRIMARY_COLOR,
                   // color: BACKGROUND,
-                  icon: Icon(Ionicons.chevron_down_circle_outline),
+                  icon: Icon(Ionicons.close_circle_outline),
                   onPressed: () {
                     Navigator.of(context).pop();
                   }),

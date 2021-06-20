@@ -41,7 +41,7 @@ class PlayerButtons extends StatelessWidget {
 
   PlayerBuilder buildRepeatBtn(PlayerBloc playerBloc, Size size) {
     return playerBloc.audioPlayer.builderLoopMode(
-      builder: (BuildContext ctx, LoopMode loopMode) {
+      builder: (_, LoopMode loopMode) {
         return loopMode != null
             ? IconButton(
                 // iconSize: size.width * 0.08,
@@ -72,7 +72,7 @@ class PlayerButtons extends StatelessWidget {
     //     null) {
     return StreamBuilder(
         stream: playerBloc?.audioPlayer?.realtimePlayingInfos,
-        builder: (BuildContext context, AsyncSnapshot<RealtimePlayingInfos> r) {
+        builder: (_, AsyncSnapshot<RealtimePlayingInfos> r) {
           if (r?.data?.duration == Duration.zero) {
             return IconButton(
               color: GRAY,
@@ -93,7 +93,7 @@ class PlayerButtons extends StatelessWidget {
         });
     // } else {
     //   return playerBloc.audioPlayer.builderRealtimePlayingInfos(
-    //     builder: (BuildContext ctx, RealtimePlayingInfos r) {
+    //     builder: (_, RealtimePlayingInfos r) {
     //       return IconButton(
     //         iconSize: ScreenUtil().setSp(28),
     //         icon: const Icon(Ionicons.shuffle),

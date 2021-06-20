@@ -28,9 +28,9 @@ const String SEARCH_HOME_PAGE_ROUTE = '/search-home';
 MaterialPageRoute _route(Widget _screen) {
   return MaterialPageRoute(builder: (BuildContext context) {
     final UiBloc uiBloc = UiProvider.of(context);
-    final LocalSongsBloc localSongsBloc = LocalSongsProvider.of(context);
+    // final LocalSongsBloc localSongsBloc = LocalSongsProvider.of(context);
     uiBloc.init();
-    localSongsBloc.init();
+    // localSongsBloc.init();
     return _screen;
   });
 }
@@ -40,7 +40,7 @@ Route onGeneratedRoute(RouteSettings settings) {
     case '/':
       return _route(SplashScreen());
     case LOCAL_SONGS_PAGE_ROUTE:
-      return _route(LocalScreen());
+    //   return _route(LocalScreen());
     case HOME_PAGE_ROUTE:
       String args = settings.arguments;
       return _route(Home(key: Key(args ?? 'INIT')));

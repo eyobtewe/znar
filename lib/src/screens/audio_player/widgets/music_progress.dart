@@ -21,7 +21,7 @@ class _MusicProgressState extends State<MusicProgress> {
     final Size size = MediaQuery.of(context).size;
 
     return playerBloc.audioPlayer.builderRealtimePlayingInfos(
-        builder: (BuildContext ctx, RealtimePlayingInfos r) {
+        builder: (_, RealtimePlayingInfos r) {
       return Container(
         width: size.width * 0.8,
         padding: EdgeInsets.symmetric(horizontal: 20),

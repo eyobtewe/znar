@@ -49,8 +49,7 @@ class PlaylistTile extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext ctx) =>
-                        PlaylistDetailScreen(playlist: playlist),
+                    builder: (_) => PlaylistDetailScreen(playlist: playlist),
                   ),
                 );
               },

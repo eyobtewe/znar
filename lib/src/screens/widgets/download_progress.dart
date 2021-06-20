@@ -14,7 +14,7 @@
 //     final uiBloc = UiProvider.of(context);
 //     return StreamBuilder<DownloadStatus>(
 //       stream: uiBloc.progressStr,
-//       builder: (BuildContext context, AsyncSnapshot<DownloadStatus> snapshot) {
+//       builder: (_, AsyncSnapshot<DownloadStatus> snapshot) {
 //         return Visibility(
 //           visible: (snapshot.hasData) &&
 //               (snapshot.data == DownloadStatus.LOADING || snapshot.data == DownloadStatus.DOWNLOADING),

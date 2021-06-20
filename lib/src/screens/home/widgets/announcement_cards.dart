@@ -18,8 +18,7 @@ class AnnouncementCards extends StatelessWidget {
     return FutureBuilder(
       future: bloc.fetchAnnouncements(),
       initialData: bloc.announcement,
-      builder:
-          (BuildContext context, AsyncSnapshot<List<Announcement>> snapshot) {
+      builder: (_, AsyncSnapshot<List<Announcement>> snapshot) {
         if (!snapshot.hasData) {
           return Container();
         } else {
@@ -54,7 +53,7 @@ class AnnouncementCards extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (BuildContext ctx) => AnnouncementScreen(
+            builder: (_) => AnnouncementScreen(
               announcement: bloc.announcement[index],
             ),
           ),

@@ -2,6 +2,7 @@ class Language {
   static const Map<String, String> ENGLISH = {
     // 'explore': 'Explore',
     'discover': 'Discover',
+    'login': 'Login',
     'songs': 'Songs',
     'song': 'Song',
     'play': 'Play',
@@ -58,10 +59,15 @@ class Language {
     'downloaded': 'Downloaded',
     'downloaded_songs': 'Downloads',
     'langauge_changed': 'Language has changed',
+    'follow': 'Follow',
+    'followers': 'Followers',
+    'follower': 'Follower',
+    'following': 'Following',
   };
   // static const Map<String, String> AMHARIC = {
   // 'explore': 'ሁሉ',
   //   'discover': 'Discover',
+  // 'login':'Login',
   //   'songs': 'ዘፈኖች',
   //   'song': 'ዘፈን',
   // 'play': 'Play',
@@ -117,10 +123,13 @@ class Language {
   //   'downloaded': 'Downloaded',
   //   'downloaded_songs': 'የወረዱ',
   //   'langauge_changed': 'ቋንቋ ተቀይሯል',
+  // 'follow':'Follow',
+  // 'following':'Following',
   // };
   static const Map<String, String> TIGRIGNA = {
     // 'explore': 'ኹሉ',
     'discover': 'ዳህሳስ',
+    'login': 'Login',
     'songs': 'ደርፍታት',
     'song': 'ደርፊ',
     'play': 'ተፃወት',
@@ -128,8 +137,8 @@ class Language {
     'albums': 'ኣልበማት',
     'album': 'ኣልበም',
     'go_to': 'Go to',
-    'artists': 'ኣርቲስታት',
-    'artist': 'አርቲስት',
+    'artists': 'ከየንቲ',
+    'artist': 'ከያኒ',
     'music_video': 'ቪድዮ ሙዚቃ',
     'music_videos': 'ቪድዮታት ሙዚቃ',
     'video': 'ቪድዮ',
@@ -140,7 +149,7 @@ class Language {
     'playlists': 'ዝርዝር ደርፍታት',
     'playlists_nav': 'ዝርዝር',
     'playlist': 'ናይ ደርፍታት ዝርዝር',
-    'similar_from_artist': ' ካብ\'ቲ አርቲስት',
+    'similar_from_artist': ' ካብ\'ቲ ከያኒ',
     'local_playlists': 'Local',
     'online_playlists': 'Online',
     'playlist_deleted': 'የዘፈኖቹ ዝርዝር ጠፍቷል',
@@ -176,6 +185,10 @@ class Language {
     'downloaded': 'Downloaded',
     'downloaded_songs': 'የወረዱ',
     'langauge_changed': 'ቋንቋ ተቀይሩ',
+    'follow': 'Follow',
+    'followers': 'Followers',
+    'follower': 'Follower',
+    'following': 'Following',
   };
 
   static String locale(String lang, String key) {

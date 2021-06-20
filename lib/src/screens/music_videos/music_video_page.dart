@@ -71,8 +71,7 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
       child: FutureBuilder(
         future: bloc.fetchMusicVideos(page, 30),
         initialData: bloc.musicVideo,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<MusicVideo>> snapshot) {
+        builder: (_, AsyncSnapshot<List<MusicVideo>> snapshot) {
           if (!snapshot.hasData) {
             return const CustomLoader();
           } else {
@@ -101,7 +100,7 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
   //   return FutureBuilder(
   //     future: bloc.fetchChannels(),
   //     initialData: bloc.channels,
-  //     builder: (BuildContext context, AsyncSnapshot<List<Channel>> snapshot) {
+  //     builder: (_, AsyncSnapshot<List<Channel>> snapshot) {
   //       if (!snapshot.hasData) {
   //         return Container();
   //       } else {
@@ -110,7 +109,7 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
   //           child: ListView.builder(
   //             scrollDirection: Axis.horizontal,
   //             itemCount: bloc.channels?.length ?? 0,
-  //             itemBuilder: (BuildContext context, int index) {
+  //             itemBuilder: (_, int index) {
   //               return ChannelThumbnail(
   //                   i: index, channel: bloc.channels[index]);
   //             },
@@ -145,7 +144,7 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
         itemCount: musicVideos.length ?? 0,
         shrinkWrap: true,
         primary: false,
-        itemBuilder: (BuildContext ctx, int i) => MusicVideoThumbnail(
+        itemBuilder: (_, int i) => MusicVideoThumbnail(
           i: i,
           musicVideo: musicVideos[i],
         ),
@@ -165,7 +164,7 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
         layout: SwiperLayout.STACK,
         autoplay: true,
         autoplayDisableOnInteraction: false,
-        itemBuilder: (BuildContext context, int index) =>
+        itemBuilder: (_, int index) =>
             buildClipRRect(context, musicVideos, index),
       ),
     );
@@ -182,8 +181,7 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext ctx) =>
-                  CustomWebPage(url: musicVideos[index].url),
+              builder: (_) => CustomWebPage(url: musicVideos[index].url),
             ),
           );
         },

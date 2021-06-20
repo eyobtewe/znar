@@ -23,7 +23,7 @@ class ThumbnailCards extends StatelessWidget {
     return FutureBuilder(
       future: bloc.buildFutures(ar),
       initialData: bloc.buildInitialData(ar),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+      builder: (_, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return ar == CustomAspectRatio.SONG
               ? Container(
@@ -39,7 +39,8 @@ class ThumbnailCards extends StatelessWidget {
                     buildTitle(uiBloc, context, bloc.buildInitialData(ar)),
                     buildDivider(),
                     Container(
-                      child: CustomAspectRatio.PLAYLIST == ar
+                      child: (CustomAspectRatio.PLAYLIST == ar ||
+                              ar == CustomAspectRatio.ARTIST)
                           ? buildContainer(bloc, size)
                           : buildGridView(bloc),
                     ),
@@ -56,7 +57,7 @@ class ThumbnailCards extends StatelessWidget {
         crossAxisCount: ar == CustomAspectRatio.SONG ? 3 : 2,
         childAspectRatio: _childAspectRatio(ar),
       ),
-      itemBuilder: (BuildContext ctx, int index) {
+      itemBuilder: (_, int index) {
         return HomeCards(
           ar: ar,
           data: bloc.buildInitialData(ar),
@@ -87,12 +88,13 @@ class ThumbnailCards extends StatelessWidget {
 
   Container buildContainer(ApiBloc bloc, Size size) {
     return Container(
-      height: size.width * 9 / 13,
+      height: ar == CustomAspectRatio.ARTIST ? 150 : size.width * 9 / 13,
       child: ListView.builder(
+        shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         key: PageStorageKey('$ar'),
         scrollDirection: Axis.horizontal,
-        itemBuilder: (BuildContext context, int i) {
+        itemBuilder: (_, int i) {
           return HomeCards(
             ar: ar,
             data: bloc.buildInitialData(ar),
@@ -106,7 +108,21 @@ class ThumbnailCards extends StatelessWidget {
 
   Widget buildMoreBtn(
       CustomAspectRatio ar, BuildContext context, UiBloc uiBloc) {
-    return TextButton(
+    // return IconButton(
+    //   onPressed: () {
+    //     if (CustomAspectRatio.SONG == ar) {
+    //       Navigator.pushNamed(context, _routePage(ar));
+    //     } else {
+    //       Navigator.pushReplacementNamed(context, _routePage(ar));
+    //     }
+    //   },
+    //   icon: Icon(
+    //     Icons.chevron_right_rounded,
+    //     size: 28,
+    //     color: PRIMARY_COLOR,
+    //   ),
+    // );
+    return ElevatedButton(
       onPressed: () {
         if (CustomAspectRatio.SONG == ar) {
           Navigator.pushNamed(context, _routePage(ar));
@@ -115,18 +131,22 @@ class ThumbnailCards extends StatelessWidget {
         }
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(PRIMARY_COLOR),
-        visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+        // elevation: MaterialStateProperty.all(0),
+        backgroundColor: MaterialStateProperty.all<Color>(BACKGROUND),
+        // visualDensity: VisualDensity(horizontal: 0, vertical: -2),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
-          ),
+              borderRadius: BorderRadius.circular(100),
+              side: BorderSide(
+                color: CANVAS_BLACK,
+                width: 2,
+              )),
         ),
       ),
       child: Text(
         Language.locale(uiBloc.language, 'more'),
         style: const TextStyle(
-          color: BACKGROUND,
+          color: PRIMARY_COLOR,
           fontFamilyFallback: f,
         ),
       ),

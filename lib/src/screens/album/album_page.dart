@@ -74,8 +74,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
           FutureBuilder(
             future: bloc.fetchAlbums(page, 30),
             initialData: bloc.albums,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Album>> snapshot) {
+            builder: (_, AsyncSnapshot<List<Album>> snapshot) {
               if (!snapshot.hasData) {
                 return const CustomLoader();
               } else {
@@ -108,7 +107,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
           //     },
           //     crossAxisCount: 3,
           //     itemCount: albums.length ?? 0,
-          //     itemBuilder: (BuildContext ctx, int i) => (i % 6 == 0 && i != 0)
+          //     itemBuilder: (_, int i) => (i % 6 == 0 && i != 0)
           //         ? BuildAd(height: _height, nativeAdController: _nativeAdController)
           //         : AlbumThumbnail(album: albums[i]),
           //   ),
@@ -121,8 +120,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
             ),
             itemCount: albums?.length ?? 0,
             shrinkWrap: true,
-            itemBuilder: (BuildContext ctx, int i) =>
-                AlbumThumbnail(album: albums[i]),
+            itemBuilder: (_, int i) => AlbumThumbnail(album: albums[i]),
           ),
           // BuildAd(height: _height, nativeAdController: _nativeAdController)
         ],
@@ -141,14 +139,14 @@ class _AlbumScreenState extends State<AlbumScreen> {
         scale: 0.6,
         autoplay: true,
         autoplayDisableOnInteraction: false,
-        itemBuilder: (BuildContext context, int index) => ClipRRect(
+        itemBuilder: (_, int index) => ClipRRect(
           borderRadius: BorderRadius.circular(5),
           child: InkWell(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext ctx) => AlbumDetailScreen(
+                    builder: (_) => AlbumDetailScreen(
                       album: albums[index],
                     ),
                   ),

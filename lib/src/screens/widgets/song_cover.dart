@@ -19,7 +19,7 @@ class SongCover extends StatelessWidget {
       height: size.width - 100,
       width: size.width,
       child: playerBloc.audioPlayer.builderRealtimePlayingInfos(
-          builder: (BuildContext ctx, RealtimePlayingInfos r) {
+          builder: (_, RealtimePlayingInfos r) {
         return buildSwiper(r, playerBloc);
       }),
     );
@@ -39,16 +39,14 @@ class SongCover extends StatelessWidget {
       },
       autoplay: false,
       autoplayDisableOnInteraction: false,
-      itemBuilder: (BuildContext context, int index) => buildImage(
-          context,
-          playerBloc
-              .audioPlayer.readingPlaylist.audios[index].metas.image.path),
+      itemBuilder: (_, int index) => buildImage(playerBloc
+          .audioPlayer.readingPlaylist.audios[index].metas.image.path),
     );
   }
 
-  Widget buildImage(BuildContext context, String img) {
+  Widget buildImage(String img) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(0),
       child: Container(
         color: PURE_BLACK,
         child: CachedPicture(

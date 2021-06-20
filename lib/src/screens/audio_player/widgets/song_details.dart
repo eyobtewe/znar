@@ -20,7 +20,7 @@ class SongDetails extends StatelessWidget {
     List<Audio> playlist = playerBloc.audioPlayer.readingPlaylist.audios;
 
     return playerBloc.audioPlayer.builderCurrent(
-      builder: (BuildContext ctx, Playing playing) {
+      builder: (_, Playing playing) {
         return Column(
           children: <Widget>[
             Container(

@@ -65,7 +65,7 @@
 //       color: CANVAS_BLACK,
 //       padding: EdgeInsets.zero,
 //       icon: const Icon(Icons.more_vert, size: 16),
-//       itemBuilder: (BuildContext ctx) {
+//       itemBuilder: (_) {
 //         return <PopupMenuEntry>[
 //           // buildShareItem(bloc, context, uiBloc),
 //           (widget.playlist != null || temp.isEmpty) ? null : PopupMenuDivider(),
@@ -179,7 +179,7 @@
 //           Navigator.pop(context);
 //           return showDialog(
 //             context: context,
-//             builder: (BuildContext ctx) => CreatePlaylist(
+//             builder: (_) => CreatePlaylist(
 //               song: widget.songs[widget.index],
 //             ),
 //           );
@@ -282,10 +282,10 @@
 //       ),
 //       isScrollControlled: true,
 //       backgroundColor: CANVAS_BLACK,
-//       builder: (BuildContext ctx) {
+//       builder: (_) {
 //         return DraggableScrollableSheet(
 //           expand: false,
-//           builder: (BuildContext ctx, ScrollController ctr) {
+//           builder: (_, ScrollController ctr) {
 //             return showPlaylists(bloc.localPlaylists, bloc, uiBloc);
 //           },
 //         );
@@ -309,7 +309,7 @@
 //           return ListView.builder(
 //             itemCount: playlistList.length,
 //             shrinkWrap: true,
-//             itemBuilder: (BuildContext context, int index) {
+//             itemBuilder: (_, int index) {
 //               return index == 0
 //                   ? Row(
 //                       children: [

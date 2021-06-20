@@ -35,8 +35,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 ? FutureBuilder(
                     future:
                         bloc.fetchAnnouncementDetails(widget.announcementId),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<Announcement> snapshot) {
+                    builder: (_, AsyncSnapshot<Announcement> snapshot) {
                       if (!snapshot.hasData) {
                         return const CustomLoader();
                       } else {
@@ -116,7 +115,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (BuildContext ctx) {
+                MaterialPageRoute(builder: (_) {
                   switch (announcement.targetType) {
                     case 'album':
                       return AlbumDetailScreen(
@@ -130,9 +129,6 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                     case 'playlist':
                       return PlaylistDetailScreen(
                           playlistId: announcement.targetId); //*
-                    case 'channel':
-                      return ChannelDetailScreen(
-                          channelId: announcement.targetId); //*
                     case 'song':
                       return PlayerDynamicLinkCatcher(
                           isAudio: true, songId: announcement.targetId); //*

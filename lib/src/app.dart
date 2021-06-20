@@ -20,7 +20,7 @@ class App extends StatelessWidget {
               darkTheme: kDarkTheme,
               theme: kLightTheme,
               themeMode: ThemeMode.dark,
-              // home: SuggestionScreen(),
+              // home: ProfileScreen(),
             ),
           ),
         ),

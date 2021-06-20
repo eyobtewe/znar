@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -32,7 +33,7 @@ class SongThumbnail extends StatelessWidget {
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(
-        //     builder: (BuildContext ctx) => AudioPlayerScreen(songs: song, i: i),
+        //     builder: (_) => AudioPlayerScreen(songs: song, i: i),
         //   ),
         // );
       },
@@ -40,41 +41,54 @@ class SongThumbnail extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         height: 150,
         width: 150,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            isSearchResult != null
-                ? Container()
-                : Container(
-                    decoration: BoxDecoration(),
-                    margin: const EdgeInsets.only(bottom: 10),
-                    // constraints: BoxConstraints(minHeight: 120),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: CachedPicture(
-                        image: song[i].coverArt,
-                        // isBackground: true,
-                        // boxFit: BoxFit.contain,
-                      ),
-                    ),
+        child: StreamBuilder<Playing>(
+            stream: _playerBloc.audioPlayer.current,
+            builder: (_, AsyncSnapshot<Playing> snapshot) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  isSearchResult != null
+                      ? Container()
+                      : Container(
+                          decoration: BoxDecoration(),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          // constraints: BoxConstraints(minHeight: 120),
+                          child: ClipRRect(
+                            // borderRadius: BorderRadius.circular(5),
+                            child: CachedPicture(
+                              image: song[i].coverArt,
+                              // isBackground: true,
+                              // boxFit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                  MusicTitle(
+                    title: song[i].title ?? '',
+                    lines: 1,
+                    fontSize: 12,
+                    color:
+                        snapshot?.data?.audio?.audio?.metas?.id == song[i].sId
+                            ? PRIMARY_COLOR
+                            : GRAY,
                   ),
-            MusicTitle(
-              title: song[i].title ?? '',
-              lines: 1,
-              fontSize: 12,
-            ),
-            Divider(color: TRANSPARENT, height: 5),
-            MusicTitle(
-                title: song[i].artistStatic.fullName,
-                // !=
-                //         song[i].artistStatic.firstName
-                //     ? song[i].artistStatic.stageName
-                //     : song[i].artistStatic.fullName,
-                lines: 1,
-                fontSize: 10,
-                color: GRAY),
-          ],
-        ),
+                  Divider(color: TRANSPARENT, height: 5),
+                  MusicTitle(
+                    title: song[i].artistStatic.fullName,
+                    // !=
+                    //         song[i].artistStatic.firstName
+                    //     ? song[i].artistStatic.stageName
+                    //     : song[i].artistStatic.fullName,
+
+                    lines: 1,
+                    fontSize: 10,
+                    color:
+                        snapshot?.data?.audio?.audio?.metas?.id == song[i].sId
+                            ? PRIMARY_COLOR
+                            : DARK_GRAY,
+                  ),
+                ],
+              );
+            }),
       ),
     );
   }

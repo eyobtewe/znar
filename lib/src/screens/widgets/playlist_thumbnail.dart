@@ -28,8 +28,7 @@ class PlaylistThumbnail extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (BuildContext ctx) =>
-                PlaylistDetailScreen(playlist: playlist),
+            builder: (_) => PlaylistDetailScreen(playlist: playlist),
           ),
         );
       },
@@ -48,7 +47,7 @@ class PlaylistThumbnail extends StatelessWidget {
                     height: size.width * 9 / 13 - 50,
                     margin: const EdgeInsets.only(bottom: 10),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
+                      // borderRadius: BorderRadius.circular(5),
                       child: CachedPicture(
                         image: playlist.featureImage,
                         isBackground: true,

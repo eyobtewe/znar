@@ -24,61 +24,69 @@ class BottomNavBar extends StatelessWidget {
       height: 1.5,
     );
 
-    return BottomNavigationBar(
-      selectedLabelStyle: _textStyle,
-      unselectedLabelStyle: _textStyle,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Ionicons.grid_outline),
-          label: Language.locale(uBloc.language, 'discover'),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: CANVAS_BLACK),
         ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(Ionicons.videocam),
-        //   label: Language.locale(uBloc.language, 'videos'),
-        // ),
-        BottomNavigationBarItem(
-          icon: Icon(Ionicons.search_outline),
-          label: Language.locale(uBloc.language, 'search'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Ionicons.musical_notes_outline),
-          label: Language.locale(uBloc.language, 'playlists_nav'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Ionicons.people),
-          label: Language.locale(uBloc.language, 'artists'),
-        ),
-      ],
-      currentIndex: currentIndex,
-      onTap: (int index) {
-        switch (index) {
-          case 0:
-            Navigator.pushReplacementNamed(context, HOME_PAGE_ROUTE);
-            break;
-          // case 1:
-          //   Navigator.pushReplacementNamed(context, MUSIC_VIDEOS_PAGE_ROUTE);
-          //   break;
-          case 1:
-            showSearch(
-                context: context, delegate: SongSearch(CustomAspectRatio.SONG));
-            break;
-          case 2:
-            Navigator.pushReplacementNamed(context, PLAYLISTS_PAGE_ROUTE);
-            break;
-          case 3:
-            Navigator.pushReplacementNamed(context, ARTISTS_PAGE_ROUTE);
-            break;
-          default:
-            Navigator.pushReplacementNamed(context, HOME_PAGE_ROUTE);
-            break;
-        }
-      },
-      fixedColor: PRIMARY_COLOR,
-      showUnselectedLabels: true,
-      unselectedItemColor: GRAY,
-      backgroundColor: BACKGROUND,
-      type: BottomNavigationBarType.fixed,
-      elevation: 0,
+      ),
+      child: BottomNavigationBar(
+        selectedLabelStyle: _textStyle,
+        unselectedLabelStyle: _textStyle,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.grid_outline),
+            label: Language.locale(uBloc.language, 'discover'),
+          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Ionicons.videocam),
+          //   label: Language.locale(uBloc.language, 'videos'),
+          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.search_outline),
+            label: Language.locale(uBloc.language, 'search'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.musical_notes_outline),
+            label: Language.locale(uBloc.language, 'playlists_nav'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.people),
+            label: Language.locale(uBloc.language, 'artists'),
+          ),
+        ],
+        currentIndex: currentIndex,
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacementNamed(context, HOME_PAGE_ROUTE);
+              break;
+            // case 1:
+            //   Navigator.pushReplacementNamed(context, MUSIC_VIDEOS_PAGE_ROUTE);
+            //   break;
+            case 1:
+              showSearch(
+                  context: context,
+                  delegate: SongSearch(CustomAspectRatio.SONG));
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, PLAYLISTS_PAGE_ROUTE);
+              break;
+            case 3:
+              Navigator.pushReplacementNamed(context, ARTISTS_PAGE_ROUTE);
+              break;
+            default:
+              Navigator.pushReplacementNamed(context, HOME_PAGE_ROUTE);
+              break;
+          }
+        },
+        fixedColor: PRIMARY_COLOR,
+        showUnselectedLabels: true,
+        unselectedItemColor: GRAY,
+        backgroundColor: BACKGROUND,
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+      ),
     );
   }
 }

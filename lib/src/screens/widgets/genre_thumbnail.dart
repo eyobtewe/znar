@@ -35,7 +35,7 @@
 //           Navigator.push(
 //             context,
 //             MaterialPageRoute(
-//               builder: (BuildContext ctx) => GenreDetailScreen(genreTitle: genre.name),
+//               builder: (_) => GenreDetailScreen(genreTitle: genre.name),
 //             ),
 //           );
 //         },

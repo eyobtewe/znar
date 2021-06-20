@@ -22,6 +22,8 @@ class ArtistDetailScreen extends StatefulWidget {
 }
 
 class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
+  bool isClicked = false;
+
   void initState() {
     super.initState();
   }
@@ -47,8 +49,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
             child: widget.artistId != null
                 ? FutureBuilder(
                     future: bloc.fetchArtistDetails(widget.artistId),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<Artist> snapshot) {
+                    builder: (_, AsyncSnapshot<Artist> snapshot) {
                       if (!snapshot.hasData) {
                         return const CustomLoader();
                       } else {
@@ -80,17 +81,42 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
           delegate: SliverChildListDelegate.fixed(
             [
               Container(
-                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
-                child: Text(
-                  artist.runtimeType == Artist
-                      ? artist.fullName ?? ''
-                      : artist.name,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontFamilyFallback: f,
-                    fontSize: ScreenUtil().setSp(20),
-                  ),
+                padding: const EdgeInsets.all(15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Text(
+                            artist.runtimeType == Artist
+                                ? artist.fullName ?? ''
+                                : artist.name,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontFamilyFallback: f,
+                              fontSize: ScreenUtil().setSp(20),
+                            ),
+                          ),
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 5),
+                        //   child: Text(
+                        //     '1.1K Followers',
+                        //     style: TextStyle(
+                        //       fontFamilyFallback: f,
+                        //       color: DARK_GRAY,
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                    // buildFollowBtn(),
+                  ],
                 ),
               ),
               buildAlbums(artist),
@@ -104,11 +130,40 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
     );
   }
 
+  Widget buildFollowBtn() {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          isClicked = !isClicked;
+        });
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+            isClicked ? PRIMARY_COLOR : BACKGROUND),
+        elevation: MaterialStateProperty.all(0),
+        // visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+            side: BorderSide(color: PRIMARY_COLOR, width: 1),
+          ),
+        ),
+      ),
+      child: Text(
+        Language.locale(uiBloc.language, isClicked ? 'following' : 'follow'),
+        style: TextStyle(
+          color: !isClicked ? PRIMARY_COLOR : BACKGROUND,
+          fontFamilyFallback: f,
+        ),
+      ),
+    );
+  }
+
   Widget buildMusicVideos(Artist artist) {
     return FutureBuilder(
       future: bloc.fetchArtistMusicVideos(artist.sId, ''),
       initialData: bloc.artistMusicVideos[artist.sId],
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+      builder: (_, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return Container();
         } else {
@@ -119,7 +174,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
                     crossAxisCount: 2,
                     childAspectRatio: 1.2,
                   ),
-                  itemBuilder: (BuildContext ctx, int index) {
+                  itemBuilder: (_, int index) {
                     return HomeCards(
                       ar: CustomAspectRatio.VIDEO,
                       data: bloc.artistMusicVideos[artist.sId],
@@ -137,13 +192,18 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
 
   Widget buildSongs(dynamic artist) {
     return FutureBuilder(
-      future: artist.runtimeType == Artist
-          ? bloc.fetchArtistSongs(artist.sId)
-          : localSongsBloc.getSongsFromArtist(artist.id),
-      initialData: artist.runtimeType == Artist
-          ? bloc.artistSongs[artist.sId]
-          : localSongsBloc.artistSongs[artist.id],
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+      future:
+          //  artist.runtimeType == Artist
+          //     ?
+          bloc.fetchArtistSongs(artist.sId),
+      // : localSongsBloc.getSongsFromArtist(artist.id),
+      initialData:
+          // artist.runtimeType == Artist
+          // ?
+          //
+          bloc.artistSongs[artist.sId],
+      // : localSongsBloc.artistSongs[artist.id],
+      builder: (_, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return const CustomLoader();
         } else {
@@ -152,10 +212,10 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
             itemCount: songs.length,
             shrinkWrap: true,
             primary: false,
-            separatorBuilder: (BuildContext ctx, int k) {
+            separatorBuilder: (_, int k) {
               return Divider(height: 1);
             },
-            itemBuilder: (BuildContext context, int index) {
+            itemBuilder: (_, int index) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -177,13 +237,18 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
 
   Widget buildAlbums(dynamic artist) {
     return FutureBuilder(
-      future: artist.runtimeType == Artist
-          ? bloc.fetchArtistAlbums(artist.sId)
-          : localSongsBloc.getAlbumsFromArtist(artist.name),
-      initialData: artist.runtimeType == Artist
-          ? bloc.artistAlbums[artist.sId]
-          : localSongsBloc.artistAlbums[artist.name],
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+      future:
+
+          //  artist.runtimeType == Artist
+          // ?
+          bloc.fetchArtistAlbums(artist.sId),
+      // : localSongsBloc.getAlbumsFromArtist(artist.name),
+      initialData:
+          //  artist.runtimeType == Artist
+          // ?
+          bloc.artistAlbums[artist.sId],
+      // : localSongsBloc.artistAlbums[artist.name],
+      builder: (_, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return Container();
         } else {
@@ -201,7 +266,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
                         itemCount: album.length,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
+                        itemBuilder: (_, int index) {
                           return Container(
                             height: 120,
                             width: 150,
@@ -294,7 +359,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
               // Navigator.push(
               //   context,
               //   MaterialPageRoute(
-              //     builder: (BuildContext ctx) =>
+              //     builder: (_) =>
               //         AudioPlayerScreen(songs: songs, i: 0),
               //   ),
               // );

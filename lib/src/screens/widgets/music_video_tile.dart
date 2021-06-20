@@ -27,7 +27,7 @@ class _MusicVideoTileState extends State<MusicVideoTile> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (BuildContext ctx) =>
+              builder: (_) =>
                   // true
                   // ?
                   VideoPlayerScreen(musicVideo: widget.musicVideo)

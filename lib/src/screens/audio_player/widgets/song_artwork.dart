@@ -34,8 +34,7 @@ class _SongArtworkState extends State<SongArtwork> {
           //  image == null
           //     ? buildSongCover(widget.songArt, size)
           //     :
-          playerBloc.audioPlayer.builderCurrent(
-              builder: (BuildContext ctx, Playing playing) {
+          playerBloc.audioPlayer.builderCurrent(builder: (_, Playing playing) {
         return buildSongCover(
             playing?.audio?.audio?.metas?.image?.path ?? widget.songArt ?? '',
             size);
@@ -46,7 +45,7 @@ class _SongArtworkState extends State<SongArtwork> {
   Widget buildSongCover(String img, Size size) {
     return Center(
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(0),
         child: Container(
           height: size.width * 0.5,
           // width: size.width * 0.5,

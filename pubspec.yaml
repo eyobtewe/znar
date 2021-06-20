@@ -17,11 +17,13 @@ dependencies:
   shared_preferences: ^2.0.5
   path_provider: ^2.0.1
   youtube_player_flutter: ^8.0.0
+  image_picker: ^0.8.0+3
   # progress_dialog: ^1.2.4
   flutter_downloader: ^1.6.0
   # color_thief_flutter: ^1.0.2
   # flutter_lyric: any
   # auto_animated: ^3.0.0
+  mailer: ^5.0.0
   
   assets_audio_player: ^3.0.3+2
   sleek_circular_slider: ^2.0.0
@@ -45,7 +47,7 @@ dependencies:
 
   permission_handler: ^6.1.1
   flutter_local_notifications: ^5.0.0+1
-  flutter_audio_query: ^0.3.5+6
+  # flutter_audio_query: ^0.3.5+6
   draggable_scrollbar: ^0.1.0
   google_fonts: ^2.0.0
 

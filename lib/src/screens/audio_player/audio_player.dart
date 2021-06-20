@@ -71,7 +71,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
           shrinkWrap: true,
           children: <Widget>[
             // playerBloc.audioPlayer.builderCurrent(
-            //     builder: (BuildContext ctx, Playing playing) {
+            //     builder: (_, Playing playing) {
             //   debugPrint(
             // '\n\n\t\t\t\t\t ${playing.playlist.currentIndex} \n\n');
             // return
@@ -100,9 +100,9 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        itemBuilder: (BuildContext context, int i) {
+        itemBuilder: (_, int i) {
           return playerBloc.audioPlayer.builderCurrent(
-              builder: (BuildContext ctx, Playing playing) {
+              builder: (_, Playing playing) {
             return i == playing.playlist.currentIndex
                 ? Container()
                 : Container(

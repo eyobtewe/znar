@@ -75,13 +75,11 @@ class _SongScreenState extends State<SongScreen> {
     return FutureBuilder(
       future: bloc.fetchSongs(page, 30),
       initialData: bloc.songs,
-      builder: (BuildContext context, AsyncSnapshot<List<Song>> snapshot) {
+      builder: (_, AsyncSnapshot<List<Song>> snapshot) {
         if (!snapshot.hasData) {
           return CustomScrollView(
             slivers: [
-              // const SliverAppBar(),
               buildSliverAppBar(context),
-
               const SliverFillRemaining(child: const CustomLoader()),
             ],
           );
@@ -93,30 +91,17 @@ class _SongScreenState extends State<SongScreen> {
               physics: const BouncingScrollPhysics(),
               slivers: [
                 buildSliverAppBar(context),
-                SliverToBoxAdapter(
-                  child: ListView.separated(
-                    primary: false,
-                    itemBuilder: (BuildContext ctx, int k) {
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (_, int k) {
                       return SongTile(songs: bloc.songs, index: k);
                     },
-                    separatorBuilder: (BuildContext ctx, int k) {
-                      return Divider(height: 1);
-                    },
-                    itemCount: bloc.songs.length,
-                    shrinkWrap: true,
+                    childCount: bloc.songs.length,
                   ),
                 ),
                 SliverToBoxAdapter(
                   child: SizedBox(height: 66),
                 ),
-                // SliverList(
-                //   delegate: SliverChildBuilderDelegate(
-                //     (BuildContext ctx, int i) {
-                //       return SongTile(songs: bloc.songs, index: i);
-                //     },
-                //     childCount: bloc.songs?.length ?? 0,
-                //   ),
-                // ),
               ],
             ),
           );
@@ -128,7 +113,6 @@ class _SongScreenState extends State<SongScreen> {
   Widget buildSliverAppBar(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      // elevation: 0,
       centerTitle: true,
       title: Text(
         Language.locale(uiBloc.language, 'songs'),
@@ -170,7 +154,7 @@ class PlayAllFAB extends StatelessWidget {
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(
-        //     builder: (BuildContext ctx) =>
+        //     builder: (_) =>
         //         AudioPlayerScreen(songs: songs, i: 0),
         //   ),
         // );

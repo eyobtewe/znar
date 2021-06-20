@@ -25,8 +25,7 @@ class _ArtistTileState extends State<ArtistTile> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (BuildContext ctx) =>
-                  ArtistDetailScreen(artist: widget.artist)),
+              builder: (_) => ArtistDetailScreen(artist: widget.artist)),
         );
       },
       child: Container(

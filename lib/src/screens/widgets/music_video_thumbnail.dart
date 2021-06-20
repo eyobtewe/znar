@@ -29,7 +29,7 @@ class MusicVideoThumbnail extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (BuildContext ctx) =>
+              builder: (_) =>
                   // true
                   //     ?
                   VideoPlayerScreen(musicVideo: musicVideo)
@@ -119,7 +119,7 @@ class MusicTitle extends StatelessWidget {
           fontSize: ScreenUtil().setSp(fontSize),
           fontFamilyFallback: f,
           fontWeight: fontSize == 12 ? FontWeight.bold : FontWeight.normal,
-          color: fontSize == 12 ? GRAY : DARK_GRAY,
+          color: color ?? (fontSize == 12 ? GRAY : DARK_GRAY),
         ),
       ),
     );

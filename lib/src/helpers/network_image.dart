@@ -17,7 +17,7 @@ class CachedPicture extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: '$image',
       fit: boxFit ?? BoxFit.cover,
-      imageBuilder: (BuildContext ctx, ImageProvider<dynamic> imageProvider) {
+      imageBuilder: (_, ImageProvider<dynamic> imageProvider) {
         return Container(
           child: isBackground ? Container() : Image(image: imageProvider),
           decoration: !isBackground

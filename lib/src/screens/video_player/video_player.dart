@@ -53,14 +53,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          buildBody(context),
+          buildBody(),
           ExpandableBottomPlayer(),
         ],
       ),
     );
   }
 
-  CustomScrollView buildBody(BuildContext context) {
+  CustomScrollView buildBody() {
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
@@ -75,7 +75,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           child: ListView(
             shrinkWrap: true,
             children: <Widget>[
-              buildVideoDescription(context),
+              buildVideoDescription(),
               buildThumbnails(
                   Language.locale(uiBloc.language, 'similar_from_artist')),
               buildThumbnails(Language.locale(uiBloc.language, 'other_videos'),
@@ -87,7 +87,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     );
   }
 
-  Container buildVideoDescription(BuildContext context) {
+  Container buildVideoDescription() {
     return Container(
       width: size.width,
       padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
@@ -123,8 +123,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           ? bloc.fetchMusicVideos(1, 30)
           : bloc.fetchArtistMusicVideos(
               widget.musicVideo.artist ?? '', '' /*widget.musicVideo.sId*/),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<MusicVideo>> snapshot) {
+      builder: (_, AsyncSnapshot<List<MusicVideo>> snapshot) {
         if (!snapshot.hasData) {
           return Container();
         } else {
@@ -149,7 +148,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                       ),
-                      itemBuilder: (BuildContext context, int i) {
+                      itemBuilder: (_, int i) {
                         return MusicVideoThumbnail(i: i, musicVideo: clips[i]);
                       },
                     ),
