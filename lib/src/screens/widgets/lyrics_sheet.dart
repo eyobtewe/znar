@@ -11,7 +11,7 @@ class LyricsBtn extends StatefulWidget {
   const LyricsBtn({Key key}) : super(key: key);
 
   @override
-  _LyricsBtnState createState() => _LyricsBtnState();
+  State<LyricsBtn> createState() => _LyricsBtnState();
 }
 
 class _LyricsBtnState extends State<LyricsBtn> {
@@ -21,32 +21,31 @@ class _LyricsBtnState extends State<LyricsBtn> {
     final playerBloc = PlayerProvider.of(context);
     final uiBloc = UiProvider.of(context);
     final size = MediaQuery.of(context).size;
-    ScreenUtil.init(context, designSize: size, allowFontScaling: true);
 
     return ElevatedButton(
       onPressed: () {
         ScrollController sc = ScrollController();
         buildShowModalBottomSheet(context, playerBloc, sc, size);
       },
-      child: Text(
-        Language.locale(uiBloc.language, 'lyric'),
-        style: TextStyle(
-          color: PRIMARY_COLOR,
-          // fontWeight: FontWeight.bold,
-          fontFamilyFallback: f,
-        ),
-      ),
       style: ButtonStyle(
         // elevation: MaterialStateProperty.all(0),
-        backgroundColor: MaterialStateProperty.all<Color>(BACKGROUND),
+        backgroundColor: MaterialStateProperty.all<Color>(cBackgroundColor),
         // visualDensity: VisualDensity(horizontal: 0, vertical: -2),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
-              side: BorderSide(
-                color: PRIMARY_COLOR,
+              side: const BorderSide(
+                color: cPrimaryColor,
                 width: 1,
               )),
+        ),
+      ),
+      child: Text(
+        Language.locale(uiBloc.language, 'lyric'),
+        style: const TextStyle(
+          color: cPrimaryColor,
+          // fontWeight: FontWeight.bold,
+          fontFamilyFallback: f,
         ),
       ),
     );
@@ -56,7 +55,7 @@ class _LyricsBtnState extends State<LyricsBtn> {
       ScrollController sc, Size size) {
     return showModalBottomSheet(
         context: context,
-        backgroundColor: BACKGROUND.withOpacity(0.5),
+        backgroundColor: cBackgroundColor.withOpacity(0.5),
         isScrollControlled: true,
         enableDrag: true,
         builder: (_) {
@@ -67,7 +66,7 @@ class _LyricsBtnState extends State<LyricsBtn> {
                   (r.currentPosition.inSeconds / r.duration.inSeconds) *
                       size.height,
                   curve: Curves.easeInOut,
-                  duration: Duration(milliseconds: 500));
+                  duration: const Duration(milliseconds: 500));
             }
             return buildContainer(sc, size, context);
           });
@@ -77,24 +76,24 @@ class _LyricsBtnState extends State<LyricsBtn> {
   Container buildContainer(
       ScrollController sc, Size size, BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Stack(
         children: [
           ListWheelScrollView(
             itemExtent: 25,
             physics: scrollable
-                ? BouncingScrollPhysics()
-                : NeverScrollableScrollPhysics(),
+                ? const BouncingScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
             controller: sc,
             children: kLYRIC
-                .map((e) => Container(
+                .map((e) => SizedBox(
                       width: size.width,
                       child: Text(
                         e,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamilyFallback: f,
-                          color: GRAY,
+                          color: cGray,
                           fontSize: ScreenUtil().setSp(16),
                         ),
                       ),
@@ -107,9 +106,9 @@ class _LyricsBtnState extends State<LyricsBtn> {
               padding: const EdgeInsets.symmetric(vertical: 30),
               child: IconButton(
                   visualDensity: VisualDensity.compact,
-                  color: PRIMARY_COLOR,
-                  // color: BACKGROUND,
-                  icon: Icon(Ionicons.close_circle_outline),
+                  color: cPrimaryColor,
+                  // color: cBackgroundColor,
+                  icon: const Icon(Ionicons.close_circle_outline),
                   onPressed: () {
                     Navigator.of(context).pop();
                   }),
@@ -118,8 +117,8 @@ class _LyricsBtnState extends State<LyricsBtn> {
           Align(
             alignment: Alignment.centerRight,
             child: IconButton(
-                color: !scrollable ? PRIMARY_COLOR : GRAY,
-                icon: Icon(Ionicons.list_outline),
+                color: !scrollable ? cPrimaryColor : cGray,
+                icon: const Icon(Ionicons.list_outline),
                 onPressed: () {
                   setState(() {
                     scrollable = !scrollable;

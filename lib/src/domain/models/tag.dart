@@ -16,10 +16,10 @@ class MetaTag {
   });
 
   MetaTag.fromMap(Map map) {
-    title = map["title"];
-    artist = map["artist"];
-    album = map["album"];
-    path = map["path"];
+    title = map['title'];
+    artist = map['artist'];
+    album = map['album'];
+    path = map['path'];
   }
 }
 

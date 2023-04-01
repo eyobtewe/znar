@@ -1,13 +1,13 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
 import 'package:ionicons/ionicons.dart';
+
 import '../../core/core.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key key}) : super(key: key);
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -28,26 +28,26 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget buildBody() {
-    var divider = Divider(color: Colors.transparent, height: 10);
+    var divider = const Divider(color: Colors.transparent, height: 10);
     return Column(
       children: [
-        Spacer(),
-        Spacer(),
-        Spacer(),
+        const Spacer(),
+        const Spacer(),
+        const Spacer(),
         Container(
-          decoration: BoxDecoration(),
-          child: Text(
+          decoration: const BoxDecoration(),
+          child: const Text(
             'ZNAR',
             style: TextStyle(
               fontSize: 38,
               fontFamily: 'Didot',
-              color: PRIMARY_COLOR,
+              color: cPrimaryColor,
             ),
           ),
         ),
-        Spacer(),
-        Spacer(),
-        Spacer(),
+        const Spacer(),
+        const Spacer(),
+        const Spacer(),
         Column(
           children: [
             buildLoginBtns(2),
@@ -59,22 +59,22 @@ class _LoginScreenState extends State<LoginScreen> {
             buildLoginBtns(3),
           ],
         ),
-        Spacer(),
-        Spacer(),
-        Spacer(),
+        const Spacer(),
+        const Spacer(),
+        const Spacer(),
       ],
     );
   }
 
   Widget buildIcons(int i) {
     return Container(
-      child: icons[i],
       decoration: BoxDecoration(
           border: Border.all(
             color: colors[i],
             width: 2,
           ),
           borderRadius: BorderRadius.circular(100)),
+      child: icons[i],
     );
   }
 
@@ -84,8 +84,8 @@ class _LoginScreenState extends State<LoginScreen> {
       onTap: () {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: PRIMARY_COLOR,
-            content: Text('Logged in with ' + title[i]),
+            backgroundColor: cPrimaryColor,
+            content: Text('Logged in with ${title[i]}'),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -103,16 +103,16 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 10, right: 5),
+              padding: const EdgeInsets.only(left: 10, right: 5),
               child: icons[i],
             ),
             VerticalDivider(color: colors[i], thickness: 2),
             Padding(
-              padding: EdgeInsets.only(left: 10, right: 5),
+              padding: const EdgeInsets.only(left: 10, right: 5),
               child: Text(
                 'Login with ${title[i]}',
-                style: TextStyle(
-                  color: DARK_GRAY,
+                style: const TextStyle(
+                  color: cDarkGray,
                   fontWeight: FontWeight.w900,
                   fontFamily: 'AvenirNext',
                 ),
@@ -126,18 +126,26 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 List<Color> colors = [
-  Color(0xff1DA1F2),
-  Color(0xff3b5998),
-  Color(0xffde5246),
-  Color(0xff707070),
+  const Color(0xff1DA1F2),
+  const Color(0xff3b5998),
+  const Color(0xffde5246),
+  const Color(0xff707070),
 ];
 List<IconButton> icons = [
   IconButton(
-      onPressed: () {}, icon: Icon(Ionicons.logo_twitter), color: colors[0]),
+      onPressed: () {},
+      icon: const Icon(Ionicons.logo_twitter),
+      color: colors[0]),
   IconButton(
-      onPressed: () {}, icon: Icon(Ionicons.logo_facebook), color: colors[1]),
+      onPressed: () {},
+      icon: const Icon(Ionicons.logo_facebook),
+      color: colors[1]),
   IconButton(
-      onPressed: () {}, icon: Icon(Ionicons.logo_google), color: colors[2]),
+      onPressed: () {},
+      icon: const Icon(Ionicons.logo_google),
+      color: colors[2]),
   IconButton(
-      onPressed: () {}, icon: Icon(Ionicons.logo_apple), color: colors[3]),
+      onPressed: () {},
+      icon: const Icon(Ionicons.logo_apple),
+      color: colors[3]),
 ];

@@ -1,4 +1,5 @@
 import 'package:device_info/device_info.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../infrastructure/services/download_manager.dart';
@@ -12,7 +13,11 @@ class UiBloc {
 
   void init() async {
     preferences = await SharedPreferences.getInstance();
-    // language = preferences.getString('lang');
+    try {
+      language = preferences.getString('lang');
+    } catch (e) {
+      debugPrint(e);
+    }
     //
     // if (Platform.isAndroid) {
     //   deviceData = DeviceInfoPlugin();
@@ -32,7 +37,8 @@ class UiBloc {
     } else {
       language = 'en';
     }
+    debugPrint(language);
 
-    preferences.setString('lang', '$language');
+    preferences.setString('lang', language);
   }
 }

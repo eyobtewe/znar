@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sembast/sembast.dart';
@@ -18,6 +20,7 @@ class LocalPlaylist implements LocalStorage {
 
   Future<Database> get _db async => await AppDatabase.instance.database;
 
+  @override
   Future<int> createPlaylist(Playlist playlist) async {
     int data = await _updatePlaylist(playlist);
     if (data == 0) {
@@ -29,8 +32,9 @@ class LocalPlaylist implements LocalStorage {
     return null;
   }
 
+  @override
   Future<int> addSongToPlaylist(Song song, Playlist playlist) async {
-    final _finder = Finder(
+    final finder = Finder(
       filter: Filter.custom((record) {
         final Playlist temp = Playlist.fromJson(record.value);
         return temp.sId == playlist.sId;
@@ -39,7 +43,7 @@ class LocalPlaylist implements LocalStorage {
 
     final RecordSnapshot recordSnapshots = await _playlistStore.findFirst(
       await _db,
-      finder: _finder,
+      finder: finder,
     );
 
     final Playlist p = Playlist.fromJson(recordSnapshots.value);
@@ -56,10 +60,11 @@ class LocalPlaylist implements LocalStorage {
     return null;
   }
 
+  @override
   Future<int> removeSongFromPlaylist(Song song, Playlist playlist) async {
     final StoreRef playlistStor = intMapStoreFactory.store(playlist.name);
 
-    final _finder = Finder(
+    final finder = Finder(
       filter: Filter.custom((record) {
         final Playlist s = Playlist.fromJson(record.value);
         return song == null ? true : s.sId == song.sId;
@@ -69,11 +74,12 @@ class LocalPlaylist implements LocalStorage {
     return await checkPermission()
         ? await playlistStor.delete(
             await _db,
-            finder: _finder,
+            finder: finder,
           )
         : 0;
   }
 
+  @override
   Future<int> removePlaylist(Playlist playlist) async {
     await removeSongFromPlaylist(null, playlist);
     final finder = Finder(
@@ -88,6 +94,7 @@ class LocalPlaylist implements LocalStorage {
         : 0;
   }
 
+  @override
   Future<List<Playlist>> fetchPlaylists() async {
     final List<RecordSnapshot> recordSnapshots = await _playlistStore.find(
       await _db,
@@ -98,6 +105,7 @@ class LocalPlaylist implements LocalStorage {
     }).toList();
   }
 
+  @override
   Future<List<Song>> fetchSongs(Playlist playlist) async {
     final StoreRef playlistStor = intMapStoreFactory.store(playlist.name);
 
@@ -111,10 +119,12 @@ class LocalPlaylist implements LocalStorage {
     }).toList();
   }
 
+  @override
   Future<int> clearAllPlaylists() async {
     return await _playlistStore.delete(await _db);
   }
 
+  @override
   Future<int> addToFavorites(Song song) async {
     int data = await _update(song, _favoriteStore);
     if (data == 0) {
@@ -126,8 +136,9 @@ class LocalPlaylist implements LocalStorage {
     return null;
   }
 
+  @override
   Future<bool> isInFavorites(Song song) async {
-    final _finder = Finder(
+    final finder = Finder(
       filter: Filter.custom((record) {
         final Song s = Song.fromJson(record.value);
         return s.sId == song.sId;
@@ -136,14 +147,15 @@ class LocalPlaylist implements LocalStorage {
 
     RecordSnapshot record = await _favoriteStore.findFirst(
       await _db,
-      finder: _finder,
+      finder: finder,
     );
 
     return record == null ? false : true;
   }
 
+  @override
   Future<int> removeFromFavorites(Song song) async {
-    final _finder = Finder(
+    final finder = Finder(
       filter: Filter.custom((record) {
         final Song s = Song.fromJson(record.value);
         return s.sId == song.sId;
@@ -151,7 +163,7 @@ class LocalPlaylist implements LocalStorage {
     );
     return await _favoriteStore.delete(
       await _db,
-      finder: _finder,
+      finder: finder,
     );
   }
 
@@ -224,8 +236,8 @@ class LocalPlaylist implements LocalStorage {
 
     if (!permissionStatus.isGranted) {
       ScaffoldMessengerState().showSnackBar(
-        SnackBar(
-          backgroundColor: BLUE,
+        const SnackBar(
+          backgroundColor: cBlue,
           content: Text(
             'Please give permission',
           ),

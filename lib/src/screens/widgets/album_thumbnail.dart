@@ -8,8 +8,8 @@ import '../screens.dart';
 import 'widgets.dart';
 
 class AlbumThumbnail extends StatelessWidget {
-  const AlbumThumbnail(
-      {this.album, this.isSearchResult, this.isFromArtist = false});
+   const AlbumThumbnail(
+      {Key key, this.album, this.isSearchResult, this.isFromArtist = false}) : super(key: key);
 
   final bool isSearchResult;
   final dynamic album;
@@ -38,7 +38,7 @@ class AlbumThumbnail extends StatelessWidget {
                 : Container(
                     width: 120,
                     height: 120,
-                    constraints: BoxConstraints(minWidth: 120, minHeight: 120),
+                    constraints: const BoxConstraints(minWidth: 120, minHeight: 120),
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     child: album.runtimeType == Album
                         ? ClipRRect(
@@ -67,7 +67,7 @@ class AlbumThumbnail extends StatelessWidget {
                         ? album.artistStatic?.stageName ?? ''
                         : album.artist,
                     lines: 1,
-                    color: GRAY,
+                    color: cGray,
                   ),
           ],
         ),

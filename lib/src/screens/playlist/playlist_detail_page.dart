@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:share/share.dart';
+import '../../infrastructure/services/services.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
@@ -11,9 +13,10 @@ class PlaylistDetailScreen extends StatefulWidget {
   final Playlist playlist;
   final String playlistId;
 
-  const PlaylistDetailScreen({this.playlist, this.playlistId});
+  const PlaylistDetailScreen({Key key, this.playlist, this.playlistId})
+      : super(key: key);
   @override
-  _PlaylistDetailScreenState createState() => _PlaylistDetailScreenState();
+  State<PlaylistDetailScreen> createState() => _PlaylistDetailScreenState();
 }
 
 class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
@@ -27,6 +30,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
   ApiBloc bloc;
   List<dynamic> songs = [];
   PlayerBloc playerBloc;
+  @override
   Widget build(BuildContext context) {
     bloc = ApiProvider.of(context);
     localBloc = LocalSongsProvider.of(context);
@@ -50,7 +54,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
                   )
                 : buildBody(widget.playlist),
           ),
-          ExpandableBottomPlayer(),
+          const ExpandableBottomPlayer(),
         ],
       ),
     );
@@ -72,12 +76,12 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
                   style: const TextStyle(fontFamilyFallback: f),
                 ),
               ),
-              SliverFillRemaining(
-                child: const CustomLoader(),
+              const SliverFillRemaining(
+                child: CustomLoader(),
               )
             ],
           );
-        } else if (snapshot.data.length == 0) {
+        } else if (snapshot.data.isEmpty) {
           return CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -110,9 +114,19 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
                   playlist.name ?? '',
                   style: const TextStyle(fontFamilyFallback: f),
                 ),
+                actions: [
+                  IconButton(
+                      onPressed: () async {
+                        final String link = await kDynamicLinkService
+                            .createDynamicLink(playlist);
+
+                        Share.share('${playlist.name}  \n\n$link');
+                      },
+                      icon: const Icon(Ionicons.share_social_outline))
+                ],
               ),
               buildSliverList(playlist),
-              SliverToBoxAdapter(child: SizedBox(height: 66)),
+              const SliverToBoxAdapter(child: BottomPlayerSpacer()),
             ],
           ),
           // DownloadProgress(),
@@ -129,7 +143,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
               ? Dismissible(
                   background: Container(
                     padding: const EdgeInsets.all(5),
-                    color: RED.withOpacity(0.25),
+                    color: cRed.withOpacity(0.25),
                     alignment: Alignment.centerRight,
                     child: const Icon(Icons.delete),
                   ),
@@ -152,19 +166,19 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
       BuildContext context, ApiBloc bloc, Playlist playlist) {
     return SliverFillRemaining(
       child: !playlist.isLocal
-          ? Center(
+          ? const Center(
               child: Text('Coming Soon'),
             )
           : IconButton(
               icon: const Icon(Ionicons.add_circle_outline),
               onPressed: () async {
                 showModalBottomSheet(
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(10)),
                   ),
                   isScrollControlled: true,
-                  backgroundColor: CANVAS_BLACK,
+                  backgroundColor: cCanvasBlack,
                   // barrierColor: Theme.of(context).scaffoldBackgroundColor,
                   context: context,
                   builder: (_) {
@@ -183,63 +197,61 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
   }
 
   Widget buildSongsList(ApiBloc bloc) {
-    return Container(
-      child: FutureBuilder(
-        future: bloc.fetchSongs(1, 100),
-        initialData: bloc.songs,
-        builder: (_, AsyncSnapshot<List<Song>> snapshot) {
-          if (!snapshot.hasData) {
-            return Container(child: const CustomLoader(), height: 100);
-          } else {
-            List<Song> songsList = snapshot.data;
-            songsList.insert(0, null);
+    return FutureBuilder(
+      future: bloc.fetchSongs(1, 100),
+      initialData: bloc.songs,
+      builder: (_, AsyncSnapshot<List<Song>> snapshot) {
+        if (!snapshot.hasData) {
+          return const SizedBox(height: 100, child: CustomLoader());
+        } else {
+          List<Song> songsList = snapshot.data;
+          songsList.insert(0, null);
 
-            return ListView.builder(
-              itemCount: songsList.length,
-              shrinkWrap: true,
-              itemBuilder: (_, int index) {
-                return index == 0
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text('Slide a song to add it'),
-                          ),
-                          IconButton(
-                            icon: Icon(Ionicons.trash),
-                            onPressed: () {
-                              setState(() {});
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      )
-                    : Dismissible(
-                        child: SongTile(
-                            songs: songsList, index: index, clickable: false),
-                        background: Container(
-                          padding: const EdgeInsets.all(5),
-                          color: BLUE,
-                          alignment: Alignment.centerRight,
-                          child: const Icon(Ionicons.add),
+          return ListView.builder(
+            itemCount: songsList.length,
+            shrinkWrap: true,
+            itemBuilder: (_, int index) {
+              return index == 0
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Text('Slide a song to add it'),
                         ),
-                        key: UniqueKey(),
-                        direction: DismissDirection.endToStart,
-                        onDismissed: (DismissDirection d) async {
-                          await bloc.addSongToPlaylist(
-                              songsList[index], widget.playlist);
-                          setState(() {});
-                          if (songsList.isEmpty) {
+                        IconButton(
+                          icon: const Icon(Ionicons.trash),
+                          onPressed: () {
+                            setState(() {});
                             Navigator.pop(context);
-                          }
-                        },
-                      );
-              },
-            );
-          }
-        },
-      ),
+                          },
+                        ),
+                      ],
+                    )
+                  : Dismissible(
+                      background: Container(
+                        padding: const EdgeInsets.all(5),
+                        color: cBlue,
+                        alignment: Alignment.centerRight,
+                        child: const Icon(Ionicons.add),
+                      ),
+                      key: UniqueKey(),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (DismissDirection d) async {
+                        await bloc.addSongToPlaylist(
+                            songsList[index], widget.playlist);
+                        setState(() {});
+                        if (songsList.isEmpty) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: SongTile(
+                          songs: songsList, index: index, clickable: false),
+                    );
+            },
+          );
+        }
+      },
     );
   }
 }

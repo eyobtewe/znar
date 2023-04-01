@@ -13,7 +13,7 @@ class MusicVideoTile extends StatefulWidget {
 
   const MusicVideoTile({Key key, this.musicVideo}) : super(key: key);
   @override
-  _MusicVideoTileState createState() => _MusicVideoTileState();
+  State<MusicVideoTile> createState() => _MusicVideoTileState();
 }
 
 class _MusicVideoTileState extends State<MusicVideoTile> {
@@ -37,11 +37,11 @@ class _MusicVideoTileState extends State<MusicVideoTile> {
       },
       child: Container(
         width: size.width,
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         height: 60,
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: 60 / 9 * 16,
               child: Stack(
                 children: [
@@ -53,36 +53,32 @@ class _MusicVideoTileState extends State<MusicVideoTile> {
                                 widget.musicVideo.thumbnail ??
                                 ''),
                   ),
-                  Center(
-                    child: Container(
-                      child: const Icon(Ionicons.play_circle_outline, size: 30),
-                    ),
+                  const Center(
+                    child: Icon(Ionicons.play_circle_outline, size: 30),
                   )
                 ],
               ),
             ),
-            VerticalDivider(color: TRANSPARENT),
+            const VerticalDivider(color: cTransparent),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  child: Text(
-                    widget.musicVideo.title ?? '',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: GRAY,
-                      fontFamilyFallback: f,
-                      fontSize: ScreenUtil().setSp(12),
-                      fontWeight: FontWeight.bold,
-                    ),
+                Text(
+                  widget.musicVideo.title ?? '',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: cGray,
+                    fontFamilyFallback: f,
+                    fontSize: ScreenUtil().setSp(12),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   widget.musicVideo.artistStatic?.fullName,
                   style: TextStyle(
-                    color: GRAY,
+                    color: cGray,
                     fontFamilyFallback: f,
                     fontSize: ScreenUtil().setSp(10),
                   ),

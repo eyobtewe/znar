@@ -37,10 +37,18 @@
             {
               "client_id": "514591476510-4f4u6ea4u0090kv7t3of0kim5hmr5nph.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "514591476510-0bvq4o0gtcsv9rm3fn1ptihhaqb9im89.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "music.streaming.znar"
+              }
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-3672981091472505~8523213732"
     }
   ],
   "configuration_version": "1"

@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../helpers/custom_route.dart';
 import 'colors.dart';
 
 final ThemeData kDarkTheme = ThemeData(
   fontFamily: 'AvenirNext',
-  brightness: Brightness.dark,
-  scaffoldBackgroundColor: BACKGROUND,
-  cardColor: BACKGROUND,
-  accentColor: PRIMARY_COLOR,
-  appBarTheme: AppBarTheme(color: BACKGROUND),
+  scaffoldBackgroundColor: cBackgroundColor,
+  cardColor: cBackgroundColor,
+  appBarTheme: const AppBarTheme(
+    color: cBackgroundColor,
+    systemOverlayStyle: SystemUiOverlayStyle.dark,
+  ),
   pageTransitionsTheme: pageTransitionsTheme(),
+  colorScheme: ColorScheme.fromSwatch().copyWith(secondary: cPrimaryColor),
 );
 
 final ThemeData kLightTheme = ThemeData(
   pageTransitionsTheme: pageTransitionsTheme(),
-  primaryColor: BACKGROUND,
+  primaryColor: cBackgroundColor,
   fontFamily: 'AvenirNext',
-  accentColor: PRIMARY_COLOR,
-  appBarTheme: AppBarTheme(
-    color: BLUE,
-    iconTheme: IconThemeData(color: BACKGROUND),
-  ),
+  appBarTheme: const AppBarTheme(
+      color: cBlue, iconTheme: IconThemeData(color: cBackgroundColor)),
+  colorScheme: ColorScheme.fromSwatch().copyWith(secondary: cPrimaryColor),
 );
 
 PageTransitionsTheme pageTransitionsTheme() {
@@ -34,5 +35,6 @@ PageTransitionsTheme pageTransitionsTheme() {
 }
 
 const List<String> f = [
+  'nyala',
   'Kefa',
 ];

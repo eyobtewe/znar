@@ -5,8 +5,10 @@ import '../../presentation/bloc.dart';
 import '../widgets/widgets.dart';
 
 class SettingScreen extends StatefulWidget {
+  const SettingScreen({Key key}) : super(key: key);
+
   @override
-  _SettingScreenState createState() => _SettingScreenState();
+  State<SettingScreen> createState() => _SettingScreenState();
 }
 
 class _SettingScreenState extends State<SettingScreen> {
@@ -21,6 +23,7 @@ class _SettingScreenState extends State<SettingScreen> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     uiBloc = UiProvider.of(context);
     checkLanguage();
@@ -46,7 +49,7 @@ class _SettingScreenState extends State<SettingScreen> {
       body: Stack(
         children: [
           buildBody(size),
-          ExpandableBottomPlayer(),
+          const ExpandableBottomPlayer(),
         ],
       ),
     );
@@ -67,11 +70,11 @@ class _SettingScreenState extends State<SettingScreen> {
           //         label: Text(
           //           'English',
           //           style: TextStyle(
-          //             color: chip1 ? PURE_WHITE : BACKGROUND,
+          //             color: chip1 ? PURE_WHITE : cBackgroundColor,
           //             fontWeight: chip1 ? FontWeight.bold : FontWeight.normal,
           //           ),
           //         ),
-          //         selectedColor: PRIMARY_COLOR,
+          //         selectedColor: cPrimaryColor,
           //         selected: chip1,
           //         onSelected: (bool selected) {
           //           if (selected) {
@@ -91,11 +94,11 @@ class _SettingScreenState extends State<SettingScreen> {
           //           'አማርኛ',
           //           style: TextStyle(
           //             fontFamilyFallback: f,
-          //             color: chip2 ? PURE_WHITE : BACKGROUND,
+          //             color: chip2 ? PURE_WHITE : cBackgroundColor,
           //             fontWeight: chip2 ? FontWeight.bold : FontWeight.normal,
           //           ),
           //         ),
-          //         selectedColor: PRIMARY_COLOR,
+          //         selectedColor: cPrimaryColor,
           //         selected: chip2,
           //         onSelected: (bool selected) {
           //           if (selected) {
@@ -118,13 +121,13 @@ class _SettingScreenState extends State<SettingScreen> {
                   label: Text(
                     langs[index],
                     style: const TextStyle(
-                      color: GRAY,
+                      color: cGray,
                       fontFamilyFallback: f,
                     ),
                   ),
                   // padding: EdgeInsets.zero,
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  selectedColor: PRIMARY_COLOR,
+                  selectedColor: cPrimaryColor,
                   selected: _value == index,
                   onSelected: (bool selected) {
                     setState(() {
@@ -149,7 +152,7 @@ class _SettingScreenState extends State<SettingScreen> {
     } else {
       uiBloc.language = 'am';
     }
-    await uiBloc.preferences.setString('lang', '${uiBloc.language}');
+    await uiBloc.preferences.setString('lang', uiBloc.language);
   }
 
   void checkLanguage() {

@@ -49,21 +49,21 @@ class Repository {
   }
 
   //! Channels
-  Future<List<Channel>> fetchChannels() async {
-    return await _musicApiService.fetchChannels();
-  }
+  // Future<List<Channel>> fetchChannels() async {
+  //   return await _musicApiService.fetchChannels();
+  // }
 
-  Future<List<Channel>> searchChannels(String channelName) async {
-    return await _musicApiService.searchChannels(channelName);
-  }
+  // Future<List<Channel>> searchChannels(String channelName) async {
+  //   return await _musicApiService.searchChannels(channelName);
+  // }
 
-  Future<Channel> fetchChannelDetails(String id) async {
-    return await _musicApiService.fetchChannelDetails(id);
-  }
+  // Future<Channel> fetchChannelDetails(String id) async {
+  //   return await _musicApiService.fetchChannelDetails(id);
+  // }
 
-  Future<List<MusicVideo>> fetchChannelMusicVideos(String id) async {
-    return await _musicApiService.fetchChannelMusicVideos(id);
-  }
+  // Future<List<MusicVideo>> fetchChannelMusicVideos(String id) async {
+  //   return await _musicApiService.fetchChannelMusicVideos(id);
+  // }
 
   //! Songs
   Future<List<Song>> searchSongs(String term) async {
@@ -121,8 +121,10 @@ class Repository {
     return await _musicApiService.fetchArtistSongs(artistId);
   }
 
-  Future<List<MusicVideo>> fetchArtistMusicVideos(String artistId, String musicVideoId) async {
-    return await _musicApiService.fetchArtistMusicVideos(artistId, musicVideoId);
+  Future<List<MusicVideo>> fetchArtistMusicVideos(
+      String artistId, String musicVideoId) async {
+    return await _musicApiService.fetchArtistMusicVideos(
+        artistId, musicVideoId);
   }
 
   Future<List<Artist>> searchArtist(String artistName) async {
@@ -151,11 +153,11 @@ class Repository {
   }
 
   //! AD | News
-  Future<List<Announcement>> fetchAnnouncements() async {
-    return await _musicApiService.fetchAnnouncements();
-  }
+  // Future<List<Announcement>> fetchAnnouncements() async {
+  //   return await _musicApiService.fetchAnnouncements();
+  // }
 
-  Future<Announcement> fetchAnnouncementDetails(String id) async {
-    return await _musicApiService.fetchAnnouncementDetails(id);
-  }
+  // Future<Announcement> fetchAnnouncementDetails(String id) async {
+  //   return await _musicApiService.fetchAnnouncementDetails(id);
+  // }
 }

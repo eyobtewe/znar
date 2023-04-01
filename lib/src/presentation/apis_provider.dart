@@ -11,7 +11,8 @@ class ApiProvider extends InheritedWidget {
       : bloc = ApiBloc(),
         super(key: key, child: child);
 
-  bool updateShouldNotify(_) => true;
+  @override
+  bool updateShouldNotify(oldWidget) => true;
 
   static ApiBloc of(BuildContext context) {
     return (context.dependOnInheritedWidgetOfExactType<ApiProvider>()).bloc;

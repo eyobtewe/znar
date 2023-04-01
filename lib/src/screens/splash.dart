@@ -4,8 +4,10 @@ import '../core/core.dart';
 import '../presentation/bloc.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key key}) : super(key: key);
+
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -21,26 +23,26 @@ class _SplashScreenState extends State<SplashScreen> {
 
     bloc.fetchAll();
 
-    Future.delayed(Duration(milliseconds: 2000), () {
+    Future.delayed(const Duration(milliseconds: 2000), () {
       Navigator.pushReplacementNamed(context, HOME_PAGE_ROUTE);
     });
 
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: size.height,
         width: size.width,
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Container(
             margin: EdgeInsets.symmetric(vertical: size.height * 0.2),
-            child: Text(
+            child: const Text(
               // 'ዝናር',
               'ZNAR',
               style: TextStyle(
                 fontSize: 38,
                 fontFamilyFallback: f,
                 fontFamily: 'Didot',
-                color: PRIMARY_COLOR,
+                color: cPrimaryColor,
                 // fontWeight: FontWeight.w900,
               ),
             ),

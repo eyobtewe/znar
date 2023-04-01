@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -14,8 +13,10 @@ import '../search/search.dart';
 import '../widgets/widgets.dart';
 
 class MusicVideoScreen extends StatefulWidget {
+  const MusicVideoScreen({Key key}) : super(key: key);
+
   @override
-  _MusicVideoScreenState createState() => _MusicVideoScreenState();
+  State<MusicVideoScreen> createState() => _MusicVideoScreenState();
 }
 
 class _MusicVideoScreenState extends State<MusicVideoScreen> {
@@ -49,50 +50,51 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
   Size size;
   ApiBloc bloc;
   UiBloc uiBloc;
+  PlayerBloc playerBloc;
+  @override
   Widget build(BuildContext context) {
+    playerBloc = PlayerProvider.of(context);
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
     size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size);
     return Scaffold(
       appBar: buildAppBar(),
-      bottomNavigationBar: BottomNavBar(currentIndex: 1),
+      // bottomNavigationBar: BottomNavBar(currentIndex: 1),
       body: Stack(
         children: [
           buildBody(),
-          ExpandableBottomPlayer(),
+          const ExpandableBottomPlayer(),
         ],
       ),
     );
   }
 
   Widget buildBody() {
-    return Container(
-      child: FutureBuilder(
-        future: bloc.fetchMusicVideos(page, 30),
-        initialData: bloc.musicVideo,
-        builder: (_, AsyncSnapshot<List<MusicVideo>> snapshot) {
-          if (!snapshot.hasData) {
-            return const CustomLoader();
-          } else {
-            return ListView(
-              controller: scrollController,
-              physics: const BouncingScrollPhysics(),
-              children: <Widget>[
-                buildNewsMusicVideos(bloc.musicVideo),
-                Divider(color: TRANSPARENT),
-                // buildTitle(
-                //     Language.locale(uiBloc.language, 'youtube_channels')),
-                // buildChannelsList(),
-                // Divider(color: TRANSPARENT),
-                // buildTitle(Language.locale(uiBloc.language, 'music_videos')),
-                buildGridView(bloc.musicVideo),
-                // CupertinoActivityIndicator(),
-              ],
-            );
-          }
-        },
-      ),
+    return FutureBuilder(
+      future: bloc.fetchMusicVideos(page, 30),
+      initialData: bloc.musicVideo,
+      builder: (_, AsyncSnapshot<List<MusicVideo>> snapshot) {
+        if (!snapshot.hasData) {
+          return const CustomLoader();
+        } else {
+          return ListView(
+            controller: scrollController,
+            physics: const BouncingScrollPhysics(),
+            children: <Widget>[
+              buildNewsMusicVideos(snapshot.data),
+              const Divider(color: cTransparent),
+              // buildTitle(
+              //     Language.locale(uiBloc.language, 'youtube_channels')),
+              // buildChannelsList(),
+              // Divider(color: cTransparent),
+              // buildTitle(Language.locale(uiBloc.language, 'music_videos')),
+              buildGridView(bloc.musicVideo),
+              // CupertinoActivityIndicator(),
+            ],
+          );
+        }
+      },
     );
   }
 
@@ -136,18 +138,17 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
   // }
 
   Widget buildGridView(List<MusicVideo> musicVideos) {
-    return Container(
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-        ),
-        itemCount: musicVideos.length ?? 0,
-        shrinkWrap: true,
-        primary: false,
-        itemBuilder: (_, int i) => MusicVideoThumbnail(
-          i: i,
-          musicVideo: musicVideos[i],
-        ),
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1.2,
+      ),
+      itemCount: musicVideos.length ?? 0,
+      shrinkWrap: true,
+      primary: false,
+      itemBuilder: (_, int i) => MusicVideoThumbnail(
+        i: i,
+        musicVideo: musicVideos[i],
       ),
     );
   }
@@ -155,14 +156,15 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
   Widget buildNewsMusicVideos(List<MusicVideo> musicVideos) {
     return Container(
       padding: const EdgeInsets.all(10),
-      height: size.width * 9 / 16,
+      height: size.width * 9 / 18,
       child: Swiper(
         itemCount: musicVideos.length < 7 ? musicVideos.length : 7,
         autoplayDelay: 10000,
         itemWidth: size.width,
-        itemHeight: size.width * 9 / 16,
+        itemHeight: size.width * 9 / 18,
         layout: SwiperLayout.STACK,
         autoplay: true,
+        loop: false,
         autoplayDisableOnInteraction: false,
         itemBuilder: (_, int index) =>
             buildClipRRect(context, musicVideos, index),
@@ -181,31 +183,17 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => CustomWebPage(url: musicVideos[index].url),
+              builder: (_) => VideoPlayerScreen(musicVideo: musicVideos[index]),
             ),
           );
         },
         child: Container(
           margin: EdgeInsets.zero,
-          color: GRAY,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: CachedPicture(
-                  image: 'https://img.youtube.com/vi/$videoId/mqdefault.jpg' ??
-                      musicVideos[index].thumbnail,
-                  isBackground: true,
-                ),
-              ),
-              Center(
-                child: Container(
-                  child: const Icon(
-                    Ionicons.play_circle_outline,
-                    size: 60,
-                  ),
-                ),
-              ),
-            ],
+          color: cCanvasBlack,
+          child: CachedPicture(
+            image: 'https://img.youtube.com/vi/$videoId/mqdefault.jpg' ??
+                musicVideos[index].thumbnail,
+            isBackground: true,
           ),
         ),
       ),
@@ -219,9 +207,7 @@ class _MusicVideoScreenState extends State<MusicVideoScreen> {
         IconButton(
             icon: const Icon(Ionicons.search),
             onPressed: () {
-              showSearch(
-                  context: context,
-                  delegate: SongSearch(CustomAspectRatio.VIDEO));
+              showSearch(context: context, delegate: SongSearch(MEDIA.VIDEO));
             }),
       ],
       title: Text(

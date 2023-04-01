@@ -15,7 +15,7 @@ class SongCover extends StatelessWidget {
 
     final Size size = MediaQuery.of(context).size;
 
-    return Container(
+    return SizedBox(
       height: size.width - 100,
       width: size.width,
       child: playerBloc.audioPlayer.builderRealtimePlayingInfos(
@@ -48,7 +48,7 @@ class SongCover extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(0),
       child: Container(
-        color: PURE_BLACK,
+        color: cPureBlack,
         child: CachedPicture(
           image: img,
           boxFit: BoxFit.cover,

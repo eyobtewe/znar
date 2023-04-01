@@ -6,7 +6,12 @@ import 'package:flutter/material.dart';
 import '../core/core.dart';
 
 class CachedPicture extends StatelessWidget {
-  const CachedPicture({this.image, this.boxFit, this.isBackground = false});
+  const CachedPicture({
+    Key key,
+    this.image,
+    this.boxFit,
+    this.isBackground = false,
+  }) : super(key: key);
 
   final String image;
   final BoxFit boxFit;
@@ -15,20 +20,20 @@ class CachedPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: '$image',
+      imageUrl: image,
       fit: boxFit ?? BoxFit.cover,
       imageBuilder: (_, ImageProvider<dynamic> imageProvider) {
         return Container(
-          child: isBackground ? Container() : Image(image: imageProvider),
           decoration: !isBackground
               ? null
               : BoxDecoration(
-                  color: GRAY.withOpacity(0.5),
+                  color: cGray.withOpacity(0.5),
                   image: DecorationImage(
                     image: imageProvider,
                     fit: BoxFit.cover,
                   ),
                 ),
+          child: isBackground ? Container() : Image(image: imageProvider),
         );
       },
       errorWidget: (BuildContext context, String url, dynamic error) {
@@ -65,8 +70,8 @@ Widget buildErrorWidget() {
     child: Container(
       width: 95,
       height: 95,
-      decoration: BoxDecoration(
-        // color: GRAY,
+      decoration: const BoxDecoration(
+        color: cCanvasBlack,
         image: DecorationImage(
           image: AssetImage('assets/images/znar_transparent.png'),
         ),

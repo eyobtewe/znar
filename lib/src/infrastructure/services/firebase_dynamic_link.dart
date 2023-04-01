@@ -7,20 +7,18 @@ final kDynamicLinkService = DynamicLinkService();
 class DynamicLinkService {
   Map<String, String> dynamicLinkDetected;
 
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+
   Future handleDynamicLinks({Function(Map<String, String>) onLinkFound}) async {
-    final PendingDynamicLinkData data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
+    final PendingDynamicLinkData data = await dynamicLinks.getInitialLink();
     if (data != null) {
       dynamicLinkDetected = await _handleDynamicLink(data);
       onLinkFound(dynamicLinkDetected);
     }
-
-    FirebaseDynamicLinks.instance.onLink(
-      onSuccess: (PendingDynamicLinkData dynamicLinkData) async {
-        dynamicLinkDetected = await _handleDynamicLink(dynamicLinkData);
-        onLinkFound(dynamicLinkDetected);
-      },
-    );
+    dynamicLinks.onLink.listen((PendingDynamicLinkData dynamicLinkData) async {
+      dynamicLinkDetected = await _handleDynamicLink(dynamicLinkData);
+      onLinkFound(dynamicLinkDetected);
+    });
   }
 
   Future<Map<String, String>> _handleDynamicLink(
@@ -28,8 +26,8 @@ class DynamicLinkService {
     final Uri deepLink = data?.link;
     if (deepLink != null) {
       return {
-        '${deepLink.queryParameters.values.single}':
-            '${deepLink.queryParameters.keys.single}',
+        deepLink.queryParameters.values.single:
+            deepLink.queryParameters.keys.single,
       };
     }
     return null;
@@ -65,26 +63,23 @@ class DynamicLinkService {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://znarmusica.page.link',
       link: Uri.parse('https://znarmusica.com/p?$type=$id'),
-      androidParameters: AndroidParameters(
+      androidParameters: const AndroidParameters(
         packageName: 'music.streaming.znar',
       ),
-      dynamicLinkParametersOptions: DynamicLinkParametersOptions(
-        shortDynamicLinkPathLength: ShortDynamicLinkPathLength.short,
-      ),
-      iosParameters: IosParameters(
+      iosParameters: const IOSParameters(
         bundleId: 'music.streaming.znar',
         // appStoreId: '1558631041',
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
         title: 'ZNAR',
         description: '',
-        imageUrl: Uri.parse('$imgUrl'),
+        imageUrl: Uri.parse(imgUrl),
       ),
     );
-    ShortDynamicLink shortDynamicLink = await parameters.buildShortLink();
-    Uri shortUrl = shortDynamicLink.shortUrl;
-    // Uri shortUrl = await parameters.buildUrl();
 
-    return '$shortUrl';
+    final ShortDynamicLink shortLink =
+        await dynamicLinks.buildShortLink(parameters);
+    Uri url = shortLink.shortUrl;
+    return '$url';
   }
 }

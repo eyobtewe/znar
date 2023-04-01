@@ -8,7 +8,7 @@ import '../../../presentation/bloc.dart';
 import '../../screens.dart';
 
 class AnnouncementCards extends StatelessWidget {
-  const AnnouncementCards({this.size});
+   const AnnouncementCards({Key key, this.size}) : super(key: key);
 
   final Size size;
 
@@ -34,7 +34,7 @@ class AnnouncementCards extends StatelessWidget {
 
   Swiper buildSwiper(ApiBloc bloc) {
     return Swiper(
-      key: PageStorageKey('announncement'),
+      key: const PageStorageKey('announncement'),
       itemCount: bloc.announcement.length,
       loop: true,
       autoplay: true,
@@ -63,7 +63,7 @@ class AnnouncementCards extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: Container(
           // width: size.width,
-          color: GRAY,
+          color: cGray,
           child: CachedPicture(
             image: bloc.announcement[index].featureImage,
             boxFit: BoxFit.cover,

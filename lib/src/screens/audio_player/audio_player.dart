@@ -1,14 +1,10 @@
-import 'dart:ui';
-
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/core.dart';
 import '../../presentation/bloc.dart';
 import '../screens.dart';
-import '../widgets/song_cover.dart';
 import '../widgets/widgets.dart';
-import 'widgets/widgets.dart';
 
 class AudioPlayerScreen extends StatefulWidget {
   final List<dynamic> songs;
@@ -18,19 +14,22 @@ class AudioPlayerScreen extends StatefulWidget {
   final bool isDownloaded;
 
   const AudioPlayerScreen(
-      {this.songs,
+      {Key key,
+      this.songs,
       this.i,
       this.isFromBottomBar = false,
       this.isLocal = false,
-      this.isDownloaded = false});
+      this.isDownloaded = false})
+      : super(key: key);
   @override
-  _AudioPlayerScreenState createState() => _AudioPlayerScreenState();
+  State<AudioPlayerScreen> createState() => _AudioPlayerScreenState();
 }
 
 class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   PlayerBloc playerBloc;
   ApiBloc bloc;
   Size size;
+  @override
   Widget build(BuildContext context) {
     playerBloc = PlayerProvider.of(context);
     bloc = ApiProvider.of(context);
@@ -44,7 +43,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: BACKGROUND.withOpacity(0),
+      backgroundColor: cBackgroundColor.withOpacity(0),
       elevation: 0,
       actions: (widget.isLocal || widget.isDownloaded)
           ? null
@@ -65,37 +64,35 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
   Widget buildBody() {
     return Center(
-      child: Container(
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          shrinkWrap: true,
-          children: <Widget>[
-            // playerBloc.audioPlayer.builderCurrent(
-            //     builder: (_, Playing playing) {
-            //   debugPrint(
-            // '\n\n\t\t\t\t\t ${playing.playlist.currentIndex} \n\n');
-            // return
-            SongCover(),
-            // ;
-            // }),
-            // SongArtwork(songArt: widget.songs[widget.i].coverArt),
-            Divider(color: TRANSPARENT),
-            SongDetails(),
-            PlayerButtons(),
-            Divider(color: TRANSPARENT),
-            // Row(
-            //   children: [Spacer(), LyricsBtn(), Spacer()],
-            // ),
-            // Divider(color: TRANSPARENT),
-            // buildContainer(),
-          ],
-        ),
+      child: ListView(
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        children: const <Widget>[
+          // playerBloc.audioPlayer.builderCurrent(
+          //     builder: (_, Playing playing) {
+          //   debugPrint(
+          // '\n\n\t\t\t\t\t ${playing.playlist.currentIndex} \n\n');
+          // return
+          SongCover(),
+          // ;
+          // }),
+          // SongArtwork(songArt: widget.songs[widget.i].coverArt),
+          Divider(color: cTransparent),
+          SongDetails(),
+          PlayerButtons(),
+          Divider(color: cTransparent),
+          // Row(
+          //   children: [Spacer(), LyricsBtn(), Spacer()],
+          // ),
+          // Divider(color: cTransparent),
+          // buildContainer(),
+        ],
       ),
     );
   }
 
-  Container buildContainer() {
-    return Container(
+  Widget buildContainer() {
+    return SizedBox(
       height: 180,
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
@@ -105,13 +102,13 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
               builder: (_, Playing playing) {
             return i == playing.playlist.currentIndex
                 ? Container()
-                : Container(
-                    child: SongThumbnail(i: i, song: widget.songs),
+                : SizedBox(
                     width: 120,
+                    child: SongThumbnail(i: i, song: widget.songs),
                   );
           });
         },
-        itemCount: bloc.buildInitialData(CustomAspectRatio.SONG).length - 1,
+        itemCount: bloc.buildInitialData(MEDIA.SONG).length - 1,
       ),
     );
   }

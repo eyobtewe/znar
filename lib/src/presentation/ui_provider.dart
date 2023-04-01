@@ -11,7 +11,8 @@ class UiProvider extends InheritedWidget {
       : bloc = UiBloc(),
         super(key: key, child: child);
 
-  bool updateShouldNotify(_) => true;
+  @override
+  bool updateShouldNotify(oldWidget) => true;
 
   static UiBloc of(BuildContext context) {
     return (context.dependOnInheritedWidgetOfExactType<UiProvider>()).bloc;

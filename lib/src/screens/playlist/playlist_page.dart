@@ -5,7 +5,6 @@ import 'package:ionicons/ionicons.dart';
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../presentation/bloc.dart';
-import '../home/widgets/widgets.dart';
 import '../screens.dart';
 import '../search/search.dart';
 import '../widgets/widgets.dart';
@@ -15,7 +14,7 @@ class PlaylistsScreen extends StatefulWidget {
 
   const PlaylistsScreen({Key key, this.isHome = false}) : super(key: key);
   @override
-  _PlaylistsScreenState createState() => _PlaylistsScreenState();
+  State<PlaylistsScreen> createState() => _PlaylistsScreenState();
 }
 
 class _PlaylistsScreenState extends State<PlaylistsScreen> {
@@ -32,16 +31,16 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
     size = MediaQuery.of(context).size;
-    ScreenUtil.init(context, allowFontScaling: true, designSize: size);
+
     return DefaultTabController(
       length: 1,
       child: Scaffold(
-        bottomNavigationBar: BottomNavBar(currentIndex: 2),
+        // bottomNavigationBar: BottomNavBar(currentIndex: 2),
         appBar: widget.isHome ? null : buildAppBar(),
         body: Stack(
           children: [
             buildBody(),
-            ExpandableBottomPlayer(),
+            const ExpandableBottomPlayer(),
           ],
         ),
       ),
@@ -86,8 +85,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
             icon: const Icon(Ionicons.search),
             onPressed: () {
               showSearch(
-                  context: context,
-                  delegate: SongSearch(CustomAspectRatio.PLAYLIST));
+                  context: context, delegate: SongSearch(MEDIA.PLAYLIST));
             }),
       ],
       centerTitle: false,
@@ -124,8 +122,8 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
     );
   }
 
-  Container buildContainer(ApiBloc bloc, List<Song> songs) {
-    return Container(
+  Widget buildContainer(ApiBloc bloc, List<Song> songs) {
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
@@ -134,7 +132,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
         // shrinkWrap: true,
         itemBuilder: (_, int i) {
           return HomeCards(
-            ar: CustomAspectRatio.SONG,
+            ar: MEDIA.SONG,
             data: songs,
             i: i,
           );
@@ -146,12 +144,12 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
 
   Widget buildOnlinePlaylist(List<Playlist> playlists) {
     return CustomScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (_, int k) {
-              return Container(
+              return SizedBox(
                 // height: 200,
                 width: size.width,
                 child: FutureBuilder(
@@ -163,10 +161,10 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
                       } else {
                         return Column(
                           children: [
-                            Divider(color: TRANSPARENT),
+                            const Divider(color: cTransparent),
                             buildPlaylistTitle(playlists[k],
                                 bloc.playlistSongs[playlists[k].sId]),
-                            Divider(color: TRANSPARENT),
+                            const Divider(color: cTransparent),
                             buildContainer(
                                 bloc, bloc.playlistSongs[playlists[k].sId]),
                           ],
@@ -201,14 +199,12 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Container(
-            child: Text(
-              '${playlist.name}',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: ScreenUtil().setSp(18),
-                fontFamilyFallback: f,
-              ),
+          Text(
+            playlist.name,
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: ScreenUtil().setSp(18),
+              fontFamilyFallback: f,
             ),
           ),
           songs.length < 5
@@ -226,7 +222,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
               //     icon: Icon(
               //       Icons.chevron_right_rounded,
               //       size: 28,
-              //       color: PRIMARY_COLOR,
+              //       color: cPrimaryColor,
               //     ),
               //   ),
               : ElevatedButton(
@@ -242,13 +238,13 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
                   style: ButtonStyle(
                     // elevation: MaterialStateProperty.all(0),
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(BACKGROUND),
+                        MaterialStateProperty.all<Color>(cBackgroundColor),
                     // visualDensity: VisualDensity(horizontal: 0, vertical: -2),
                     shape: MaterialStateProperty.all<OutlinedBorder>(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),
-                          side: BorderSide(
-                            color: CANVAS_BLACK,
+                          side: const BorderSide(
+                            color: cCanvasBlack,
                             width: 2,
                           )),
                     ),
@@ -256,7 +252,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
                   child: Text(
                     Language.locale(uiBloc.language, 'more'),
                     style: const TextStyle(
-                      color: PRIMARY_COLOR,
+                      color: cPrimaryColor,
                       fontFamilyFallback: f,
                     ),
                   ),
@@ -271,7 +267,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
   //     floatingActionButton: widget.isHome
   //         ? null
   //         : FloatingActionButton(
-  //             backgroundColor: CANVAS_BLACK,
+  //             backgroundColor: cCanvasBlack,
   //             child: const Icon(Ionicons.add_circle),
   //             onPressed: () async {
   //               await showDialog(
@@ -297,7 +293,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
   //   return Dismissible(
   //     background: Container(
   //       padding: const EdgeInsets.all(5),
-  //       color: RED.withOpacity(0.25),
+  //       color: cRed.withOpacity(0.25),
   //       alignment: Alignment.centerRight,
   //       child: const Icon(Icons.delete),
   //     ),
@@ -308,7 +304,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
   //       Fluttertoast.showToast(
   //         msg: Language.locale(uiBloc.language, 'playlist_deleted'),
   //         backgroundColor: PURE_WHITE,
-  //         textColor: BACKGROUND,
+  //         textColor: cBackgroundColor,
   //       );
   //       setState(() {});
   //     },

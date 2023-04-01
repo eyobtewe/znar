@@ -11,8 +11,10 @@ import '../screens.dart';
 import '../widgets/widgets.dart';
 
 class AlbumScreen extends StatefulWidget {
+  const AlbumScreen({Key key}) : super(key: key);
+
   @override
-  _AlbumScreenState createState() => _AlbumScreenState();
+  State<AlbumScreen> createState() => _AlbumScreenState();
 }
 
 class _AlbumScreenState extends State<AlbumScreen> {
@@ -62,6 +64,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
   Size size;
   ApiBloc bloc;
   UiBloc uiBloc;
+  @override
   Widget build(BuildContext context) {
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
@@ -78,11 +81,11 @@ class _AlbumScreenState extends State<AlbumScreen> {
               if (!snapshot.hasData) {
                 return const CustomLoader();
               } else {
-                return buildBody(bloc.albums);
+                return buildBody(snapshot.data);
               }
             },
           ),
-          ExpandableBottomPlayer(),
+          const ExpandableBottomPlayer(),
         ],
       ),
     );
@@ -90,41 +93,39 @@ class _AlbumScreenState extends State<AlbumScreen> {
 
   Widget buildBody(List<Album> albums) {
     // albums.add(Album());
-    return Container(
-      child: ListView(
-        physics: const BouncingScrollPhysics(),
-        controller: scrollController,
-        shrinkWrap: true,
-        children: <Widget>[
-          buildNewAlbums(albums),
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      controller: scrollController,
+      shrinkWrap: true,
+      children: <Widget>[
+        buildNewAlbums(albums),
 
-          // Container(
-          //   child: StaggeredGridView.countBuilder(
-          //     shrinkWrap: true,
-          //     primary: false,
-          //     staggeredTileBuilder: (int i) {
-          //       return (i % 6 == 0 && i != 0) ? StaggeredTile.extent(3, _height) : StaggeredTile.extent(1, 170);
-          //     },
-          //     crossAxisCount: 3,
-          //     itemCount: albums.length ?? 0,
-          //     itemBuilder: (_, int i) => (i % 6 == 0 && i != 0)
-          //         ? BuildAd(height: _height, nativeAdController: _nativeAdController)
-          //         : AlbumThumbnail(album: albums[i]),
-          //   ),
-          // ),
-          GridView.builder(
-            primary: false,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 0.6,
-            ),
-            itemCount: albums?.length ?? 0,
-            shrinkWrap: true,
-            itemBuilder: (_, int i) => AlbumThumbnail(album: albums[i]),
+        // Container(
+        //   child: StaggeredGridView.countBuilder(
+        //     shrinkWrap: true,
+        //     primary: false,
+        //     staggeredTileBuilder: (int i) {
+        //       return (i % 6 == 0 && i != 0) ? StaggeredTile.extent(3, _height) : StaggeredTile.extent(1, 170);
+        //     },
+        //     crossAxisCount: 3,
+        //     itemCount: albums.length ?? 0,
+        //     itemBuilder: (_, int i) => (i % 6 == 0 && i != 0)
+        //         ? BuildAd(height: _height, nativeAdController: _nativeAdController)
+        //         : AlbumThumbnail(album: albums[i]),
+        //   ),
+        // ),
+        GridView.builder(
+          primary: false,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 0.6,
           ),
-          // BuildAd(height: _height, nativeAdController: _nativeAdController)
-        ],
-      ),
+          itemCount: bloc.albums?.length ?? 0,
+          shrinkWrap: true,
+          itemBuilder: (_, int i) => AlbumThumbnail(album: bloc.albums[i]),
+        ),
+        // BuildAd(height: _height, nativeAdController: _nativeAdController)
+      ],
     );
   }
 

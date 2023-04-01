@@ -32,7 +32,7 @@ class SongDetails extends StatelessWidget {
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
-                  color: GRAY,
+                  color: cGray,
                   fontFamilyFallback: f,
                 ),
               ),
@@ -45,7 +45,7 @@ class SongDetails extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamilyFallback: f,
-                  color: DARK_GRAY,
+                  color: cDarkGray,
                   fontSize: ScreenUtil().setSp(14),
                 ),
               ),
@@ -58,7 +58,7 @@ class SongDetails extends StatelessWidget {
                     child: Text(
                       playlist[i]?.metas?.album ?? '',
                       style: TextStyle(
-                        color: GRAY,
+                        color: cGray,
                         fontFamilyFallback: f,
                         fontSize: ScreenUtil().setSp(12),
                       ),

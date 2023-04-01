@@ -1,19 +1,20 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
-import '../../helpers/network_image.dart';
 import '../../presentation/bloc.dart';
 import 'widgets.dart';
 
 class SongThumbnail extends StatelessWidget {
   const SongThumbnail({
+    Key key,
     this.i,
     this.song,
     this.isSearchResult,
-  });
+  }) : super(key: key);
 
   final List<Song> song;
   final int i;
@@ -21,15 +22,15 @@ class SongThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PlayerBloc _playerBloc = PlayerProvider.of(context);
+    final PlayerBloc playerBloc = PlayerProvider.of(context);
     final size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size);
     return InkWell(
       onTap: () {
-        if (_playerBloc.audioPlayer != null) {
-          _playerBloc.audioPlayer.stop();
+        if (playerBloc.audioPlayer != null) {
+          playerBloc.audioPlayer.stop();
         }
-        _playerBloc.audioInit(i, song);
+        playerBloc.audioInit(i, song);
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(
@@ -42,7 +43,7 @@ class SongThumbnail extends StatelessWidget {
         height: 150,
         width: 150,
         child: StreamBuilder<Playing>(
-            stream: _playerBloc.audioPlayer.current,
+            stream: playerBloc.audioPlayer.current,
             builder: (_, AsyncSnapshot<Playing> snapshot) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -50,28 +51,43 @@ class SongThumbnail extends StatelessWidget {
                   isSearchResult != null
                       ? Container()
                       : Container(
-                          decoration: BoxDecoration(),
                           margin: const EdgeInsets.only(bottom: 10),
-                          // constraints: BoxConstraints(minHeight: 120),
                           child: ClipRRect(
-                            // borderRadius: BorderRadius.circular(5),
-                            child: CachedPicture(
-                              image: song[i].coverArt,
-                              // isBackground: true,
-                              // boxFit: BoxFit.contain,
+                            // child: CachedPicture(
+                            //   image: song[i].coverArt,
+                            //   // isBackground: true,
+                            //   // boxFit: BoxFit.contain,
+                            // ),
+                            child: CachedNetworkImage(
+                              imageUrl: song[i].coverArt,
+                              fit: BoxFit.cover,
+                              imageBuilder:
+                                  (_, ImageProvider<dynamic> imageProvider) {
+                                return Image(image: imageProvider);
+                                // return Container(
+                                //     width: 150,
+                                //     height: 120,
+                                //     color: cCanvasBlack);
+                              },
+                              placeholder: (BuildContext context, String url) {
+                                return Container(
+                                    width: 150,
+                                    height: 120,
+                                    color: cCanvasBlack);
+                              },
                             ),
                           ),
                         ),
                   MusicTitle(
                     title: song[i].title ?? '',
                     lines: 1,
-                    fontSize: 12,
+                    fontSize: 14,
                     color:
                         snapshot?.data?.audio?.audio?.metas?.id == song[i].sId
-                            ? PRIMARY_COLOR
-                            : GRAY,
+                            ? cPrimaryColor
+                            : cGray,
                   ),
-                  Divider(color: TRANSPARENT, height: 5),
+                  const Divider(color: cTransparent, height: 5),
                   MusicTitle(
                     title: song[i].artistStatic.fullName,
                     // !=
@@ -80,11 +96,11 @@ class SongThumbnail extends StatelessWidget {
                     //     : song[i].artistStatic.fullName,
 
                     lines: 1,
-                    fontSize: 10,
+                    fontSize: 12,
                     color:
                         snapshot?.data?.audio?.audio?.metas?.id == song[i].sId
-                            ? PRIMARY_COLOR
-                            : DARK_GRAY,
+                            ? cPrimaryColor
+                            : cDarkGray,
                   ),
                 ],
               );

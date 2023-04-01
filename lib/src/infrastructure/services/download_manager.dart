@@ -1,131 +1,109 @@
 import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:dart_tags/dart_tags.dart';
+import 'package:audiotagger/audiotagger.dart';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../core/colors.dart';
 
 import '../../domain/models/models.dart';
 
 class DownloadsManager {
-  // CancelToken cancelToken = CancelToken();
-  // Dio dio = Dio();
+  CancelToken cancelToken = CancelToken();
+  Dio dio = Dio();
   Directory externalDirectory;
 
   Future<String> downloadMusic(
-    TargetPlatform platform,
     Song song, {
-    onReceiveProgress(int i, int j),
+    Function(int i, int j) onReceiveProgress,
   }) async {
-    await setDirectory(platform);
+    await setDirectory();
 
-    // Directory dir = Directory(externalDirectory.path);
-    Directory dir = Directory(externalDirectory.path + '/.znar');
+    Directory dir = Directory('${externalDirectory.path}/.znar');
     if (!dir.existsSync()) {
       dir.createSync();
     }
 
-    // if (cancelToken.isCancelled) {
-    //   cancelToken = CancelToken();
-    // }
-
+    if (cancelToken.isCancelled) {
+      cancelToken = CancelToken();
+    }
     try {
-      final id = await FlutterDownloader.enqueue(
-        url: song.fileUrl,
-        savedDir: dir.path,
-        showNotification: true,
-        openFileFromNotification: true,
-        fileName: song.title,
+      String fileTitle = '${dir.path}/${song.title}.mp3';
+      final id = await dio.download(
+        song.fileUrl,
+        fileTitle,
+        onReceiveProgress: onReceiveProgress,
+        cancelToken: cancelToken,
       );
-      // // final id = await dio.download(
-      // //   song.fileUrl,
-      // //   dir.path + '/' + song.sId + '.mp3',
-      // //   onReceiveProgress: onReceiveProgress,
-      // //   cancelToken: cancelToken,
-      // // );
-      return id;
-      // if (id.statusMessage == 'OK') {
-      //   showToast('Downloaded successfully');
-      // }
-      // return id.statusMessage;
+
+      return id.data;
     } catch (e) {
       return null;
     }
-    // return '';
   }
 
-  Future<List<DownloadedSong>> getDownloaded(TargetPlatform platform) async {
-    await setDirectory(platform);
+  Future<List<dynamic>> getDownloaded() async {
+    await setDirectory();
 
-    // final Directory directory = Directory(externalDirectory.path);
-    final Directory directory = Directory(externalDirectory.path + '/.znar');
+    final Directory directory = Directory('${externalDirectory.path}/.znar');
     if (!directory.existsSync()) {
       directory.createSync();
     }
 
     Stream<FileSystemEntity> files = directory.list();
-    TagProcessor tp = TagProcessor();
 
-    return files.asyncMap((FileSystemEntity event) async {
-      List<Tag> t = [];
-
-      t = await tp.getTagsFromByteArray(
-        File(event.path).readAsBytes(),
-        [TagType.id3v1],
-      );
-
-      debugPrint(event.path);
-
-      if (t[0].tags.isNotEmpty) {
-        final dil = await tp.getTagsFromByteArray(
-          File(event.path).readAsBytes(),
-          [TagType.id3v2],
-        );
-        DownloadedSong songData = DownloadedSong.fromMap(dil[0]?.tags);
-
-        songData.path = event.path;
-
-        songData.sId = event.path.replaceFirst(directory.path + '/', '');
-        // debugPrint('\n\n--\n\n\t\t${songData.toString()}\n\n--\n\n');
-        return songData;
-      }
-
-      return DownloadedSong();
-    }).toList();
+    return getFile(files, directory);
   }
 
-  Future<void> setDirectory(TargetPlatform platform) async {
-    externalDirectory = platform == TargetPlatform.android
+  Future<List<dynamic>> getFile(files, directory) async {
+    return files.asyncMap(
+      (FileSystemEntity event) async {
+        Audiotagger audiotagger = Audiotagger();
+        Map audioFile = await audiotagger.readTagsAsMap(path: event.path);
+        Uint8List img = await audiotagger.readArtwork(path: event.path);
+
+        DownloadedSong songData;
+        songData = DownloadedSong.fromMap(audioFile);
+
+        songData.path = event.path;
+        songData.image = img;
+
+        return songData;
+      },
+    ).toList();
+  }
+
+  Future<void> setDirectory() async {
+    externalDirectory = Platform.isAndroid
         ? await getExternalStorageDirectory()
         : await getApplicationDocumentsDirectory();
-    // debugPrint('\n\n--\n\n\t\t$externalDirectory\n\n--\n\n');
   }
 
   void deleteDownload(List<DownloadedSong> songs) {
     if (songs.isEmpty) {
-      // final Directory directory = Directory(externalDirectory.path);
-      final Directory directory = Directory(externalDirectory.path + '/.znar');
+      final Directory directory = Directory('${externalDirectory.path}/.znar');
       directory.deleteSync(recursive: true);
     } else {
-      songs.forEach((element) {
+      for (final element in songs) {
         var f = File(element.path);
         f.deleteSync();
-      });
+      }
     }
   }
 
-  // void kill() {
-  //   cancelToken.cancel();
-  // }
+  void kill() {
+    cancelToken.cancel();
+  }
 }
 
-showToast(String message) {
+void showToast(String message) {
   ScaffoldMessengerState().showSnackBar(
     SnackBar(
       content: Text(
         message,
-        style: TextStyle(color: GRAY),
+        style: const TextStyle(color: cGray),
       ),
     ),
   );

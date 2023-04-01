@@ -33,15 +33,15 @@ class Album {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    if (this.artistStatic != null) {
-      data['artistStatic'] = this.artistStatic.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (artistStatic != null) {
+      data['artistStatic'] = artistStatic.toJson();
     }
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['artist'] = this.artist;
-    data['releaseDate'] = this.releaseDate;
-    data['albumArt'] = this.albumArt;
+    data['_id'] = sId;
+    data['name'] = name;
+    data['artist'] = artist;
+    data['releaseDate'] = releaseDate;
+    data['albumArt'] = albumArt;
     return data;
   }
 }

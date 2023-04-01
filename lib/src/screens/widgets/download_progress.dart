@@ -22,24 +22,24 @@
 //           child: InkWell(
 //             onTap: null,
 //             child: Container(
-//               color: BACKGROUND.withOpacity(0.8),
+//               color: cBackgroundColor.withOpacity(0.8),
 //               width: size.width,
 //               height: size.height,
 //               child: Center(
 //                 child: Container(
 //                   width: size.width * 0.4,
 //                   height: size.height * 0.3,
-//                   decoration: BoxDecoration(color: BACKGROUND),
+//                   decoration: BoxDecoration(color: cBackgroundColor),
 //                   child: Column(
 //                     mainAxisSize: MainAxisSize.min,
 //                     mainAxisAlignment: MainAxisAlignment.center,
 //                     children: [
 //                       DownloadStatus.LOADING == snapshot.data ? CustomLoader() : buildCircularProgress(uiBloc),
-//                       Divider(color: TRANSPARENT),
+//                       Divider(color: cTransparent),
 //                       Text((snapshot.data != null ? '${uiBloc.downloadProgess} %' : '0%')),
-//                       Divider(color: TRANSPARENT),
+//                       Divider(color: cTransparent),
 //                       FlatButton(
-//                         color: CANVAS_BLACK,
+//                         color: cCanvasBlack,
 //                         onPressed: () {
 //                           uiBloc.killDownloader();
 //                         },

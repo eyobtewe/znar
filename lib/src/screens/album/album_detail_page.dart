@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
@@ -14,9 +13,11 @@ class AlbumDetailScreen extends StatefulWidget {
   final dynamic album;
   final String albumId;
 
-  const AlbumDetailScreen({this.album, this.albumId});
+  const AlbumDetailScreen({Key key, this.album, this.albumId})
+      : super(key: key);
 
-  _AlbumDetailScreenState createState() => _AlbumDetailScreenState();
+  @override
+  State<AlbumDetailScreen> createState() => _AlbumDetailScreenState();
 }
 
 class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
@@ -36,7 +37,6 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
     localSongsBloc = LocalSongsProvider.of(context);
 
     size = MediaQuery.of(context).size;
-    ScreenUtil.init(context, designSize: size, allowFontScaling: true);
 
     return Scaffold(
       body: Stack(
@@ -47,7 +47,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
                     future: bloc.fetchAlbumDetails(widget.albumId),
                     builder: (_, AsyncSnapshot<Album> snapshot) {
                       if (!snapshot.hasData) {
-                        return Center(child: const CustomLoader());
+                        return const Center(child: CustomLoader());
                       } else {
                         return buildBody(snapshot.data);
                       }
@@ -55,7 +55,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
                   )
                 : buildBody(widget.album),
           ),
-          ExpandableBottomPlayer(),
+          const ExpandableBottomPlayer(),
         ],
       ),
     );
@@ -77,10 +77,10 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
         if (!snapshot.hasData) {
           return const CustomScrollView(
             primary: true,
-            physics: const BouncingScrollPhysics(),
+            physics: BouncingScrollPhysics(),
             slivers: <Widget>[
-              const SliverAppBar(),
-              const SliverFillRemaining(child: const CustomLoader()),
+              SliverAppBar(),
+              SliverFillRemaining(child: CustomLoader()),
             ],
           );
         } else {
@@ -137,7 +137,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
         centerTitle: true,
         title: buildTitle(album, songs),
         titlePadding: EdgeInsets.zero,
-        stretchModes: <StretchMode>[
+        stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,
           StretchMode.fadeTitle
         ],
@@ -150,8 +150,20 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
   Container buildTitle(dynamic album, dynamic songs) {
     return Container(
       width: size.width,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Theme.of(context).scaffoldBackgroundColor.withOpacity(1),
+            Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
+            Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+            cTransparent,
+          ],
+          begin: FractionalOffset.bottomCenter,
+          end: FractionalOffset.topCenter,
+        ),
+      ),
       child: ListTile(
-        leading: Container(width: 1, height: 1),
+        leading: const SizedBox(width: 1, height: 1),
         // trailing: buildPlayBtn(songs),
         title: Text(
           album.runtimeType == Album ? album.name ?? '' : album.title,
@@ -165,18 +177,6 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
           style: const TextStyle(fontFamilyFallback: f),
         ),
         dense: true,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).scaffoldBackgroundColor.withOpacity(1),
-            Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
-            Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
-            TRANSPARENT,
-          ],
-          begin: FractionalOffset.bottomCenter,
-          end: FractionalOffset.topCenter,
-        ),
       ),
     );
   }

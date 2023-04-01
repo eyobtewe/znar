@@ -13,8 +13,6 @@ class BottomScreenPlayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PlayerBloc playerBloc = PlayerProvider.of(context);
-    final size = MediaQuery.of(context).size;
-    ScreenUtil.init(context, designSize: size, allowFontScaling: true);
 
     return playerBloc.audioPlayer.builderPlayerState(
         builder: (_, PlayerState playerState) {
@@ -43,15 +41,15 @@ class BottomScreenPlayer extends StatelessWidget {
   //   return Dismissible(
   //     background: Container(
   //       padding: const EdgeInsets.all(5),
-  //       color: PRIMARY_COLOR,
+  //       color: cPrimaryColor,
   //       alignment: Alignment.centerRight,
   //       child: CircleAvatar(
   //         child: const Icon(
   //           Ionicons.stop_circle,
-  //           color: PRIMARY_COLOR,
+  //           color: cPrimaryColor,
   //           size: 32,
   //         ),
-  //         backgroundColor: BACKGROUND,
+  //         backgroundColor: cBackgroundColor,
   //       ),
   //     ),
   //     key: UniqueKey(),
@@ -81,16 +79,16 @@ class BottomScreenPlayer extends StatelessWidget {
           playerBloc.audioPlayer.builderRealtimePlayingInfos(
             builder: (_, RealtimePlayingInfos rInfo) {
               if (rInfo == null) {
-                return LinearProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(PRIMARY_COLOR),
-                  backgroundColor: CANVAS_BLACK,
+                return const LinearProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(cPrimaryColor),
+                  backgroundColor: cCanvasBlack,
                   value: 0,
                 );
               } else {
                 return LinearProgressIndicator(
                   minHeight: 2,
-                  valueColor: AlwaysStoppedAnimation(PRIMARY_COLOR),
-                  backgroundColor: CANVAS_BLACK,
+                  valueColor: const AlwaysStoppedAnimation(cPrimaryColor),
+                  backgroundColor: cCanvasBlack,
                   value: rInfo.duration.inSeconds != 0
                       ? (rInfo.currentPosition.inSeconds /
                           rInfo.duration.inSeconds)
@@ -109,19 +107,11 @@ class BottomScreenPlayer extends StatelessWidget {
     return playerBloc.audioPlayer.builderCurrent(builder: (_, Playing playing) {
       final Metas songMetaData = playing.audio?.audio?.metas;
       return ListTile(
-        // onTap: () {
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (_) => AudioPlayerScreen(
-        //               isFromBottomBar: true,
-        //             )));
-        // },
         leading: Stack(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(0),
-              child: Container(
+              child: SizedBox(
                 width: 48,
                 height: 48,
                 child: songMetaData?.extra['image'] != null
@@ -137,10 +127,10 @@ class BottomScreenPlayer extends StatelessWidget {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: BACKGROUND.withOpacity(0.65),
+                    color: cBackgroundColor.withOpacity(0.65),
                   ),
                   child: IconButton(
-                    color: PRIMARY_COLOR,
+                    color: cPrimaryColor,
                     iconSize: 32,
                     icon: isPlaying
                         ? const Icon(Ionicons.pause_circle)
@@ -159,7 +149,7 @@ class BottomScreenPlayer extends StatelessWidget {
           maxLines: 2,
           style: TextStyle(
             fontFamilyFallback: f,
-            color: GRAY,
+            color: cGray,
             fontSize: ScreenUtil().setSp(12),
           ),
         ),
@@ -167,15 +157,15 @@ class BottomScreenPlayer extends StatelessWidget {
           songMetaData?.artist ?? '',
           maxLines: 1,
           style: TextStyle(
-            color: DARK_GRAY,
+            color: cDarkGray,
             fontFamilyFallback: f,
             fontSize: ScreenUtil().setSp(10),
           ),
         ),
         dense: true,
         trailing: IconButton(
-            icon: Icon(Ionicons.close_outline),
-            color: PRIMARY_COLOR,
+            icon: const Icon(Ionicons.close_outline),
+            color: cPrimaryColor,
             onPressed: () async {
               await playerBloc.stop();
             }),

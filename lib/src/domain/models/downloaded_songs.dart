@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:dart_tags/dart_tags.dart';
+// ignore: depend_on_referenced_packages
+import 'package:uuid/uuid.dart';
+
+// import 'package:dart_tags/dart_tags.dart';
 
 class DownloadedSong {
   String sId;
@@ -19,27 +22,28 @@ class DownloadedSong {
   });
 
   DownloadedSong.fromMap(Map map) {
-    title = map["title"] ?? '';
-    artist = map["artist"] ?? '';
-    album = map["album"] ?? '';
+    title = map['title'] ?? '';
+    artist = map['artist'] ?? '';
+    album = map['album'] ?? '';
+    sId = const Uuid().v4();
 
-    if (map["picture"] != null) {
-      AttachedPicture ap;
+    // if (map["picture"] != null) {
+    //   AttachedPicture ap;
 
-      ap = map["picture"]["Cover (front)"];
-      image = Uint8List.fromList(ap.imageData);
-    }
+    //   ap = map["picture"]["Cover (front)"];
+    //   image = Uint8List.fromList(ap.imageData);
+    // }
   }
 
   @override
   String toString() {
     return '''
-sId: $sId,
-title: $title,
-artist: $artist,
-album: $album,
-path: $path,
-image: $image,
+\t\tsId: $sId,
+\t\ttitle: $title,
+\t\tartist: $artist,
+\t\talbum: $album,
+\t\tpath: $path,
+\t\timage: $image,
 ''';
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/colors.dart';
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../helpers/network_image.dart';
@@ -9,10 +8,11 @@ import '../screens.dart';
 
 class PlaylistThumbnail extends StatelessWidget {
   const PlaylistThumbnail({
-    this.i,
+    Key key,
     this.playlist,
     this.isSearchResult,
-  });
+    this.i,
+  }) : super(key: key);
 
   final Playlist playlist;
   final bool isSearchResult;
@@ -54,7 +54,7 @@ class PlaylistThumbnail extends StatelessWidget {
                       ),
                     ),
                   ),
-            Container(
+            SizedBox(
               width: size.width * 9 / 13 - 50,
               child: Text(
                 playlist.name,
@@ -63,7 +63,7 @@ class PlaylistThumbnail extends StatelessWidget {
                 style: TextStyle(
                   fontSize: ScreenUtil().setSp(14),
                   fontFamilyFallback: f,
-                  color: GRAY,
+                  color: cGray,
                 ),
               ),
             ),

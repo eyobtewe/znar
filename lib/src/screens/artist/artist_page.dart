@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
+import '../../core/core.dart';
 
 import '../../domain/models/models.dart';
 import '../../presentation/bloc.dart';
-import '../home/explore.dart';
+import '../screens.dart';
 import '../search/search.dart';
 import '../widgets/widgets.dart';
 
 class ArtistScreen extends StatefulWidget {
+  const ArtistScreen({Key key}) : super(key: key);
+
   @override
-  _ArtistScreenState createState() => _ArtistScreenState();
+  State<ArtistScreen> createState() => _ArtistScreenState();
 }
 
 class _ArtistScreenState extends State<ArtistScreen> {
@@ -53,25 +56,29 @@ class _ArtistScreenState extends State<ArtistScreen> {
     ScreenUtil.init(context, designSize: size);
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: buildAppBar(),
-      bottomNavigationBar: BottomNavBar(currentIndex: 3),
+      bottomNavigationBar: const BottomNavBar(currentIndex: 2),
       body: Stack(
         children: [
-          Container(
-            padding: EdgeInsets.only(bottom: 66),
-            child: FutureBuilder(
-              future: bloc.fetchArtists(page, 30),
-              initialData: bloc.artists,
-              builder: (_, AsyncSnapshot<List<Artist>> snapshot) {
-                if (!snapshot.hasData) {
-                  return const CustomLoader();
-                } else {
-                  return buildBody(bloc.artists);
-                }
-              },
-            ),
+          FutureBuilder(
+            future: bloc.fetchArtists(page, 30),
+            initialData: bloc.artists,
+            builder: (_, AsyncSnapshot<List<Artist>> snapshot) {
+              if (!snapshot.hasData) {
+                return const CustomLoader();
+              } else {
+                return ListView(
+                  shrinkWrap: true,
+                  children: [
+                    buildBody(bloc.artists),
+                    const BottomPlayerSpacer(),
+                  ],
+                );
+              }
+            },
           ),
-          ExpandableBottomPlayer(),
+          const ExpandableBottomPlayer(),
         ],
       ),
     );
@@ -81,27 +88,33 @@ class _ArtistScreenState extends State<ArtistScreen> {
     return GridView.builder(
       controller: scrollController,
       physics: const BouncingScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         childAspectRatio: 0.8,
       ),
       itemCount: artists?.length ?? 0,
-      // shrinkWrap: true,
+      shrinkWrap: true,
+      primary: false,
       itemBuilder: (_, int i) => ArtistThumbnail(artist: artists[i]),
     );
   }
 
   Widget buildAppBar() {
     return AppBar(
-      // elevation: 0,
+      elevation: 0,
+      backgroundColor: cTransparent,
       centerTitle: false,
+      leading: IconButton(
+          onPressed: () {
+            uiBloc.toggleLanguage();
+            setState(() {});
+          },
+          icon: const Icon(Ionicons.language)),
       actions: <Widget>[
         IconButton(
             icon: const Icon(Ionicons.search),
             onPressed: () {
-              showSearch(
-                  context: context,
-                  delegate: SongSearch(CustomAspectRatio.ARTIST));
+              showSearch(context: context, delegate: SongSearch(MEDIA.ARTIST));
             }),
       ],
       // title: Text(

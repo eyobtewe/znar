@@ -1,5 +1,4 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
@@ -12,27 +11,28 @@ import 'widgets.dart';
 class PlayerButtons extends StatelessWidget {
   const PlayerButtons({Key key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     final PlayerBloc playerBloc = PlayerProvider.of(context);
     final Size size = MediaQuery.of(context).size;
-    ScreenUtil.init(context, designSize: size, allowFontScaling: true);
+
     return Column(
       children: [
-        Divider(color: TRANSPARENT),
-        MusicProgress(),
-        Divider(color: TRANSPARENT),
+        const Divider(color: cTransparent),
+        const MusicProgress(),
+        const Divider(color: cTransparent),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Spacer(),
+            const Spacer(),
             buildRepeatBtn(playerBloc, size),
-            VerticalDivider(),
+            const VerticalDivider(),
             buildPrevButton(playerBloc, size),
             buildPlayPauseBtn(playerBloc, size),
             buildNextBtn(playerBloc, size),
-            VerticalDivider(),
+            const VerticalDivider(),
             buildShuffleBtn(playerBloc, size),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ],
@@ -47,7 +47,7 @@ class PlayerButtons extends StatelessWidget {
                 // iconSize: size.width * 0.08,
                 iconSize: ScreenUtil().setSp(28),
                 icon: const Icon(Ionicons.repeat),
-                color: loopMode == LoopMode.single ? PRIMARY_COLOR : GRAY,
+                color: loopMode == LoopMode.single ? cPrimaryColor : cGray,
                 onPressed: () {
                   if (LoopMode.playlist == loopMode) {}
                   playerBloc.audioPlayer.setLoopMode(
@@ -63,10 +63,6 @@ class PlayerButtons extends StatelessWidget {
   }
 
   Widget buildShuffleBtn(PlayerBloc playerBloc, Size size) {
-    debugPrint(playerBloc
-        ?.audioPlayer?.realtimePlayingInfos?.valueWrapper?.value?.playingPercent
-        .toString());
-
     // if (playerBloc?.audioPlayer?.realtimePlayingInfos?.valueWrapper?.value
     //         ?.playingPercent ==
     //     null) {
@@ -75,7 +71,7 @@ class PlayerButtons extends StatelessWidget {
         builder: (_, AsyncSnapshot<RealtimePlayingInfos> r) {
           if (r?.data?.duration == Duration.zero) {
             return IconButton(
-              color: GRAY,
+              color: cGray,
               iconSize: ScreenUtil().setSp(28),
               icon: const Icon(Ionicons.shuffle),
               onPressed: null,
@@ -84,7 +80,7 @@ class PlayerButtons extends StatelessWidget {
             return IconButton(
               iconSize: ScreenUtil().setSp(28),
               icon: const Icon(Ionicons.shuffle),
-              color: (r?.data?.isShuffling == false) ? GRAY : PRIMARY_COLOR,
+              color: (r?.data?.isShuffling == false) ? cGray : cPrimaryColor,
               onPressed: () {
                 playerBloc.audioPlayer.toggleShuffle();
               },
@@ -97,7 +93,7 @@ class PlayerButtons extends StatelessWidget {
     //       return IconButton(
     //         iconSize: ScreenUtil().setSp(28),
     //         icon: const Icon(Ionicons.shuffle),
-    //         color: (r?.isShuffling == false) ? GRAY : PRIMARY_COLOR,
+    //         color: (r?.isShuffling == false) ? cGray : cPrimaryColor,
     //         onPressed:
     //             playerBloc?.audioPlayer?.isShuffling?.valueWrapper?.value ==
     //                     null
@@ -114,30 +110,29 @@ class PlayerButtons extends StatelessWidget {
   Widget buildNextBtn(PlayerBloc playerBloc, Size size) {
     return IconButton(
       iconSize: ScreenUtil().setSp(28),
-      color: GRAY,
+      color: cGray,
       icon: const Icon(Ionicons.play_skip_forward_outline),
-      onPressed:
-          playerBloc.audioPlayer.current.valueWrapper?.value?.hasNext == false
-              ? null
-              : () {
-                  playerBloc.audioPlayer.pause();
-                  playerBloc.audioPlayer.next();
-                },
+      onPressed: playerBloc.audioPlayer.current.value?.hasNext == false
+          ? null
+          : () {
+              playerBloc.audioPlayer.pause();
+              playerBloc.audioPlayer.next();
+            },
     );
   }
 
   PlayerBuilder buildPlayPauseBtn(PlayerBloc playerBloc, Size size) {
     return playerBloc.audioPlayer.builderPlayerState(
       builder: (BuildContext _, PlayerState playerState) {
-        return (playerBloc?.audioPlayer?.realtimePlayingInfos?.valueWrapper
-                        ?.value?.playingPercent ==
+        return (playerBloc?.audioPlayer?.realtimePlayingInfos?.value
+                        ?.playingPercent ==
                     null ||
-                playerBloc?.audioPlayer?.realtimePlayingInfos?.valueWrapper
-                        ?.value?.duration ==
+                playerBloc
+                        ?.audioPlayer?.realtimePlayingInfos?.value?.duration ==
                     Duration.zero)
             ? buildBuffering()
             : IconButton(
-                color: PRIMARY_COLOR,
+                color: cPrimaryColor,
                 iconSize: ScreenUtil().setSp(50),
                 icon: playerState == PlayerState.play
                     ? const Icon(Ionicons.pause_circle_outline)
@@ -155,8 +150,8 @@ class PlayerButtons extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         IconButton(
-          color: GRAY,
-          disabledColor: PRIMARY_COLOR,
+          color: cGray,
+          disabledColor: cPrimaryColor,
           iconSize: ScreenUtil().setSp(50),
           icon: const Icon(Ionicons.pause_circle_outline),
           onPressed: null,
@@ -166,12 +161,12 @@ class PlayerButtons extends StatelessWidget {
             spinnerMode: true,
             size: 40,
             customColors: CustomSliderColors(
-                trackColor: LINK,
-                dotColor: GRAY,
+                trackColor: cLinkColor,
+                dotColor: cGray,
                 progressBarColors: [
-                  PURPLE,
-                  BLUE,
-                  PRIMARY_COLOR,
+                  cPurple,
+                  cBlue,
+                  cPrimaryColor,
                 ]),
             customWidths:
                 CustomSliderWidths(progressBarWidth: 3, trackWidth: 3),
@@ -184,7 +179,7 @@ class PlayerButtons extends StatelessWidget {
   IconButton buildPrevButton(PlayerBloc playerBloc, Size size) {
     return IconButton(
       iconSize: ScreenUtil().setSp(28),
-      color: GRAY,
+      color: cGray,
       icon: const Icon(Ionicons.play_skip_back_outline),
       onPressed: () {
         playerBloc.audioPlayer.previous();

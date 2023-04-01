@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:share/share.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
+import '../../infrastructure/services/services.dart';
 import '../../presentation/bloc.dart';
 import '../widgets/widgets.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final MusicVideo musicVideo;
 
-  const VideoPlayerScreen({@required this.musicVideo});
+  const VideoPlayerScreen({Key key, @required this.musicVideo})
+      : super(key: key);
 
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+  @override
+  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   YoutubePlayerController _youtubeController;
 
+  @override
   void dispose() {
     _youtubeController.dispose();
     super.dispose();
@@ -29,7 +35,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
     _youtubeController = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(widget.musicVideo.url),
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
+        // hideControls: true,
         enableCaption: false,
         autoPlay: true,
       ),
@@ -43,18 +50,18 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   Size size;
 
+  @override
   Widget build(BuildContext context) {
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
 
     size = MediaQuery.of(context).size;
-    ScreenUtil.init(context, allowFontScaling: true, designSize: size);
 
     return Scaffold(
       body: Stack(
         children: [
           buildBody(),
-          ExpandableBottomPlayer(),
+          const ExpandableBottomPlayer(),
         ],
       ),
     );
@@ -70,6 +77,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             background: YoutubePlayer(controller: _youtubeController),
           ),
           pinned: true,
+          leading: IconButton(
+            onPressed: () {
+              if (MediaQuery.of(context).orientation == Orientation.portrait) {
+                Navigator.pop(context);
+              } else {
+                _youtubeController.toggleFullScreenMode();
+              }
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
         ),
         SliverFillRemaining(
           child: ListView(
@@ -91,25 +108,50 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return Container(
       width: size.width,
       padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
-      child: Container(
+      child: SizedBox(
         width: size.width,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              widget.musicVideo.title,
-              style: TextStyle(
-                fontFamilyFallback: f,
-                fontWeight: FontWeight.bold,
-                color: GRAY,
+            SizedBox(
+              width: size.width * 0.85,
+              child: Wrap(
+                children: [
+                  Text(
+                    widget.musicVideo.title,
+                    style: const TextStyle(
+                      fontFamilyFallback: f,
+                      fontWeight: FontWeight.bold,
+                      color: cGray,
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    // child: Container(color: cGray, width: 2, height: 2),
+                  ),
+                  Text(
+                    widget.musicVideo.artistStatic.fullName,
+                    style: const TextStyle(
+                      fontFamilyFallback: f,
+                      color: cDarkGray,
+                      fontWeight: FontWeight.w100,
+                    ),
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Container(color: GRAY, width: 2, height: 2),
-            ),
-            Text(
-              widget.musicVideo.artistStatic.fullName,
-              style: TextStyle(fontFamilyFallback: f, color: DARK_GRAY),
+            // Spacer(),
+            InkWell(
+              child: const Icon(Ionicons.share_social_outline,
+                  color: cPrimaryColor),
+              onTap: () async {
+                String link = await kDynamicLinkService
+                    .createDynamicLink(widget.musicVideo);
+
+                Share.share(
+                    '${widget.musicVideo.title} - ${widget.musicVideo.artistStatic.fullName} \n\n$link');
+              },
             ),
           ],
         ),
@@ -145,7 +187,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       primary: false,
                       shrinkWrap: true,
                       itemCount: clips.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                       ),
                       itemBuilder: (_, int i) {
@@ -167,7 +210,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            '$title',
+            title,
             style: TextStyle(
                 fontSize: ScreenUtil().setSp(18),
                 fontWeight: FontWeight.bold,

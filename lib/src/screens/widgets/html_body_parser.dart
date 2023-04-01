@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 
 class HtmlBody extends StatelessWidget {
-  const HtmlBody({this.data});
+  const HtmlBody({Key key, this.data}) : super(key: key);
 
   final String data;
 
   @override
   Widget build(BuildContext context) {
-    return Html(
-      data: data,
-    );
+    // return Html(
+    //   data: data,
+    // );
   }
 }

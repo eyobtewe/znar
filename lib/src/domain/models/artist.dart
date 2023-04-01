@@ -31,15 +31,15 @@ class Artist {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['stageName'] = this.stageName;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['bio'] = this.bio;
-    data['coverImage'] = this.coverImage;
-    data['photo'] = this.photo;
-    data['fullName'] = this.fullName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['stageName'] = stageName;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['bio'] = bio;
+    data['coverImage'] = coverImage;
+    data['photo'] = photo;
+    data['fullName'] = fullName;
     return data;
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/core.dart';
 import 'presentation/bloc.dart';
@@ -7,20 +9,30 @@ import 'presentation/bloc.dart';
 // final FirebaseAnalyticsObserver _observer = FirebaseAnalyticsObserver(analytics: kAnalytics);
 
 class App extends StatelessWidget {
+  const App({Key key}) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
     return LocalSongsProvider(
       child: ApiProvider(
         child: UiProvider(
           child: PlayerProvider(
-            child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              initialRoute: '/',
-              onGenerateRoute: onGeneratedRoute,
-              // navigatorObservers: [_observer],
-              darkTheme: kDarkTheme,
-              theme: kLightTheme,
-              themeMode: ThemeMode.dark,
-              // home: ProfileScreen(),
+            child: ScreenUtilInit(
+              designSize: ScreenUtil.defaultSize,
+              builder: (BuildContext context, Widget child) => MaterialApp(
+                debugShowCheckedModeBanner: false,
+                initialRoute: '/',
+                onGenerateRoute: onGeneratedRoute,
+                theme: kDarkTheme,
+                // navigatorObservers: [_observer],
+                // darkTheme: kDarkTheme,
+                // theme: kLightTheme,
+                // themeMode: ThemeMode.dark,
+                // home: ProfileScreen(),
+                useInheritedMediaQuery: true,
+                locale: DevicePreview.locale(context),
+                builder: DevicePreview.appBuilder,
+              ),
             ),
           ),
         ),

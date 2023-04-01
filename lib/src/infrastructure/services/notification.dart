@@ -18,9 +18,9 @@ class CustomNotification {
     //   ),
     // );
     await noti.initialize(
-      InitializationSettings(
+      const InitializationSettings(
         android: AndroidInitializationSettings('ic_music'),
-        iOS: IOSInitializationSettings(),
+        iOS: DarwinInitializationSettings(),
       ),
     );
   }
@@ -29,7 +29,6 @@ class CustomNotification {
     var androidProgress = AndroidNotificationDetails(
       'progress channel',
       'progress channel',
-      'progress channel description',
       channelShowBadge: false,
       onlyAlertOnce: true,
       showProgress: true,
@@ -61,14 +60,14 @@ class CustomNotification {
         return await noti.show(
           id,
           'Download finished',
-          song.artistStatic.stageName + ' ' + song.title,
+          '${song.artistStatic.stageName} ${song.title}',
           platformChannelSpecifics,
         );
       default:
         return await noti.show(
           id,
           'Downloading',
-          song.artistStatic.stageName + ' ' + song.title,
+          '${song.artistStatic.stageName} ${song.title}',
           platformChannelSpecifics,
           payload: song.sId,
         );
@@ -79,15 +78,14 @@ class CustomNotification {
 const AndroidNotificationDetails androidDone = AndroidNotificationDetails(
   'progress channel',
   'progress channel',
-  'progress channel description',
   channelShowBadge: false,
   onlyAlertOnce: true,
   showProgress: false,
   maxProgress: 100,
   playSound: false,
 );
-const IOSNotificationDetails iOS = IOSNotificationDetails(
-  presentSound: false,
-  presentAlert: false,
-  presentBadge: false,
+const DarwinNotificationDetails iOS = DarwinNotificationDetails(
+  presentAlert: true,
+  presentBadge: true,
+  presentSound: true,
 );

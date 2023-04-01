@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:znar/src/core/core.dart';
 
-import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../presentation/bloc.dart';
 import '../screens.dart';
@@ -10,14 +9,16 @@ import '../search/search.dart';
 import '../widgets/widgets.dart';
 
 class SongScreen extends StatefulWidget {
+  const SongScreen({Key key}) : super(key: key);
+
   @override
-  _SongScreenState createState() => _SongScreenState();
+  State<SongScreen> createState() => _SongScreenState();
 }
 
 class _SongScreenState extends State<SongScreen> {
   int page = 1;
   ScrollController scrollController;
-  LocalSongsBloc localBloc;
+  // LocalSongsBloc localBloc;
   // List<DownloadedSong> downloadedSongs;
 
   // getDownloads() async {
@@ -52,20 +53,22 @@ class _SongScreenState extends State<SongScreen> {
   ApiBloc bloc;
   Size size;
   UiBloc uiBloc;
+  bool isGrid = false;
 
+  @override
   Widget build(BuildContext context) {
     playerBloc = PlayerProvider.of(context);
-    localBloc = LocalSongsProvider.of(context);
+    // localBloc = LocalSongsProvider.of(context);
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
     size = MediaQuery.of(context).size;
 
-    ScreenUtil.init(context, allowFontScaling: true, designSize: size);
     return Scaffold(
+      bottomNavigationBar: const BottomNavBar(currentIndex: 1),
       body: Stack(
         children: [
           buildBody(),
-          ExpandableBottomPlayer(),
+          const ExpandableBottomPlayer(),
         ],
       ),
     );
@@ -80,7 +83,7 @@ class _SongScreenState extends State<SongScreen> {
           return CustomScrollView(
             slivers: [
               buildSliverAppBar(context),
-              const SliverFillRemaining(child: const CustomLoader()),
+              const SliverFillRemaining(child: CustomLoader()),
             ],
           );
         } else {
@@ -91,17 +94,29 @@ class _SongScreenState extends State<SongScreen> {
               physics: const BouncingScrollPhysics(),
               slivers: [
                 buildSliverAppBar(context),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (_, int k) {
-                      return SongTile(songs: bloc.songs, index: k);
-                    },
-                    childCount: bloc.songs.length,
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: SizedBox(height: 66),
-                ),
+                isGrid
+                    ? SliverGrid(
+                        delegate: SliverChildBuilderDelegate(
+                          (_, int k) {
+                            return SongThumbnail(i: k, song: bloc.songs);
+                          },
+                          childCount: bloc.songs.length,
+                        ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          childAspectRatio: 0.7,
+                        ),
+                      )
+                    : SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (_, int k) {
+                            return SongTile(songs: bloc.songs, index: k);
+                          },
+                          childCount: bloc.songs.length,
+                        ),
+                      ),
+                const SliverToBoxAdapter(child: BottomPlayerSpacer()),
               ],
             ),
           );
@@ -113,21 +128,33 @@ class _SongScreenState extends State<SongScreen> {
   Widget buildSliverAppBar(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      centerTitle: true,
-      title: Text(
-        Language.locale(uiBloc.language, 'songs'),
-        style: const TextStyle(
-          fontWeight: FontWeight.w800,
-          fontFamilyFallback: f,
-        ),
-      ),
+      // centerTitle: true,
+      // title: Text(
+      //   Language.locale(uiBloc.language, 'songs'),
+      //   style: const TextStyle(
+      //     fontWeight: FontWeight.w800,
+      //     fontFamilyFallback: f,
+      //   ),
+      // ),
+      leading: IconButton(
+          onPressed: () {
+            uiBloc.toggleLanguage();
+            setState(() {});
+          },
+          icon: const Icon(Ionicons.language)),
       actions: [
+        IconButton(
+          onPressed: () {
+            setState(() {
+              isGrid = !isGrid;
+            });
+          },
+          icon: Icon(isGrid ? Ionicons.list : Ionicons.grid),
+        ),
         IconButton(
             icon: const Icon(Ionicons.search),
             onPressed: () {
-              showSearch(
-                  context: context,
-                  delegate: SongSearch(CustomAspectRatio.SONG));
+              showSearch(context: context, delegate: SongSearch(MEDIA.SONG));
               // Navigator.pushNamed(context, SEARCH_SONGS_PAGE_ROUTE);
             }),
       ],
@@ -144,8 +171,12 @@ class PlayAllFAB extends StatelessWidget {
   Widget build(BuildContext context) {
     final playerBloc = PlayerProvider.of(context);
     return FloatingActionButton(
+      elevation: 0,
       mini: true,
-      child: Icon(Ionicons.play),
+      child: const Icon(
+        Ionicons.play,
+        color: cBackgroundColor,
+      ),
       onPressed: () {
         if (playerBloc.audioPlayer != null) {
           playerBloc.audioPlayer.stop();

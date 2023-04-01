@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:ionicons/ionicons.dart';
 import 'package:miniplayer/miniplayer.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart' as yt;
+
+import 'package:znar/src/screens/search/search.dart';
 
 import '../../infrastructure/services/services.dart';
 import '../../presentation/bloc.dart';
 import '../screens.dart';
+import '../video_player/expandable_video_player.dart';
 import '../widgets/widgets.dart';
 
 class Home extends StatefulWidget {
-  Home({Key key}) : super(key: key);
+  const Home({Key key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
@@ -23,40 +28,41 @@ class _HomeState extends State<Home> {
   // FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   // FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
+  @override
   void initState() {
     miniPlayerController = MiniplayerController();
     super.initState();
-    listenForNotification();
+    // listenForNotification();
 
-    if (widget.key != Key('NO-INIT')) {
-      // checkDynamicLinks();
+    if (widget.key != const Key('NO-INIT')) {
+      checkDynamicLinks();
     }
   }
 
-  void listenForNotification() async {
-    // await _firebaseMessaging.requestPermission();
-    // debugPrint(await _firebaseMessaging.getToken());
-    // FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-    //   setState(() {
-    //     messageTitle = event.notification.title;
-    //     // notificationAlert =
-    //   });
-    // });
-    // _firebaseMessaging.configure(
-    //   onLaunch: (message) async {
-    //     setState(() {
-    //       messageTitle = message["notification"]["title"];
-    //       notificationAlert = "New Notification Alert";
-    //     });
-    //   },
-    //   onResume: (message) async {
-    //     setState(() {
-    //       messageTitle = message["data"]["title"];
-    //       notificationAlert = "Application opened from Notification";
-    //     });
-    //   },
-    // );
-  }
+  // void listenForNotification() async {
+  // await _firebaseMessaging.requestPermission();
+  // debugPrint(await _firebaseMessaging.getToken());
+  // FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+  //   setState(() {
+  //     messageTitle = event.notification.title;
+  //     // notificationAlert =
+  //   });
+  // });
+  // _firebaseMessaging.configure(
+  //   onLaunch: (message) async {
+  //     setState(() {
+  //       messageTitle = message["notification"]["title"];
+  //       notificationAlert = "New Notification Alert";
+  //     });
+  //   },
+  //   onResume: (message) async {
+  //     setState(() {
+  //       messageTitle = message["data"]["title"];
+  //       notificationAlert = "Application opened from Notification";
+  //     });
+  //   },
+  // );
+  // }
 
   @override
   void dispose() {
@@ -69,20 +75,48 @@ class _HomeState extends State<Home> {
   PlayerBloc playerBloc;
   Size size;
 
+  @override
   Widget build(BuildContext context) {
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
     playerBloc = PlayerProvider.of(context);
 
     size = MediaQuery.of(context).size;
-    ScreenUtil.init(context, allowFontScaling: true, designSize: size);
 
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(currentIndex: 0),
+      bottomNavigationBar: const BottomNavBar(currentIndex: 0),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        // backgroundColor: cTransparent,
+        leading: IconButton(
+            onPressed: () {
+              uiBloc.toggleLanguage();
+              setState(() {});
+            },
+            icon: const Icon(Ionicons.language)),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(context: context, delegate: SongSearch(MEDIA.SONG));
+            },
+            icon: const Icon(Ionicons.search_outline),
+          ),
+        ],
+      ),
       body: Stack(
         children: [
-          ExplorerScreen(),
-          ExpandableBottomPlayer(),
+          const ExplorerScreen(),
+          StreamBuilder(
+              stream: playerBloc.videoStr,
+              builder: (_, AsyncSnapshot<yt.PlayerState> snapshot) {
+                // debugPrint('\t\t\t ${snapshot.data}');
+                return (snapshot.hasData &&
+                        (snapshot.data != yt.PlayerState.unknown &&
+                            snapshot.data != yt.PlayerState.unStarted))
+                    ? const ExpandableBottomVideoPlayer()
+                    : const ExpandableBottomPlayer();
+              }),
         ],
       ),
     );
@@ -98,6 +132,10 @@ class _HomeState extends State<Home> {
               switch (id?.values?.single) {
                 // case 'album':
                 //   return AlbumDetailScreen(albumId: id.keys.single);
+                // case 'channel':
+                //   return ChannelDetailScreen(channelId: id.keys.single);
+                // case 'announcement':
+                //   return AnnouncementScreen(announcementId: id.keys.single);
                 case 'musicvideo':
                   return PlayerDynamicLinkCatcher(
                       isAudio: false, songId: id.keys.single);
@@ -105,15 +143,11 @@ class _HomeState extends State<Home> {
                   return ArtistDetailScreen(artistId: id.keys.single);
                 case 'playlist':
                   return PlaylistDetailScreen(playlistId: id.keys.single);
-                // case 'channel':
-                //   return ChannelDetailScreen(channelId: id.keys.single);
-                // case 'announcement':
-                //   return AnnouncementScreen(announcementId: id.keys.single);
                 case 'song':
                   return PlayerDynamicLinkCatcher(
                       isAudio: true, songId: id.keys.single);
                 default:
-                  return Home();
+                  return const Home();
               }
             }),
           );

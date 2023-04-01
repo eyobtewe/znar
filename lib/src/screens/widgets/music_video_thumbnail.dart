@@ -5,37 +5,40 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../core/core.dart';
 import '../../domain/models/models.dart';
-import '../screens.dart';
-import '../video_player/video_player.dart';
+import '../../presentation/bloc.dart';
 
 class MusicVideoThumbnail extends StatelessWidget {
   const MusicVideoThumbnail({
+    Key key,
     this.i,
     this.musicVideo,
     this.isSearchResult,
-  });
+  }) : super(key: key);
   final bool isSearchResult;
   final MusicVideo musicVideo;
   final int i;
 
   @override
   Widget build(BuildContext context) {
+    PlayerBloc playerBloc = PlayerProvider.of(context);
     final size = MediaQuery.of(context).size;
     ScreenUtil.init(context, designSize: size);
     final String videoId = YoutubePlayer.convertUrlToId(musicVideo.url);
 
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) =>
-                  // true
-                  //     ?
-                  VideoPlayerScreen(musicVideo: musicVideo)
-              // : CustomWebPage(url: musicVideo.url),
-              ),
-        );
+        playerBloc.videoInit(musicVideo);
+        playerBloc.youtubeController.play();
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (_) =>
+        //           // true
+        //           //     ?
+        //           VideoPlayerScreen(musicVideo: musicVideo)
+        //       // : CustomWebPage(url: musicVideo.url),
+        //       ),
+        // );
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -45,9 +48,9 @@ class MusicVideoThumbnail extends StatelessWidget {
             MusicTitle(
               title: musicVideo.title ?? '',
               lines: 1,
-              fontSize: 12,
+              fontSize: 14,
             ),
-            Divider(color: TRANSPARENT, height: 5),
+            const Divider(color: cTransparent, height: 5),
             MusicTitle(
                 title: musicVideo.artistStatic.fullName,
                 // !=
@@ -55,8 +58,8 @@ class MusicVideoThumbnail extends StatelessWidget {
                 //     ? song[i].artistStatic.stageName
                 //     : song[i].artistStatic.fullName,
                 lines: 1,
-                fontSize: 10,
-                color: GRAY),
+                fontSize: 12,
+                color: cGray),
           ],
         ),
       ),
@@ -76,25 +79,24 @@ class MusicVideoThumbnail extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Center(
-        child: Container(
-          child: const Icon(Ionicons.play_circle_outline, size: 40),
-        ),
-      ),
       height: 90,
+      child: const Center(
+        child: Icon(Ionicons.play_circle_outline, size: 40),
+      ),
     );
   }
 }
 
 class MusicTitle extends StatelessWidget {
   const MusicTitle({
+    Key key,
     this.title,
     this.lines,
     this.color,
     this.alignment,
     this.fontSize = 12,
     this.textAlign = TextAlign.left,
-  });
+  }) : super(key: key);
 
   final String title;
   final int lines;
@@ -111,15 +113,16 @@ class MusicTitle extends StatelessWidget {
       alignment: alignment ?? Alignment.centerLeft,
       width: double.maxFinite,
       child: Text(
-        '$title',
+        title,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
         textAlign: textAlign,
         style: TextStyle(
-          fontSize: ScreenUtil().setSp(fontSize),
+          fontSize: fontSize.toDouble(),
+          // fontSize: ScreenUtil().setSp(fontSize),
           fontFamilyFallback: f,
           fontWeight: fontSize == 12 ? FontWeight.bold : FontWeight.normal,
-          color: color ?? (fontSize == 12 ? GRAY : DARK_GRAY),
+          color: color ?? (fontSize == 12 ? cGray : cDarkGray),
         ),
       ),
     );

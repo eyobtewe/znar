@@ -8,7 +8,7 @@ import '../screens.dart';
 import 'widgets.dart';
 
 class ArtistThumbnail extends StatelessWidget {
-  const ArtistThumbnail({this.artist, this.isSearchResult});
+   const ArtistThumbnail({Key key, this.artist, this.isSearchResult}) : super(key: key);
   final bool isSearchResult;
   final dynamic artist;
 
@@ -35,23 +35,25 @@ class ArtistThumbnail extends StatelessWidget {
                 ? Container()
                 : Container(
                     margin: const EdgeInsets.only(bottom: 5, top: 10),
-                    // height: size.width * 0.25,
-                    // width: size.width * 0.25,
+                    height: size.width * 0.25,
+                    width: size.width * 0.25,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(500),
                         child: artist.runtimeType == Artist
                             ? CachedPicture(image: artist.photo ?? '')
                             : CustomFileImage(img: artist.artistArtPath)),
                   ),
-            Divider(
+            const Divider(
               height: 5,
+              color: cTransparent,
             ),
             MusicTitle(
               title: artist.runtimeType == Artist
                   ? artist.fullName ?? ''
                   : artist.name,
               lines: 2,
-              color: GRAY,
+              fontSize: 14,
+              color: cGray,
               alignment: Alignment.center,
               textAlign: TextAlign.center,
             ),

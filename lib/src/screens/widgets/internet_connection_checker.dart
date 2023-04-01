@@ -14,7 +14,7 @@
 // //     return ConnectionStatusBar(
 // //       // beginOffset: const Offset(0.0, 1.0),
 // //       // endOffset: const Offset(0.0, 0.0),
-// //       color: BLUE,
+// //       color: cBlue,
 // //       title: Text(
 // //         'Please check your internet connection',
 // //         style: const TextStyle(
@@ -97,7 +97,7 @@
 // //     // );
 // //     Fluttertoast.showToast(
 // //       msg: _hasConnection ? 'Online' : 'Please check your internet connection',
-// //       backgroundColor: BLUE,
+// //       backgroundColor: cBlue,
 // //       textColor: PURE_WHITE,
 // //       gravity: ToastGravity.TOP,
 // //       toastLength: Toast.LENGTH_LONG,

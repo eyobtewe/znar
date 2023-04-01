@@ -34,19 +34,19 @@ class MusicVideo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    if (this.artistStatic != null) {
-      data['artistStatic'] = this.artistStatic.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (artistStatic != null) {
+      data['artistStatic'] = artistStatic.toJson();
     }
-    if (this.channel != null) {
-      data['channel'] = this.channel.toJson();
+    if (channel != null) {
+      data['channel'] = channel.toJson();
     }
-    data['_id'] = this.sId;
-    data['title'] = this.title;
-    data['url'] = this.url;
-    data['channel'] = this.channel;
-    data['thumbnail'] = this.thumbnail;
-    data['artist'] = this.artist;
+    data['_id'] = sId;
+    data['title'] = title;
+    data['url'] = url;
+    data['channel'] = channel;
+    data['thumbnail'] = thumbnail;
+    data['artist'] = artist;
     return data;
   }
 }

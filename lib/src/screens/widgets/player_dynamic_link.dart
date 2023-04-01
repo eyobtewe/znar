@@ -9,7 +9,7 @@ class PlayerDynamicLinkCatcher extends StatelessWidget {
   final String songId;
   final bool isAudio;
 
-  const PlayerDynamicLinkCatcher({this.songId, this.isAudio});
+  const PlayerDynamicLinkCatcher({Key key, this.songId, this.isAudio}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final bloc = ApiProvider.of(context);
@@ -25,7 +25,7 @@ class PlayerDynamicLinkCatcher extends StatelessWidget {
           if (!snapshot.hasData) {
             return const CustomLoader();
           } else {
-            Future.delayed(Duration(milliseconds: 200), () {
+            Future.delayed(const Duration(milliseconds: 200), () {
               goTo(snapshot, context, playerBloc);
             });
 

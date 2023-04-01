@@ -7,7 +7,7 @@ import '../../domain/models/models.dart';
 import '../screens.dart';
 
 class PlaylistTile extends StatelessWidget {
-  const PlaylistTile({this.playlist, this.onTap, this.padded});
+   const PlaylistTile({Key key, this.playlist, this.onTap, this.padded}) : super(key: key);
 
   final Playlist playlist;
   final Function onTap;
@@ -25,12 +25,12 @@ class PlaylistTile extends StatelessWidget {
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(5),
           child: Container(
-            color: PRIMARY_COLOR,
+            color: cPrimaryColor,
             width: 48,
             height: 48,
             child: const Icon(
               Ionicons.musical_notes_outline,
-              color: BACKGROUND,
+              color: cBackgroundColor,
             ),
           ),
         ),
@@ -43,9 +43,7 @@ class PlaylistTile extends StatelessWidget {
             fontFamilyFallback: f,
           ),
         ),
-        onTap: onTap != null
-            ? onTap
-            : () {
+        onTap: onTap ?? () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(

@@ -44,23 +44,23 @@ class Song {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    if (this.albumStatic != null) {
-      data['albumStatic'] = this.albumStatic.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (albumStatic != null) {
+      data['albumStatic'] = albumStatic.toJson();
     }
-    if (this.artistStatic != null) {
-      data['artistStatic'] = this.artistStatic.toJson();
+    if (artistStatic != null) {
+      data['artistStatic'] = artistStatic.toJson();
     }
-    if (this.featuredArtists != null) {
-      data['featuredArtists'] = this.featuredArtists.map((v) => v.toJson()).toList();
+    if (featuredArtists != null) {
+      data['featuredArtists'] = featuredArtists.map((v) => v.toJson()).toList();
     }
-    data['_id'] = this.sId;
-    data['title'] = this.title;
-    data['isSingle'] = this.isSingle;
-    data['releaseDate'] = this.releaseDate;
-    data['fileUrl'] = this.fileUrl;
-    data['filePath'] = this.filePath;
-    data['coverArt'] = this.coverArt;
+    data['_id'] = sId;
+    data['title'] = title;
+    data['isSingle'] = isSingle;
+    data['releaseDate'] = releaseDate;
+    data['fileUrl'] = fileUrl;
+    data['filePath'] = filePath;
+    data['coverArt'] = coverArt;
     return data;
   }
 }

@@ -10,14 +10,14 @@ class HomeFAB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      child: const Icon(Icons.home),
       mini: true,
-      backgroundColor: PRIMARY_COLOR.withOpacity(0.25),
+      backgroundColor: cPrimaryColor.withOpacity(0.25),
       onPressed: () {
         Navigator.pushNamedAndRemoveUntil(
             context, HOME_PAGE_ROUTE, (route) => false,
             arguments: 'NO-INIT');
       },
+      child: const Icon(Icons.home),
     );
   }
 }

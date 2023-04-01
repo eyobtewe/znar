@@ -11,7 +11,8 @@ class LocalSongsProvider extends InheritedWidget {
       : bloc = LocalSongsBloc(),
         super(key: key, child: child);
 
-  bool updateShouldNotify(_) => true;
+  @override
+  bool updateShouldNotify(oldWidget) => true;
 
   static LocalSongsBloc of(BuildContext context) {
     return (context.dependOnInheritedWidgetOfExactType<LocalSongsProvider>())

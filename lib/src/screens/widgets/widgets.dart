@@ -6,7 +6,6 @@ export 'artist_thumbnail.dart';
 export 'artist_tile.dart';
 export 'bottom_music_player.dart';
 export 'bottom_nav_bar.dart';
-
 export 'custom_loader.dart';
 export 'download_progress.dart';
 export 'expandable_player.dart';

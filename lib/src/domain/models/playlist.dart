@@ -16,12 +16,12 @@ class Playlist {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['isLocal'] = this.isLocal;
-    data['featureImage'] = this.featureImage ?? '';
-    data['count'] = this.count ?? '';
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
+    data['isLocal'] = isLocal;
+    data['featureImage'] = featureImage ?? '';
+    data['count'] = count ?? '';
     return data;
   }
 }

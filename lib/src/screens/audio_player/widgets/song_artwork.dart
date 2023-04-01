@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +12,7 @@ class SongArtwork extends StatefulWidget {
   final String songArt;
 
   @override
-  _SongArtworkState createState() => _SongArtworkState();
+  State<SongArtwork> createState() => _SongArtworkState();
 }
 
 class _SongArtworkState extends State<SongArtwork> {
@@ -26,8 +28,6 @@ class _SongArtworkState extends State<SongArtwork> {
 
     final Size size = MediaQuery.of(context).size;
 
-    // debugPrint(image);
-    // debugPrint(widget.songArt);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.125),
       child:
@@ -36,25 +36,25 @@ class _SongArtworkState extends State<SongArtwork> {
           //     :
           playerBloc.audioPlayer.builderCurrent(builder: (_, Playing playing) {
         return buildSongCover(
-            playing?.audio?.audio?.metas?.image?.path ?? widget.songArt ?? '',
-            size);
+          playing?.audio?.audio?.metas?.image?.path ?? widget.songArt ?? '',
+          size,
+          memory: playerBloc
+              .audioPlayer.current.value?.audio?.audio?.metas?.extra['image'],
+        );
       }),
     );
   }
 
-  Widget buildSongCover(String img, Size size) {
+  Widget buildSongCover(String img, Size size, {Uint8List memory}) {
     return Center(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(0),
-        child: Container(
-          height: size.width * 0.5,
-          // width: size.width * 0.5,
-          child: CachedPicture(
-            image: img,
-            boxFit: BoxFit.cover,
-            // isBackground: true,
-          ),
-        ),
+        child: SizedBox(
+            height: size.width * 0.5,
+            // width: size.width * 0.5,
+            child: memory == null
+                ? CachedPicture(image: img, boxFit: BoxFit.cover)
+                : Image(image: MemoryImage(memory), fit: BoxFit.cover)),
       ),
     );
   }

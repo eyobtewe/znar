@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
@@ -8,7 +7,6 @@ import '../../core/core.dart';
 import '../../domain/models/models.dart';
 import '../../helpers/network_image.dart';
 import '../../presentation/bloc.dart';
-import '../home/widgets/widgets.dart';
 import '../screens.dart';
 import '../widgets/widgets.dart';
 
@@ -16,14 +14,17 @@ class ArtistDetailScreen extends StatefulWidget {
   final dynamic artist;
   final String artistId;
 
-  const ArtistDetailScreen({this.artist, this.artistId});
+  const ArtistDetailScreen({Key key, this.artist, this.artistId})
+      : super(key: key);
 
-  _ArtistDetailScreenState createState() => _ArtistDetailScreenState();
+  @override
+  State<ArtistDetailScreen> createState() => _ArtistDetailScreenState();
 }
 
 class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
   bool isClicked = false;
 
+  @override
   void initState() {
     super.initState();
   }
@@ -34,13 +35,13 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
   UiBloc uiBloc;
   PlayerBloc playerBloc;
 
+  @override
   Widget build(BuildContext context) {
     playerBloc = PlayerProvider.of(context);
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
     localSongsBloc = LocalSongsProvider.of(context);
     size = MediaQuery.of(context).size;
-    ScreenUtil.init(context, designSize: size, allowFontScaling: true);
 
     return Stack(
       children: [
@@ -60,12 +61,12 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
                 : buildBody(widget.artist),
           ),
         ),
-        ExpandableBottomPlayer(),
+        const ExpandableBottomPlayer(),
       ],
     );
   }
 
-  Widget buildBody(dynamic artist) {
+  Widget buildBody(artist) {
     return CustomScrollView(
       primary: true,
       physics: const BouncingScrollPhysics(),
@@ -74,7 +75,9 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
           pinned: true,
           elevation: 0,
           stretch: true,
-          flexibleSpace: buildFlexibleSpaceBar(artist),
+          flexibleSpace: artist.runtimeType == Artist
+              ? CachedPicture(image: artist.coverImage, isBackground: true)
+              : CustomFileImage(img: artist.artistArtPath),
           expandedHeight: size.width * 9 / 16,
         ),
         SliverList(
@@ -109,7 +112,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
                         //     '1.1K Followers',
                         //     style: TextStyle(
                         //       fontFamilyFallback: f,
-                        //       color: DARK_GRAY,
+                        //       color: cDarkGray,
                         //     ),
                         //   ),
                         // ),
@@ -122,7 +125,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
               buildAlbums(artist),
               buildMusicVideos(artist),
               buildSongs(artist),
-              SizedBox(height: 66),
+              const BottomPlayerSpacer(),
             ],
           ),
         ),
@@ -139,20 +142,20 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(
-            isClicked ? PRIMARY_COLOR : BACKGROUND),
+            isClicked ? cPrimaryColor : cBackgroundColor),
         elevation: MaterialStateProperty.all(0),
         // visualDensity: VisualDensity(horizontal: 0, vertical: -2),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
-            side: BorderSide(color: PRIMARY_COLOR, width: 1),
+            side: const BorderSide(color: cPrimaryColor, width: 1),
           ),
         ),
       ),
       child: Text(
         Language.locale(uiBloc.language, isClicked ? 'following' : 'follow'),
         style: TextStyle(
-          color: !isClicked ? PRIMARY_COLOR : BACKGROUND,
+          color: !isClicked ? cPrimaryColor : cBackgroundColor,
           fontFamilyFallback: f,
         ),
       ),
@@ -170,13 +173,13 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
           return bloc.artistMusicVideos[artist.sId].isEmpty
               ? Container()
               : GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 1.2,
                   ),
                   itemBuilder: (_, int index) {
                     return HomeCards(
-                      ar: CustomAspectRatio.VIDEO,
+                      ar: MEDIA.VIDEO,
                       data: bloc.artistMusicVideos[artist.sId],
                       i: index,
                     );
@@ -213,7 +216,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
             shrinkWrap: true,
             primary: false,
             separatorBuilder: (_, int k) {
-              return Divider(height: 1);
+              return const Divider(height: 1, color: cTransparent);
             },
             itemBuilder: (_, int index) {
               return Column(
@@ -221,8 +224,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
                 children: [
                   index == 0
                       ? buildTitle(
-                          '${songs.length > 1 ? songs.length : ''} ' +
-                              Language.locale(uiBloc.language, 'songs'),
+                          '${songs.length > 1 ? songs.length : ''} ${Language.locale(uiBloc.language, 'songs')}',
                           songs)
                       : Container(),
                   SongTile(index: index, songs: songs),
@@ -260,14 +262,14 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
                   children: [
                     buildTitle(
                         Language.locale(uiBloc.language, 'albums'), null),
-                    Container(
+                    SizedBox(
                       height: 200,
                       child: ListView.builder(
                         itemCount: album.length,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, int index) {
-                          return Container(
+                          return SizedBox(
                             height: 120,
                             width: 150,
                             child: AlbumThumbnail(
@@ -281,28 +283,6 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
         }
       },
     );
-  }
-
-  FlexibleSpaceBar buildFlexibleSpaceBar(dynamic artist) {
-    return FlexibleSpaceBar(
-      // stretchModes: <StretchMode>[
-      //   StretchMode.zoomBackground,
-      //   StretchMode.fadeTitle,
-      // ],
-      // centerTitle: true,
-      // title: Container(
-      //   width: size.width,
-      //   child: buildArtistProfile(artist),
-      // ),
-      // titlePadding: EdgeInsets.zero,
-      background: buildAppBarBackground(artist),
-    );
-  }
-
-  Widget buildAppBarBackground(dynamic artist) {
-    return artist.runtimeType == Artist
-        ? CachedPicture(image: artist.coverImage, isBackground: true)
-        : CustomFileImage(img: artist.artistArtPath);
   }
 
   // Widget buildArtistProfile(dynamic artist) {
@@ -337,7 +317,7 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
       child: Row(
         children: [
           Text(
-            '$title',
+            title,
             style: TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: ScreenUtil().setSp(18),
@@ -345,10 +325,10 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
               fontFamily: f.single,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           IconButton(
-            icon: Icon(Ionicons.play),
-            color: PRIMARY_COLOR,
+            icon: const Icon(Ionicons.play),
+            color: cPrimaryColor,
             onPressed: () {
               if (playerBloc.audioPlayer != null) {
                 playerBloc.audioPlayer.stop();
@@ -367,6 +347,24 @@ class _ArtistDetailScreenState extends State<ArtistDetailScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class BottomPlayerSpacer extends StatelessWidget {
+  const BottomPlayerSpacer({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final PlayerBloc playerBloc = PlayerProvider.of(context);
+
+    return StreamBuilder(
+      stream: playerBloc.audioPlayer.playerState,
+      builder: (_, AsyncSnapshot<PlayerState> snapshot) {
+        return (!snapshot.hasData || snapshot.data == PlayerState.stop)
+            ? Container()
+            : const SizedBox(height: 76);
+      },
     );
   }
 }

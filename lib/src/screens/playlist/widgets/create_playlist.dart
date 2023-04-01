@@ -10,7 +10,7 @@ class CreatePlaylist extends StatefulWidget {
   const CreatePlaylist({Key key, this.song}) : super(key: key);
   final Song song;
   @override
-  _CreatePlaylistState createState() => _CreatePlaylistState();
+  State<CreatePlaylist> createState() => _CreatePlaylistState();
 }
 
 class _CreatePlaylistState extends State<CreatePlaylist> {
@@ -31,12 +31,13 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     uiBloc = UiProvider.of(context);
     bloc = ApiProvider.of(context);
 
     return AlertDialog(
-      backgroundColor: CANVAS_BLACK,
+      backgroundColor: cCanvasBlack,
       title: Text(Language.locale(uiBloc.language, 'create_playlist'),
           style: const TextStyle(
             fontFamilyFallback: f,
@@ -66,7 +67,7 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
           Playlist playlist = Playlist(
             name: _playlistTitle.text,
             isLocal: true,
-            sId: Uuid().v1(),
+            sId: const Uuid().v1(),
             featureImage: '',
           );
           int data = await bloc.savePlaylist(playlist);
@@ -89,7 +90,7 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
           //           ? 'create_playlist_failed'
           //           : 'create_playlist_success'),
           //   backgroundColor: PURE_WHITE,
-          //   textColor: BACKGROUND,
+          //   textColor: cBackgroundColor,
           // );
           if (widget.song != null && data != null) {
             int songAddedOrNot =
@@ -97,7 +98,7 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
 
             ScaffoldMessengerState().showSnackBar(
               SnackBar(
-                backgroundColor: BLUE,
+                backgroundColor: cBlue,
                 content: Text(
                   songAddedOrNot != null
                       ? Language.locale(uiBloc.language, 'song_added')
@@ -112,14 +113,14 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
           }
         },
         icon: const Icon(Ionicons.checkmark),
-        label: Text(''),
+        label: const Text(''),
       ),
       ElevatedButton.icon(
           onPressed: () {
             Navigator.pop(context);
           },
           icon: const Icon(Ionicons.trash),
-          label: Text('')),
+          label: const Text('')),
     ];
   }
 }

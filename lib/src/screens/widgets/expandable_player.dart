@@ -10,7 +10,7 @@ class ExpandableBottomPlayer extends StatefulWidget {
   const ExpandableBottomPlayer({Key key}) : super(key: key);
 
   @override
-  _ExpandableBottomPlayerState createState() => _ExpandableBottomPlayerState();
+  State<ExpandableBottomPlayer> createState() => _ExpandableBottomPlayerState();
 }
 
 class _ExpandableBottomPlayerState extends State<ExpandableBottomPlayer> {
@@ -47,12 +47,12 @@ class _ExpandableBottomPlayerState extends State<ExpandableBottomPlayer> {
 
   Widget buildSmallPlayer() {
     return InkWell(
-      child: BottomScreenPlayer(),
+      child: const BottomScreenPlayer(),
       onTap: () {
         miniPlayerController.animateToHeight(
           state: PanelState.MAX,
           // height: size.height * 0.7,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
         );
       },
     );
@@ -60,7 +60,7 @@ class _ExpandableBottomPlayerState extends State<ExpandableBottomPlayer> {
 
   Widget buildBigPlayer() {
     return Container(
-      color: BACKGROUND,
+      color: cBackgroundColor,
       child: Center(
         child: StreamBuilder<Playing>(
             stream: playerBloc.audioPlayer.current,
@@ -82,10 +82,10 @@ class _ExpandableBottomPlayerState extends State<ExpandableBottomPlayer> {
                       // );
                     },
                   ),
-                  Divider(color: TRANSPARENT),
-                  SongDetails(),
-                  PlayerButtons(),
-                  // Divider(color: TRANSPARENT),
+                  const Divider(color: cTransparent),
+                  const SongDetails(),
+                  const PlayerButtons(),
+                  // Divider(color: cTransparent),
                   // Row(
                   //   children: [Spacer(), LyricsBtn(), Spacer()],
                   // ),

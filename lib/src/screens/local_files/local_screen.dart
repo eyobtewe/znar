@@ -76,7 +76,7 @@
 //             Language.locale(uiBloc.language, tabs[title].toLowerCase()),
 //             style: TextStyle(
 //               fontSize: 18,
-//               color: GRAY,
+//               color: cGray,
 //               fontFamilyFallback: f,
 //             ),
 //           ),

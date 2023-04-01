@@ -11,7 +11,7 @@ class ArtistTile extends StatefulWidget {
 
   const ArtistTile({Key key, this.artist}) : super(key: key);
   @override
-  _ArtistTileState createState() => _ArtistTileState();
+  State<ArtistTile> createState() => _ArtistTileState();
 }
 
 class _ArtistTileState extends State<ArtistTile> {
@@ -30,24 +30,24 @@ class _ArtistTileState extends State<ArtistTile> {
       },
       child: Container(
         width: size.width,
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         height: 60,
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: 60,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: CachedPicture(image: widget.artist.photo ?? ''),
               ),
             ),
-            VerticalDivider(color: TRANSPARENT),
+            const VerticalDivider(color: cTransparent),
             Text(
               widget.artist.fullName ?? '',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: GRAY,
+                color: cGray,
                 fontFamilyFallback: f,
                 fontSize: ScreenUtil().setSp(16),
                 fontWeight: FontWeight.bold,

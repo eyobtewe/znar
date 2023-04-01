@@ -33,16 +33,16 @@ class Announcement {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['type'] = this.type;
-    data['moreInfoLink'] = this.moreInfoLink;
-    data['targetType'] = this.targetType;
-    data['targetId'] = this.targetId;
-    data['contentImage'] = this.contentImage;
-    data['featureImage'] = this.featureImage;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['title'] = title;
+    data['description'] = description;
+    data['type'] = type;
+    data['moreInfoLink'] = moreInfoLink;
+    data['targetType'] = targetType;
+    data['targetId'] = targetId;
+    data['contentImage'] = contentImage;
+    data['featureImage'] = featureImage;
     return data;
   }
 }

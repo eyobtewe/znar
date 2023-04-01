@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../core/core.dart';
@@ -7,12 +8,12 @@ import '../screens.dart';
 import '../widgets/widgets.dart';
 
 class SearchPage extends StatefulWidget {
-  final CustomAspectRatio ar;
-  final trigger;
+  final MEDIA ar;
+  final dynamic trigger;
 
   const SearchPage({Key key, this.ar, this.trigger = false}) : super(key: key);
   @override
-  _SearchPageState createState() => _SearchPageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
@@ -22,11 +23,11 @@ class _SearchPageState extends State<SearchPage> {
       showSearch(context: context, delegate: SongSearch(widget.ar));
     }
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(currentIndex: 0),
+      bottomNavigationBar: const BottomNavBar(currentIndex: 0),
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(Ionicons.search, color: PRIMARY_COLOR),
+            icon: const Icon(Ionicons.search, color: cPrimaryColor),
             onPressed: () {
               showSearch(context: context, delegate: SongSearch(widget.ar));
             },
@@ -38,7 +39,7 @@ class _SearchPageState extends State<SearchPage> {
 }
 
 class SongSearch extends SearchDelegate<dynamic> {
-  final CustomAspectRatio ar;
+  final MEDIA ar;
 
   SongSearch(this.ar);
 
@@ -50,12 +51,15 @@ class SongSearch extends SearchDelegate<dynamic> {
     assert(theme != null);
     return theme.copyWith(
       appBarTheme: AppBarTheme(
-        brightness: colorScheme.brightness,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: colorScheme.brightness,
+        ),
         backgroundColor: colorScheme.brightness == Brightness.dark
             ? Colors.black
             : Colors.white,
-        iconTheme: theme.primaryIconTheme.copyWith(color: GRAY),
-        textTheme: theme.textTheme,
+        iconTheme: theme.primaryIconTheme.copyWith(color: cGray),
+        toolbarTextStyle: theme.textTheme.bodyText2,
+        titleTextStyle: theme.textTheme.headline6,
       ),
       inputDecorationTheme: searchFieldDecorationTheme ??
           InputDecorationTheme(
@@ -69,7 +73,7 @@ class SongSearch extends SearchDelegate<dynamic> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Ionicons.close_sharp),
+        icon: const Icon(Ionicons.close_sharp),
         onPressed: () {
           query = '';
         },
@@ -97,25 +101,24 @@ class SongSearch extends SearchDelegate<dynamic> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final uiBloc = UiProvider.of(context);
     final bloc = ApiProvider.of(context);
     return query != ''
         ? FutureBuilder(
             future: buildFutures(ar, bloc),
             builder: (_, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
-                return CustomLoader();
+                return const CustomLoader();
               } else {
                 return ListView.builder(
                   itemBuilder: (_, int k) {
                     switch (ar) {
-                      case CustomAspectRatio.VIDEO:
+                      case MEDIA.VIDEO:
                         return MusicVideoTile(musicVideo: snapshot.data[k]);
-                      case CustomAspectRatio.SONG:
+                      case MEDIA.SONG:
                         return SongTile(songs: snapshot.data, index: k);
-                      case CustomAspectRatio.PLAYLIST:
+                      case MEDIA.PLAYLIST:
                         return PlaylistTile(playlist: snapshot.data[k]);
-                      case CustomAspectRatio.ARTIST:
+                      case MEDIA.ARTIST:
                         return ArtistTile(artist: snapshot.data[k]);
                       default:
                         return PlaylistTile(playlist: snapshot.data[k]);
@@ -127,7 +130,8 @@ class SongSearch extends SearchDelegate<dynamic> {
               }
             },
           )
-        : buildPlaceHolder(uiBloc);
+        : Container();
+    // : buildPlaceHolder(uiBloc);
   }
 
   Widget buildPlaceHolder(UiBloc uiBloc) {
@@ -143,7 +147,7 @@ class SongSearch extends SearchDelegate<dynamic> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 1.5,
           crossAxisSpacing: 20,
@@ -153,14 +157,14 @@ class SongSearch extends SearchDelegate<dynamic> {
             .map((e) => Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: CANVAS_BLACK,
+                    color: cCanvasBlack,
                   ),
                   // margin: EdgeInsets.all(15),
                   child: Tab(
                     child: Text(
                       e,
-                      style: TextStyle(
-                        color: PRIMARY_COLOR,
+                      style: const TextStyle(
+                        color: cPrimaryColor,
                         fontSize: 24,
                         fontWeight: FontWeight.w900,
                       ),
@@ -175,32 +179,31 @@ class SongSearch extends SearchDelegate<dynamic> {
     //   children: [
     //     buildDivider(),
     //     ThumbnailCards(
-    //       ar: CustomAspectRatio.PLAYLIST,
+    //       ar: MEDIA.PLAYLIST,
     //       title: Language.locale(uiBloc.language, 'popular_playlists'),
     //     ),
     //     buildDivider(),
     //     ThumbnailCards(
-    //       ar: CustomAspectRatio.SONG,
+    //       ar: MEDIA.SONG,
     //       title: Language.locale(uiBloc.language, 'songs'),
     //     ),
     //   ],
     // );
   }
 
-  dynamic buildResultTile(
-      CustomAspectRatio ar, List<dynamic> data, int k) async {}
+  dynamic buildResultTile(MEDIA ar, List<dynamic> data, int k) async {}
 
-  Future buildFutures(CustomAspectRatio ar, ApiBloc bloc) async {
+  Future buildFutures(MEDIA ar, ApiBloc bloc) async {
     switch (ar) {
-      case CustomAspectRatio.ALBUM:
+      case MEDIA.ALBUM:
         return bloc.searchAlbums(query);
-      case CustomAspectRatio.ARTIST:
+      case MEDIA.ARTIST:
         return bloc.searchArtist(query);
-      case CustomAspectRatio.PLAYLIST:
+      case MEDIA.PLAYLIST:
         return bloc.searchPlayLists(query);
-      case CustomAspectRatio.VIDEO:
+      case MEDIA.VIDEO:
         return bloc.searchMusicVideos(query);
-      case CustomAspectRatio.SONG:
+      case MEDIA.SONG:
         return bloc.searchSongs(query);
 
       default:

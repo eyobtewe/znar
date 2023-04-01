@@ -3,7 +3,7 @@ import '../infrastructure/repository/repository.dart';
 import '../screens/screens.dart';
 
 class ApiBloc {
-  String language = 'am';
+  // String language = 'en';
   // final DynamicLinkService dynamikLinkService = DynamicLinkService();
   final Repository _repository = Repository();
 
@@ -72,23 +72,23 @@ class ApiBloc {
   }
 
   //! Channels
-  Future<List<Channel>> fetchChannels() async {
-    channels = await _repository.fetchChannels();
-    return channels;
-  }
+  // Future<List<Channel>> fetchChannels() async {
+  //   channels = await _repository.fetchChannels();
+  //   return channels;
+  // }
 
-  Future<List<Channel>> searchChannels(String channelName) async {
-    return await _repository.searchChannels(channelName);
-  }
+  // Future<List<Channel>> searchChannels(String channelName) async {
+  //   return await _repository.searchChannels(channelName);
+  // }
 
-  Future<Channel> fetchChannelDetails(String id) async {
-    return await _repository.fetchChannelDetails(id);
-  }
+  // Future<Channel> fetchChannelDetails(String id) async {
+  //   return await _repository.fetchChannelDetails(id);
+  // }
 
-  Future<List<MusicVideo>> fetchChannelMusicVideos(String id) async {
-    channelMusicVideo[id] = await _repository.fetchChannelMusicVideos(id);
-    return channelMusicVideo[id];
-  }
+  // Future<List<MusicVideo>> fetchChannelMusicVideos(String id) async {
+  //   channelMusicVideo[id] = await _repository.fetchChannelMusicVideos(id);
+  //   return channelMusicVideo[id];
+  // }
 
   //! Songs
   Future<List<Song>> searchSongs(String term) async {
@@ -106,7 +106,8 @@ class ApiBloc {
     } else {
       songs.addAll(data);
     }
-    return songs;
+    // songs.shuffle();
+    return data;
   }
 
   //! Albums
@@ -125,7 +126,8 @@ class ApiBloc {
     } else {
       albums.addAll(data);
     }
-    return albums;
+    // albums.shuffle();
+    return data;
   }
 
   Future<List<Song>> fetchAlbumSongs(String albumId) async {
@@ -156,7 +158,8 @@ class ApiBloc {
     } else {
       onlinePlaylists.addAll(data);
     }
-    return onlinePlaylists;
+    // onlinePlaylists.shuffle();
+    return data;
   }
 
   Future<List<Playlist>> searchPlayLists(String playlistTitle) async {
@@ -196,7 +199,8 @@ class ApiBloc {
     } else {
       artists.addAll(data);
     }
-    return artists;
+    // artists.shuffle();
+    return data;
   }
 
   //! Music Videos
@@ -215,52 +219,55 @@ class ApiBloc {
     } else {
       musicVideo.addAll(data);
     }
-    return musicVideo;
+    // musicVideo.shuffle();
+    return data;
   }
 
   //! AD | News
   Future<List<Announcement>> fetchAnnouncements() async {
-    announcement = await _repository.fetchAnnouncements();
-    return announcement;
+    // announcement = await _repository.fetchAnnouncements();
+    // return announcement;
+    return null;
   }
 
   Future<Announcement> fetchAnnouncementDetails(String id) async {
-    return await _repository.fetchAnnouncementDetails(id);
+    // return await _repository.fetchAnnouncementDetails(id);
+    return null;
   }
 
   //! Shortcuts
-  List<dynamic> buildInitialData(CustomAspectRatio ar) {
+  List<dynamic> buildInitialData(MEDIA ar) {
     switch (ar) {
-      case CustomAspectRatio.ALBUM:
+      case MEDIA.ALBUM:
         return albums;
-      case CustomAspectRatio.ARTIST:
+      case MEDIA.ARTIST:
         return artists;
-      case CustomAspectRatio.PLAYLIST:
+      case MEDIA.PLAYLIST:
         return onlinePlaylists;
-      case CustomAspectRatio.CHANNEL:
+      case MEDIA.CHANNEL:
         return channels;
-      case CustomAspectRatio.VIDEO:
+      case MEDIA.VIDEO:
         return musicVideo;
-      case CustomAspectRatio.SONG:
+      case MEDIA.SONG:
         return songs;
       default:
         return announcement;
     }
   }
 
-  Future<List<dynamic>> buildFutures(CustomAspectRatio ar) async {
+  Future<List<dynamic>> buildFutures(MEDIA ar) async {
     switch (ar) {
-      case CustomAspectRatio.ALBUM:
+      case MEDIA.ALBUM:
         return fetchAlbums(1, 7);
-      case CustomAspectRatio.ARTIST:
+      case MEDIA.ARTIST:
         return fetchArtists(1, 7);
-      case CustomAspectRatio.PLAYLIST:
+      case MEDIA.PLAYLIST:
         return fetchOnlinePlayList(1, 7);
-      case CustomAspectRatio.CHANNEL:
-        return fetchChannels();
-      case CustomAspectRatio.VIDEO:
+      // case MEDIA.CHANNEL:
+      //   return fetchChannels();
+      case MEDIA.VIDEO:
         return fetchMusicVideos(1, 7);
-      case CustomAspectRatio.SONG:
+      case MEDIA.SONG:
         return fetchSongs(1, 7);
       default:
         return fetchAnnouncements();
@@ -270,10 +277,10 @@ class ApiBloc {
   Future fetchAll() async {
     // Future.wait([
     // fetchAlbums(1, 7);
-    // fetchArtists(1, 7);
+    fetchArtists(1, 7);
     fetchOnlinePlayList(1, 7);
     // fetchChannels();
-    // fetchMusicVideos(1, 7);
+    fetchMusicVideos(1, 7);
     fetchSongs(1, 7);
     // fetchAnnouncements();
     // ]);

@@ -10,7 +10,7 @@ class CustomLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: 30,
         height: 30,
         child: SleekCircularSlider(
@@ -18,15 +18,15 @@ class CustomLoader extends StatelessWidget {
             spinnerMode: true,
             customColors: CustomSliderColors(
               progressBarColors: [
-                Colors.orange,
                 Colors.red,
-                // PRIMARY_COLOR,
+                Colors.orange,
+                // cPrimaryColor,
               ],
               trackColor: isPlayer
                   ? Theme.of(context).scaffoldBackgroundColor
-                  : PRIMARY_COLOR,
+                  : cPrimaryColor,
               dotColor:
-                  isPlayer ? Theme.of(context).scaffoldBackgroundColor : GRAY,
+                  isPlayer ? Theme.of(context).scaffoldBackgroundColor : cGray,
             ),
             customWidths: CustomSliderWidths(
               progressBarWidth: isPlayer ? 15 : 1,

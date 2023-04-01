@@ -7,10 +7,11 @@ class CustomWebPage extends StatefulWidget {
   final String url;
   final String title;
 
-  const CustomWebPage({@required this.url, this.title});
+  const CustomWebPage({Key key, @required this.url, this.title})
+      : super(key: key);
 
   @override
-  _CustomWebPageState createState() => _CustomWebPageState();
+  State<CustomWebPage> createState() => _CustomWebPageState();
 }
 
 class _CustomWebPageState extends State<CustomWebPage> {
@@ -18,6 +19,7 @@ class _CustomWebPageState extends State<CustomWebPage> {
   // String url = "";
   double progress = 0;
 
+  @override
   void initState() {
     super.initState();
   }
@@ -43,18 +45,18 @@ class _CustomWebPageState extends State<CustomWebPage> {
     return SafeArea(
       child: Scaffold(
         // appBar: AppBar(
-        //   // backgroundColor: TRANSPARENT,
+        //   // backgroundColor: cTransparent,
         //   iconTheme: IconThemeData(color: BLACK),
         //   elevation: height,
         //   toolbarHeight: 48,
         // ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.arrow_back),
           mini: true,
-          backgroundColor: PRIMARY_COLOR,
+          backgroundColor: cPrimaryColor,
           onPressed: () {
             Navigator.pop(context);
           },
+          child: const Icon(Icons.arrow_back),
         ),
         body: Stack(
           fit: StackFit.expand,
@@ -78,13 +80,14 @@ class _CustomWebPageState extends State<CustomWebPage> {
             ),
             progress < 1.0
                 ? Positioned(
-                    child: LinearProgressIndicator(
-                      value: progress,
-                      backgroundColor: PRIMARY_COLOR.withOpacity(0.25),
-                      valueColor: AlwaysStoppedAnimation<Color>(PRIMARY_COLOR),
-                    ),
                     bottom: 0,
                     width: size.width,
+                    child: LinearProgressIndicator(
+                      value: progress,
+                      backgroundColor: cPrimaryColor.withOpacity(0.25),
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(cPrimaryColor),
+                    ),
                   )
                 : Container(),
           ],

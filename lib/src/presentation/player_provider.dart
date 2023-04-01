@@ -11,7 +11,8 @@ class PlayerProvider extends InheritedWidget {
       : bloc = PlayerBloc(),
         super(key: key, child: child);
 
-  bool updateShouldNotify(_) => true;
+  @override
+  bool updateShouldNotify(oldWidget) => true;
 
   static PlayerBloc of(BuildContext context) {
     return (context.dependOnInheritedWidgetOfExactType<PlayerProvider>()).bloc;

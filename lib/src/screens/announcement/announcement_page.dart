@@ -11,9 +11,10 @@ class AnnouncementScreen extends StatefulWidget {
   final Announcement announcement;
   final String announcementId;
 
-  const AnnouncementScreen({this.announcement, this.announcementId});
+  const AnnouncementScreen({Key key, this.announcement, this.announcementId})
+      : super(key: key);
   @override
-  _AnnouncementScreenState createState() => _AnnouncementScreenState();
+  State<AnnouncementScreen> createState() => _AnnouncementScreenState();
 }
 
 class _AnnouncementScreenState extends State<AnnouncementScreen> {
@@ -24,6 +25,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
 
   ApiBloc bloc;
   UiBloc uiBloc;
+  @override
   Widget build(BuildContext context) {
     bloc = ApiProvider.of(context);
     uiBloc = UiProvider.of(context);
@@ -45,7 +47,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                   )
                 : buildBody(widget.announcement),
           ),
-          ExpandableBottomPlayer(),
+          const ExpandableBottomPlayer(),
         ],
       ),
     );
@@ -110,7 +112,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
     return announcement.targetType != ''
         ? ElevatedButton(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(TRANSPARENT),
+              backgroundColor: MaterialStateProperty.all<Color>(cTransparent),
             ),
             onPressed: () {
               Navigator.push(
@@ -133,18 +135,15 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       return PlayerDynamicLinkCatcher(
                           isAudio: true, songId: announcement.targetId); //*
                     default:
-                      return Home();
+                      return const Home();
                   }
                 }),
               );
             },
             child: Text(
-              Language.locale(uiBloc.language, 'go_to') +
-                  ' ' +
-                  Language.locale(
-                      uiBloc.language, announcement.targetType.toLowerCase()),
+              '${Language.locale(uiBloc.language, 'go_to')} ${Language.locale(uiBloc.language, announcement.targetType.toLowerCase())}',
               style:
-                  const TextStyle(color: PRIMARY_COLOR, fontFamilyFallback: f),
+                  const TextStyle(color: cPrimaryColor, fontFamilyFallback: f),
             ),
           )
         : Container();
@@ -166,7 +165,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
     return announcement.moreInfoLink != ''
         ? ElevatedButton(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(TRANSPARENT),
+              backgroundColor: MaterialStateProperty.all<Color>(cTransparent),
             ),
             onPressed: () {
               Navigator.push(
@@ -179,7 +178,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
             },
             child: Text(
               Language.locale(uiBloc.language, 'learn_more'),
-              style: const TextStyle(color: BLUE, fontFamilyFallback: f),
+              style: const TextStyle(color: cBlue, fontFamilyFallback: f),
             ),
           )
         : Container();
