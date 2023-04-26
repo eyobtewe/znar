@@ -1,16 +1,13 @@
 # znar
 
-A new Flutter application.
+This app is designed to provide users with the ability to stream music from various artists, as well as discover new artists and create their own playlists.
 
-## Getting Started
+### Features
 
-This project is a starting point for a Flutter application.
+- Stream Music - Users can listen to music from various artists and genres, including popular and emerging artists from around the world.
 
-A few resources to get you started if this is your first Flutter project:
+- Discover New Artists - Users can discover new artists and genres through the app's recommendation feature, which suggests music based on their listening history and preferences.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Create Playlists - Users can create their own playlists by selecting their favorite songs and organizing them in a personalized playlist.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Social Sharing - Users can share their playlists with friends on social media platforms.
